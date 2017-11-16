@@ -405,7 +405,6 @@ struct sock {
 #define SK_FL_TYPE_MASK    0xffff0000
 #endif
 
-	kmemcheck_bitfield_begin(flags);
 	unsigned int		sk_padding : 2,
 				sk_no_check_tx : 1,
 				sk_no_check_rx : 1,
@@ -413,8 +412,6 @@ struct sock {
 				sk_protocol  : 8,
 				sk_type      : 16;
 #define SK_PROTOCOL_MAX U8_MAX
-	kmemcheck_bitfield_end(flags);
-
 	int			sk_wmem_queued;
 	gfp_t			sk_allocation;
 	u32			sk_pacing_rate; /* bytes per second */
