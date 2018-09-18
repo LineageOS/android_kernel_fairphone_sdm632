@@ -205,6 +205,17 @@
 
 		#clock-cells = <1>;
 	};
+
+	/* Disable secure_mem node */
+	qcom,ion {
+		/delete-node/ qcom,ion-heap@8;
+	};
+	/* delete hypervisor node for GPU*/
+	/delete-node/ qcom,kgsl-hyp;
+};
+
+&secure_mem {
+	status = "disabled";
 };
 
 &clock_gcc_mdss {
@@ -225,4 +236,9 @@
 
 	/* disable mem pools */
 	/delete-node/qcom,gpu-mempools;
+};
+
+/* Disable secure context for Graphics*/
+&kgsl_msm_iommu {
+	/delete-node/ gfx3d_secure;
 };
