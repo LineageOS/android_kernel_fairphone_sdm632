@@ -203,6 +203,15 @@
 			gpio-key,wakeup;
 		};
 	};
+
+	//[FairPhone][JasonY] SAR sensor driver porting -BEGIN
+	sar_sensor {
+		compatible = "sar_sensor";
+		interrupt-parent = <&tlmm>;
+		interrupts = <13 0x0>;
+		jt06,irq-gpio = <&tlmm 13 0x2008>;
+	};
+	//[FairPhone][JasonY] SAR sensor driver porting -END
 };
 
 &thermal_zones {
