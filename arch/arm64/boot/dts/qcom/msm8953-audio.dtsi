@@ -36,7 +36,7 @@
 	};
 
 	int_codec: sound {
-		status = "okay";
+		status = "disabled";
 		compatible = "qcom,msm8952-audio-codec";
 		qcom,model = "msm8953-snd-card-mtp";
 		reg = <0xc051000 0x4>,
@@ -78,8 +78,8 @@
 
 		qcom,cdc-us-euro-gpios = <&tlmm 63 0>;
 		qcom,cdc-us-eu-gpios = <&cdc_us_euro_sw>;
-		qcom,cdc-comp-gpios = <&cdc_comp_gpios>;
-		qcom,pri-mi2s-gpios = <&cdc_pri_mi2s_gpios>;
+		//qcom,cdc-comp-gpios = <&cdc_comp_gpios>;
+		//qcom,pri-mi2s-gpios = <&cdc_pri_mi2s_gpios>;
 		qcom,quin-mi2s-gpios = <&cdc_quin_mi2s_gpios>;
 
 		qcom,afe-rxtx-lb;
@@ -142,6 +142,7 @@
 	};
 
 	cdc_comp_gpios: cdc_comp_pinctrl {
+		status = "disabled";
 		compatible = "qcom,msm-cdc-pinctrl";
 		pinctrl-names = "aud_active", "aud_sleep";
 		pinctrl-0 = <&cdc_pdm_comp_lines_act>;
@@ -149,6 +150,7 @@
 	};
 
 	cdc_pri_mi2s_gpios: msm_cdc_pinctrl_pri {
+		status = "disabled";
 		compatible = "qcom,msm-cdc-pinctrl";
 		pinctrl-names = "aud_active", "aud_sleep";
 		pinctrl-0 = <&cdc_pdm_lines_act &cdc_pdm_lines_2_act>;
@@ -164,11 +166,11 @@
 
 
 	i2c@78b6000 {
-		status = "okay";
+		status = "disabled";
 		#address-cells = <1>;
 		#size-cells = <0>;
 		wsa881x_i2c_f: wsa881x-i2c-codec@f {
-			status = "okay";
+			status = "disabled";
 			compatible = "qcom,wsa881x-i2c-codec";
 			reg = <0x0f>;
 			qcom,wsa-analog-vi-gpio = <&wsa881x_analog_vi_gpio>;
@@ -177,7 +179,7 @@
 				<&wsa881x_analog_reset_gpio>;
 		};
 		wsa881x_i2c_45: wsa881x-i2c-codec@45 {
-			status = "okay";
+			status = "disabled";
 			compatible = "qcom,wsa881x-i2c-codec";
 			reg = <0x45>;
 		};
@@ -203,7 +205,7 @@
 	};
 
 	ext_codec: sound-9335 {
-		status = "disabled";
+		status = "okay";
 		compatible = "qcom,msm8952-audio-slim-codec";
 		qcom,model = "msm8953-tasha-snd-card";
 
@@ -216,6 +218,14 @@
 			"csr_gp_io_lpaif_pri_pcm_pri_mode_muxsel",
 			"csr_gp_io_mux_quin_ctl";
 
+/*		reg-names = "csr_gp_io_mux_mic_ctl",
+			"csr_gp_io_mux_spkr_ctl",
+			"csr_gp_io_lpaif_pri_pcm_pri_mode_muxsel",
+			"csr_gp_io_mux_quin_ctl",
+			"csr_gp_io_lpaif_qui_pcm_sec_mode_muxsel",
+			"csr_gp_io_mux_mic_ext_clk_ctl",
+			"csr_gp_io_mux_sec_tlmm_ctl";
+*/
 		qcom,audio-routing =
 			"AIF4 VI", "MCLK",
 			"AIF4 VI", "MICBIAS_REGULATOR",
@@ -301,7 +311,7 @@
 		asoc-codec = <&stub_codec>, <&hdmi_dba>;
 		asoc-codec-names = "msm-stub-codec.1", "msm-hdmi-dba-codec-rx";
 
-		qcom,wsa-max-devs = <2>;
+		qcom,wsa-max-devs = <0>;
 		qcom,wsa-devs = <&wsa881x_211>, <&wsa881x_212>,
 				<&wsa881x_213>, <&wsa881x_214>;
 		qcom,wsa-aux-dev-prefix = "SpkrLeft", "SpkrRight",
@@ -313,7 +323,7 @@
 	};
 
 	wcd9xxx_intc: wcd9xxx-irq {
-		status = "disabled";
+		status = "okay";
 		compatible = "qcom,wcd9xxx-irq";
 		interrupt-controller;
 		#interrupt-cells = <1>;
@@ -324,7 +334,7 @@
 	};
 
 	clock_audio: audio_ext_clk {
-		status = "disabled";
+		status = "okay";
 		compatible = "qcom,audio-ref-clk";
 		clock-names = "osr_clk";
 		qcom,node_has_rpm_clock;
@@ -337,7 +347,7 @@
 	};
 
 	wcd_rst_gpio: msm_cdc_pinctrl@67 {
-		status = "disabled";
+		status = "okay";
 		compatible = "qcom,msm-cdc-pinctrl";
 		pinctrl-names = "aud_active", "aud_sleep";
 		pinctrl-0 = <&cdc_reset_active>;
@@ -346,16 +356,16 @@
 };
 
 &slim_msm {
-	status = "disabled";
+	status = "okay";
 
 	dai_slim: msm_dai_slim {
-		status = "disabled";
+		status = "okay";
 		compatible = "qcom,msm-dai-slim";
 		elemental-addr = [ff ff ff fe 17 02];
 	};
 
 	wcd9335: tasha_codec {
-		status = "disabled";
+		status = "okay";
 		compatible = "qcom,tasha-slim-pgd";
 		elemental-addr = [00 01 A0 01 17 02];
 
@@ -438,7 +448,7 @@
 
 &pm8953_1 {
 	pmic_analog_codec: analog-codec@f000 {
-		status = "okay";
+		status = "disabled";
 		compatible = "qcom,pmic-analog-codec";
 		reg = <0xf000 0x200>;
 		#address-cells = <2>;
