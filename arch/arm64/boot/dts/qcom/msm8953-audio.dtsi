@@ -204,6 +204,7 @@
 		pinctrl-1 = <&wsa_reset_off>;
 	};
 
+//[FairPhone][Audio][jinjia]=2018.10.19=Audio porting. -s
 	ext_codec: sound-9335 {
 		status = "okay";
 		compatible = "qcom,msm8952-audio-slim-codec";
@@ -263,8 +264,8 @@
 
 		qcom,tasha-mclk-clk-freq = <9600000>;
 		qcom,cdc-us-euro-gpios = <&tlmm 63 0>;
-		qcom,msm-mbhc-hphl-swh = <0>;
-		qcom,msm-mbhc-gnd-swh = <0>;
+		qcom,msm-mbhc-hphl-swh = <1>;
+		qcom,msm-mbhc-gnd-swh = <1>;
 		qcom,cdc-us-eu-gpios = <&cdc_us_euro_sw>;
 		qcom,quin-mi2s-gpios = <&cdc_quin_mi2s_gpios>;
 
@@ -317,6 +318,7 @@
 		qcom,wsa-aux-dev-prefix = "SpkrLeft", "SpkrRight",
 				"SpkrLeft", "SpkrRight";
 	};
+//[FairPhone][Audio][jinjia]=2018.10.19=Audio porting. -e
 
 	cpe: qcom,msm-cpe-lsm {
 		compatible = "qcom,msm-cpe-lsm";
