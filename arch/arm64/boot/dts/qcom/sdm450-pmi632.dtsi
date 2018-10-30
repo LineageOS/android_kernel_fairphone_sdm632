@@ -373,6 +373,7 @@
 	};
 };
 
+/*
 &tlmm {
 	pmx_mdss {
 		mdss_dsi_active: mdss_dsi_active {
@@ -393,3 +394,4 @@
 		  };
 	};
 };
+*/
