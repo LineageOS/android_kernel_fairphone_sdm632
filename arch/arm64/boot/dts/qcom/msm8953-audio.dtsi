@@ -198,10 +198,11 @@
 		pinctrl-1 = <&wsa_clk_off>;
 	};
 	wsa881x_analog_reset_gpio: wsa881x_analog_reset_pctrl {
-		compatible = "qcom,msm-cdc-pinctrl";
-		pinctrl-names = "aud_active", "aud_sleep";
-		pinctrl-0 = <&wsa_reset_on>;
-		pinctrl-1 = <&wsa_reset_off>;
+		status = "disabled";
+		//compatible = "qcom,msm-cdc-pinctrl";
+		//pinctrl-names = "aud_active", "aud_sleep";
+		//pinctrl-0 = <&wsa_reset_on>;
+		//pinctrl-1 = <&wsa_reset_off>;
 	};
 
 //[FairPhone][Audio][jinjia]=2018.10.19=Audio porting. -s
