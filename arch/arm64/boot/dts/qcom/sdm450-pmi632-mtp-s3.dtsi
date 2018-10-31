@@ -21,6 +21,16 @@
 	cam_vdig-supply = <&pm8953_l23>;
 };
 
+/*<2018/10/18-Yutng Shih.[FAIRPHONE][MISC][COMMON][CAMERA][][]Add and modified for new front camera device driver S5K4H7YX. */
+//&eeprom1 {
+//	/* */
+//};
+
+//&camera2 {
+//	qcom,csid-sd-index = <1>; /* SDM450 support 2 CSID cores. MSM8953 is 3 CSID cores */
+//};
+/*>2018/10/18-Yuting Shih.[FAIRPHONE][MISC][COMMON][CAMERA][][]. */
+
 &mdss_dsi0 {
 	qcom,dsi-pref-prim-pan = <&dsi_hx8399c_truly_vid>;
 	pinctrl-names = "mdss_default", "mdss_sleep";
