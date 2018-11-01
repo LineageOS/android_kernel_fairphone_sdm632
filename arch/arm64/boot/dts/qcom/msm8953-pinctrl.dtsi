@@ -342,80 +342,15 @@
 			};
 		};
 
-/*<2018/10/18-Yuting Shih.[FAIRPHONE][MISC][COMMON][CAMERA][][]Modified for new front camera device driver S5K4H7YX. */
-		cam_sensor_front1_vio_default: cam_sensor_front1_vio_default {
-			/* CAM IOVDD */
-			mux {
-				pins = "gpio123";
-				function = "gpio";
-			};
-
-			config {
-				pins = "gpio123";
-				bias-disable; /* No PULL */
-				drive-strength = <2>; /* 2 MA */
-			};
-		};
-
-		cam_sensor_front1_vio_sleep: cam_sensor_front1_vio_sleep {
-			/* CAM IOVDD */
-			mux {
-				pins = "gpio123";
-				function = "gpio";
-			};
-
-			config {
-				pins = "gpio123";
-				bias-disable; /* No PULL */
-				drive-strength = <2>; /* 2 MA */
-			};
-		};
-
-		cam_sensor_front1_vdig_default: cam_sensor_front1_vdig_default {
-			/* CAM DVDD */
-			mux {
-				pins = "gpio46";
-				function = "gpio";
-			};
-
-			config {
-				pins = "gpio46";
-				bias-disable; /* No PULL */
-				drive-strength = <2>; /* 2 MA */
-			};
-		};
-
-		cam_sensor_front1_vdig_sleep: cam_sensor_front1_vdig_sleep {
-			/* CAM DVDD */
-			mux {
-				pins = "gpio46";
-				function = "gpio";
-			};
-
-			config {
-				pins = "gpio46";
-				bias-disable; /* No PULL */
-				drive-strength = <2>; /* 2 MA */
-			};
-		};
-
 		cam_sensor_front1_default: cam_sensor_front1_default {
 			/* RESET, STANDBY */
 			mux {
-			#if 1
-				pins = "gpio129";   /* Only Reset,Non-standby GPIO */
-			#else /* Qualcomm default */
 				pins = "gpio129", "gpio130";
-			#endif
 				function = "gpio";
 			};
 
 			config {
-			#if 1
-				pins = "gpio129";   /* Only Reset,Non-standby GPIO */
-			#else /* Qualcomm default */
 				pins = "gpio129", "gpio130";
-			#endif
 				bias-disable; /* No PULL */
 				drive-strength = <2>; /* 2 MA */
 			};
@@ -424,25 +359,16 @@
 		cam_sensor_front1_sleep: cam_sensor_front1_sleep {
 			/* RESET, STANDBY */
 			mux {
-			#if 1
-				pins = "gpio129";   /* Only Reset,Non-standby GPIO */
-			#else /* Qualcomm default */
 				pins = "gpio129", "gpio130";
-			#endif
 				function = "gpio";
 			};
 
 			config {
-			#if 1
-				pins = "gpio129";   /* Only Reset,Non-standby GPIO */
-			#else /* Qualcomm default */
 				pins = "gpio129", "gpio130";
-			#endif
 				bias-disable; /* No PULL */
 				drive-strength = <2>; /* 2 MA */
 			};
 		};
-/*>2018/10/18-Yuting Shih.[FAIRPHONE][MISC][COMMON][CAMERA][][]. */
 
 		pmx_adv7533_int: pmx_adv7533_int {
 			adv7533_int_active: adv7533_int_active {
