@@ -166,7 +166,7 @@
 
 
 	i2c@78b6000 {
-		status = "disabled";
+		status = "okay";
 		#address-cells = <1>;
 		#size-cells = <0>;
 		wsa881x_i2c_f: wsa881x-i2c-codec@f {
