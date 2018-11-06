@@ -211,17 +211,20 @@ static void mdss_dsi_panel_cmds_send(struct mdss_dsi_ctrl_pdata *ctrl,
 
 	mdss_dsi_cmdlist_put(ctrl, &cmdreq);
 }
-
-static char led_pwm1[2] = {0x51, 0x0};	/* DTYPE_DCS_WRITE1 */
+//[Arima][8901][20181105]Jialong modify backlight range is 1~4095 for control cmd range(2 bytes) Start
+static char led_pwm1[3] = {0x51, 0x00,0x00};	/* DTYPE_DCS_WRITE1 */
 static struct dsi_cmd_desc backlight_cmd = {
-	{DTYPE_DCS_WRITE1, 1, 0, 0, 1, sizeof(led_pwm1)},
-	led_pwm1
+	{DTYPE_DCS_LWRITE, 1, 0, 0, 1, sizeof(led_pwm1)}, led_pwm1
 };
+//[Arima][8901][20181105]Jialong modify backlight range is 1~4095 for control cmd range(2 bytes) END
 
 static void mdss_dsi_panel_bklt_dcs(struct mdss_dsi_ctrl_pdata *ctrl, int level)
 {
 	struct dcs_cmd_req cmdreq;
 	struct mdss_panel_info *pinfo;
+	
+//[Arima][8901][20181105]Jialong modify backlight range is 1~4095 for control cmd range(2 bytes) Start
+int para_1,para_2;
 
 	pinfo = &(ctrl->panel_data.panel_info);
 	if (pinfo->dcs_cmd_by_left) {
@@ -231,7 +234,19 @@ static void mdss_dsi_panel_bklt_dcs(struct mdss_dsi_ctrl_pdata *ctrl, int level)
 
 	pr_debug("%s: level=%d\n", __func__, level);
 
-	led_pwm1[1] = (unsigned char)level;
+	//led_pwm1[1] = (unsigned char)level;
+	pr_err("[Jialong]level b4 = %d\n", level);
+	//para_1 = level /4096;
+	//para_2 = level % 4096;
+	//para_1 = level;
+	//para_2 = level;
+	para_1 = (level>>8)&0x0F;
+	para_2 = level&0xFF;
+	led_pwm1[1] = (unsigned char)para_1;
+	led_pwm1[2] = (unsigned char)para_2;
+	//pr_err("[Jialong]para_1= %d\n", para_1);
+	//pr_err("[Jialong]para_2= %d\n", para_2);
+	//pr_err("[Jialong]level aft = %d\n", level);
 
 	memset(&cmdreq, 0, sizeof(cmdreq));
 	cmdreq.cmds = &backlight_cmd;
