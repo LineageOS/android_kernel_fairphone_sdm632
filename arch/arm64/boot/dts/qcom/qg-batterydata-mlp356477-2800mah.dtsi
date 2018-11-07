@@ -15,7 +15,13 @@ qcom,mlp356477_2800mah {
 	qcom,max-voltage-uv = <4400000>;
 	qcom,fg-cc-cv-threshold-mv = <4390>;
 	qcom,fastchg-current-ma = <4200>;
+//<--[FairPhone][Charging][JasonHsing] Battery ID change to 10 kohm 20181107 BEGIN --
+#if 1
+	qcom,batt-id-kohm = <10>;
+#else
 	qcom,batt-id-kohm = <82>;
+#endif
+//-->[FairPhone][Charging][JasonHsing] Battery ID change to 10 kohm 20181107 END --
 	qcom,battery-beta = <4250>;
 	qcom,battery-therm-kohm = <100>;
 	qcom,battery-type =
