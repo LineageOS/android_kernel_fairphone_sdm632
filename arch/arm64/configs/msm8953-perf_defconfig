@@ -674,3 +674,6 @@ CONFIG_QMI_ENCDEC=y
 #[FairPhone][JasonY] SAR sensor driver porting -BEGIN
 CONFIG_SENSORS_JT06=y
 #[FairPhone][JasonY] SAR sensor driver porting -END
+# [FairPhone][Fingerprint][akenhsu] FingerPrint driver porting 20181108 BEGIN
+CONFIG_ELAN_FINGERPRINT=y
+# [FairPhone][Fingerprint][akenhsu] 20181108 END
