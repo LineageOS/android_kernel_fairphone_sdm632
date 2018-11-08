@@ -2307,3 +2307,16 @@
 &gdsc_usb30 {
 	status = "okay";
 };
+
+// [FairPhone][Fingerprint][akenhsu] Add Fingerprint driver codes of Elan 20181108 BEGIN
+&soc {
+	elan {
+		compatible = "elan,elan_fp";
+		interrupt-parent = <&tlmm>;
+		interrupts = <48 0>;
+		elan,irq-gpio = <&tlmm 48 0>;
+		elan,rst-gpio = <&tlmm 140 0>;
+		elan,vdd-gpio = <&tlmm 90 0>;
+	};
+};
+// [FairPhone][Fingerprint][akenhsu] 20181108 END
