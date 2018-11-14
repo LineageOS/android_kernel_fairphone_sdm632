@@ -235,18 +235,12 @@ int para_1,para_2;
 	pr_debug("%s: level=%d\n", __func__, level);
 
 	//led_pwm1[1] = (unsigned char)level;
-	pr_err("[Jialong]level b4 = %d\n", level);
-	//para_1 = level /4096;
-	//para_2 = level % 4096;
-	//para_1 = level;
-	//para_2 = level;
 	para_1 = (level>>8)&0x0F;
 	para_2 = level&0xFF;
 	led_pwm1[1] = (unsigned char)para_1;
 	led_pwm1[2] = (unsigned char)para_2;
-	//pr_err("[Jialong]para_1= %d\n", para_1);
-	//pr_err("[Jialong]para_2= %d\n", para_2);
-	//pr_err("[Jialong]level aft = %d\n", level);
+//[Arima][8901][20181105]Jialong modify backlight range is 1~4095 for control cmd range(2 bytes) End
+
 
 	memset(&cmdreq, 0, sizeof(cmdreq));
 	cmdreq.cmds = &backlight_cmd;
