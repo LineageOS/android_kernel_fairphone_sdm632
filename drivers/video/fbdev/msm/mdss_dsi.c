@@ -36,6 +36,11 @@
 #include "mdss_dsi_phy.h"
 #include "mdss_dba_utils.h"
 
+//[Arima_8901][LCM][Jialongjhan] Add LCM_vendor file node for PCBA function test begin
+#include <linux/proc_fs.h>
+//[Arima_8901][LCM][Jialongjhan] Add LCM_vendor file node for PCBA function test end
+
+
 #define XO_CLK_RATE	19200000
 #define CMDLINE_DSI_CTL_NUM_STRING_LEN 2
 
@@ -3269,6 +3274,45 @@ end:
 	return rc;
 }
 
+/*[Arima_8901][Jialongjhan] Add LCM_vendor file node for PCBA function test 20181114 begin*/
+extern void seq_printf(struct seq_file *m, const char *f, ...);
+extern int single_open(struct file *, int (*)(struct seq_file *, void *), void *);
+extern ssize_t seq_read(struct file *, char __user *, size_t, loff_t *);
+extern loff_t seq_lseek(struct file *, loff_t, int);
+extern int single_release(struct inode *, struct file *);
+
+static int proc_lcm_vendor_show(struct seq_file *m, void *v)
+{
+    int lcm_id;
+
+    lcm_id = gpio_request(59, "lcm_id");
+
+    if(lcm_id == 1)
+    {
+		//For another's LCM module
+    	seq_printf(m, "XXX , XXX\n");         
+    }
+    else
+    {	//DJN's LCM module id is 0.
+    	seq_printf(m, "DJN , HX83112B\n");         
+    }
+
+    return 0;
+}
+
+static int proc_lcm_vendor_open(struct inode *inode, struct file *file)
+{
+    return single_open(file, proc_lcm_vendor_show, NULL);
+}
+
+static const struct file_operations proc_lcm_vendor_fops = { 
+    .open  = proc_lcm_vendor_open, 
+    .read = seq_read,
+    .llseek = seq_lseek,
+    .release = single_release,
+};
+/*[Arima_8901][Jialongjhan] Add LCM_vendor file node for PCBA function test 20181114 End*/
+
 static int mdss_dsi_ctrl_probe(struct platform_device *pdev)
 {
 	int rc = 0;
@@ -3460,6 +3504,10 @@ static int mdss_dsi_ctrl_probe(struct platform_device *pdev)
 
 	mdss_dsi_debug_bus_init(mdss_dsi_res);
 
+	//[Arima_8901][LCM][Jialongjhan] Add LCM_vendor file node for PCBA function test begin
+    proc_create("lcm_vendor", 0, NULL, &proc_lcm_vendor_fops);
+//[Arima_8901][LCM][Jialongjhan] Add LCM_vendor file node for PCBA function test end	
+	
 	return 0;
 
 error_shadow_clk_deinit:
