@@ -280,7 +280,7 @@
 		reg = <0x02>;
 		qcom,csiphy-sd-index = <2>;
 		qcom,csid-sd-index = <1>; /* SDM450 support 2 CSID cores. MSM8953 is 3 CSID cores */
-		qcom,mount-angle = <90>;
+		qcom,mount-angle = <270>; /* <90>; */
 		qcom,eeprom-src = <&eeprom1>;
 		/* qcom,actuator-src = <&actuator1>; */ /* The auto focus is not support */
 
