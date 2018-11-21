@@ -677,3 +677,8 @@ CONFIG_SENSORS_JT06=y
 # [FairPhone][Fingerprint][akenhsu] FingerPrint driver porting 20181108 BEGIN
 CONFIG_ELAN_FINGERPRINT=y
 # [FairPhone][Fingerprint][akenhsu] 20181108 END
+#[FairPhone][Audio][jinjia]=2018.11.21=smart amp porting. -s
+#add aw8898 smartpa
+CONFIG_SND_SMARTPA_AW8898=y
+#[FairPhone][Audio][jinjia]=2018.11.21=smart amp porting. -e
+
