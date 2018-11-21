@@ -205,7 +205,7 @@
 		//pinctrl-1 = <&wsa_reset_off>;
 	};
 
-//[FairPhone][Audio][jinjia]=2018.10.19=Audio porting. -s
+//[FairPhone][Audio][jinjia]=2018.11.21=Audio porting. -s
 	ext_codec: sound-9335 {
 		status = "okay";
 		compatible = "qcom,msm8952-audio-slim-codec";
@@ -214,11 +214,17 @@
 		reg = <0xc051000 0x4>,
 			<0xc051004 0x4>,
 			<0xc055000 0x4>,
-			<0xc052000 0x4>;
+			<0xc052000 0x4>,
+			<0x0c056000 0x4>,
+			<0x0c054000 0x4>,
+			<0x0c053000 0x4>;
 		reg-names = "csr_gp_io_mux_mic_ctl",
 			"csr_gp_io_mux_spkr_ctl",
 			"csr_gp_io_lpaif_pri_pcm_pri_mode_muxsel",
-			"csr_gp_io_mux_quin_ctl";
+			"csr_gp_io_mux_quin_ctl",
+			"csr_gp_io_lpaif_qui_pcm_sec_mode_muxsel",
+			"csr_gp_io_mux_mic_ext_clk_ctl",
+			"csr_gp_io_mux_sec_tlmm_ctl";
 
 /*		reg-names = "csr_gp_io_mux_mic_ctl",
 			"csr_gp_io_mux_spkr_ctl",
@@ -228,6 +234,8 @@
 			"csr_gp_io_mux_mic_ext_clk_ctl",
 			"csr_gp_io_mux_sec_tlmm_ctl";
 */
+		qcom,msm-ext-pa = "quinary";
+
 		qcom,audio-routing =
 			"AIF4 VI", "MCLK",
 			"AIF4 VI", "MICBIAS_REGULATOR",
@@ -310,8 +318,8 @@
 				"msm-dai-q6-dev.12289", "msm-dai-q6-dev.12292",
 				"msm-dai-q6-dev.12293", "msm-dai-q6-dev.16396";
 
-		asoc-codec = <&stub_codec>, <&hdmi_dba>;
-		asoc-codec-names = "msm-stub-codec.1", "msm-hdmi-dba-codec-rx";
+		asoc-codec = <&stub_codec>, <&dai_mi2s5>;
+		asoc-codec-names = "msm-stub-codec.1", "msm-dai-q6-mi2s.5";
 
 		qcom,wsa-max-devs = <0>;
 		qcom,wsa-devs = <&wsa881x_211>, <&wsa881x_212>,
@@ -319,7 +327,7 @@
 		qcom,wsa-aux-dev-prefix = "SpkrLeft", "SpkrRight",
 				"SpkrLeft", "SpkrRight";
 	};
-//[FairPhone][Audio][jinjia]=2018.10.19=Audio porting. -e
+//[FairPhone][Audio][jinjia]=2018.11.21=Audio porting. -e
 
 	cpe: qcom,msm-cpe-lsm {
 		compatible = "qcom,msm-cpe-lsm";
