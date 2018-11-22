@@ -24,14 +24,9 @@
 extern void himax_ic_reset(uint8_t loadconfig,uint8_t int_off);
 #endif
 
-/*[Arima_8710][allen_yu] Upgrade himax 2nd source fw to CIDFF07_D02_C25 20180907 begin*/
-/*[Arima_8710][allen_yu] Upgrade himax fw to CIDFF04_D02_C04 20180801 begin*/
-/*[Arima_8710][allen_yu] Upgrade himax fw to CID040A_D02_C03 20180717 begin*/
-/*[Arima_8710][allen_yu] Upgrade himax fw to CID0409_D02_C02 20180607 begin*/
-/*[Arima_8710][allen_yu] Into DSTB mode in suspend begin*/
+/*[Arima_8901][allen_yu] Upgrade himax first fw CIDFF00_D01_C01 20181122 begin*/
 #if defined(HX_AUTO_UPDATE_FW)
-/*[Arima_8710][allen_yu] Modify the touch fw dynamic auto upgtade rule 20180830 begin*/
-/*[Arima_8710][allen_yu] Dynamic detect Yandex LCM/TP 2nd source and add PCBA node 20180828 begin*/
+
 unsigned char i_CTPM_FW_HX83112A[]=
 {
 	0
@@ -39,17 +34,11 @@ unsigned char i_CTPM_FW_HX83112A[]=
 };
 unsigned char i_CTPM_FW_HX83112B[]=
 {
-	0
-//#include "Yandex_DJN_Arima_CIDFF07_D02_C25_20180907.i"
+#include "FP_DJN_Arima_CIDFF00_D01_C01_20181122.i"
 };
-/*[Arima_8710][allen_yu] 20180828 end*/
-/*[Arima_8710][allen_yu] 20180830 end*/
+
 #endif
-/*[Arima_8710][allen_yu] 20180510 end*/
-/*[Arima_8710][allen_yu] 20180607 end*/
-/*[Arima_8710][allen_yu] 20180717 end*/
-/*[Arima_8710][allen_yu] 20180801 end*/
-/*[Arima_8710][allen_yu] 20180907 end*/
+/*[Arima_8901][allen_yu] 20181122 end*/
 
 /*[Arima_8710][allen_yu] Solve the report point issue 20180619 begin*/
 static void himax_release_all_finger(void);
