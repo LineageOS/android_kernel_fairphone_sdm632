@@ -348,15 +348,24 @@
 		};
 
 /*<2018/10/18-Yuting Shih.[FAIRPHONE][MISC][COMMON][CAMERA][][]Modified for new front camera device driver S5K4H7YX. */
+/*<2018/11/14-Yuting Shih.[FAIRPHONE][MISC][COMMON][CAMERA][][]VOI control pin.PCBA EP0 is GPIO123;EP1 and above is GPIO130 */
 		cam_sensor_front1_vio_default: cam_sensor_front1_vio_default {
 			/* CAM IOVDD */
 			mux {
+			#if 1
+				pins = "gpio130";
+			#else /* PCBA EP0 */
 				pins = "gpio123";
+			#endif
 				function = "gpio";
 			};
 
 			config {
+			#if 1
+				pins = "gpio130";
+			#else /* PCBA EP0 */
 				pins = "gpio123";
+			#endif
 				bias-disable; /* No PULL */
 				drive-strength = <2>; /* 2 MA */
 			};
@@ -365,16 +374,25 @@
 		cam_sensor_front1_vio_sleep: cam_sensor_front1_vio_sleep {
 			/* CAM IOVDD */
 			mux {
+			#if 1
+				pins = "gpio130";
+			#else /* PCBA EP0 */
 				pins = "gpio123";
+			#endif
 				function = "gpio";
 			};
 
 			config {
+			#if 1
+				pins = "gpio130";
+			#else /* PCBA EP0 */
 				pins = "gpio123";
+			#endif
 				bias-disable; /* No PULL */
 				drive-strength = <2>; /* 2 MA */
 			};
 		};
+/*>2018/11/14-Yuting Shih.[FAIRPHONE][MISC][COMMON][CAMERA][][] */
 
 		cam_sensor_front1_vdig_default: cam_sensor_front1_vdig_default {
 			/* CAM DVDD */
