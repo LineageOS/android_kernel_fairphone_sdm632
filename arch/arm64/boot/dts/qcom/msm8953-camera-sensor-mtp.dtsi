@@ -111,10 +111,16 @@
 				&cam_sensor_front1_vdig_sleep
 				&cam_sensor_front1_vio_sleep>;
 
+/*<2018/11/14-Yuting Shih.[FAIRPHONE][MISC][COMMON][CAMERA][][]VOI control pin.PCBA EP0 is GPIO123;EP1 and above is GPIO130 */
 		gpios = <&tlmm 27 0>,
 				<&tlmm 129 0>,
 				<&tlmm 46 0>,
+#if 1
+				<&tlmm 130 0>;
+#else /* PCBA EP0 */
 				<&tlmm 123 0>;
+#endif
+/*>2018/11/14-Yuting Shih.[FAIRPHONE][MISC][COMMON][CAMERA][][] */
 		qcom,gpio-reset = <1>;
 		qcom,gpio-vdig = <2>;
 		qcom,gpio-vio = <3>;
@@ -304,10 +310,16 @@
 				&cam_sensor_front1_vdig_sleep
 				&cam_sensor_front1_vio_sleep>;
 
+/*<2018/11/14-Yuting Shih.[FAIRPHONE][MISC][COMMON][CAMERA][][]VOI control pin.PCBA EP0 is GPIO123;EP1 and above is GPIO130 */
 		gpios = <&tlmm 27 0>,
 				<&tlmm 129 0>,
 				<&tlmm 46 0>,
+#if 1
+				<&tlmm 130 0>;
+#else /* PCBA EP0 */
 				<&tlmm 123 0>;
+#endif
+/*>2018/11/14-Yuting Shih.[FAIRPHONE][MISC][COMMON][CAMERA][][] */
 		qcom,gpio-reset = <1>;
 		qcom,gpio-vdig = <2>;
 		qcom,gpio-vio = <3>;
