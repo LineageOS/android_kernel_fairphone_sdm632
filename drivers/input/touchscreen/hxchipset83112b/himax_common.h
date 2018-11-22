@@ -78,9 +78,9 @@ void himax_touch_proc_deinit(void);
 #endif
 //===========Himax Option function=============
 #define HX_RST_PIN_FUNC
-/*[Arima_8710][allen_yu] Into DSTB mode in suspend begin*/
-//#define HX_AUTO_UPDATE_FW
-/*[Arima_8710][allen_yu] 20180510 end*/
+/*[Arima_8901][allen_yu] Upgrade himax first fw CIDFF00_D01_C01 20181122 begin*/
+#define HX_AUTO_UPDATE_FW
+/*[Arima_8901][allen_yu] 20181122 end*/
 //#define HX_ESD_RECOVERY
 //#define HX_CHIP_STATUS_MONITOR		/*for ESD 2nd solution,it does not support incell,default off*/
 //#define HX_SMART_WAKEUP
