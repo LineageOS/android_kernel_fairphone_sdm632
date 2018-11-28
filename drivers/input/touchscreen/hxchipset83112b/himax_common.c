@@ -24,6 +24,7 @@
 extern void himax_ic_reset(uint8_t loadconfig,uint8_t int_off);
 #endif
 
+/*[Arima_8901][allen_yu] Modify to edge trigger and upgrade himax first fw CIDFF00_D01_C02 20181128 begin*/
 /*[Arima_8901][allen_yu] Upgrade himax first fw CIDFF00_D01_C01 20181122 begin*/
 #if defined(HX_AUTO_UPDATE_FW)
 
@@ -34,11 +35,12 @@ unsigned char i_CTPM_FW_HX83112A[]=
 };
 unsigned char i_CTPM_FW_HX83112B[]=
 {
-#include "FP_DJN_Arima_CIDFF00_D01_C01_20181122.i"
+#include "FP_DJN_Arima_CIDFF00_D01_C02_20181128.i"
 };
 
 #endif
 /*[Arima_8901][allen_yu] 20181122 end*/
+/*[Arima_8901][allen_yu] 20181128 end*/
 
 /*[Arima_8710][allen_yu] Solve the report point issue 20180619 begin*/
 static void himax_release_all_finger(void);
