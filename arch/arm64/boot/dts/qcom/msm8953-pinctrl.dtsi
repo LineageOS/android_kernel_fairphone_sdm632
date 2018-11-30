@@ -234,12 +234,12 @@
 		cam_sensor_rear_vana: cam_sensor_rear_vdig {
 			/* VDIG */
 			mux {
-				pins = "gpio134";
+				pins = "gpio128";
 				function = "gpio";
 			};
 
 			config {
-				pins = "gpio134";
+				pins = "gpio128";
 				bias-disable; /* No PULL */
 				drive-strength = <2>; /* 2 MA */
 			};
@@ -248,12 +248,12 @@
 		cam_sensor_rear_vana_sleep: cam_sensor_rear_vdig_sleep {
 			/* VDIG */
 			mux {
-				pins = "gpio134";
+				pins = "gpio128";
 				function = "gpio";
 			};
 
 			config {
-				pins = "gpio134";
+				pins = "gpio128";
 				bias-disable; /* No PULL */
 				drive-strength = <2>; /* 2 MA */
 			};
