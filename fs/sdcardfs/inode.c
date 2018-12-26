@@ -100,6 +100,7 @@ static int sdcardfs_create(struct inode *dir, struct dentry *dentry,
 	task_lock(current);
 	current->fs = copied_fs;
 	task_unlock(current);
+
 	err = vfs_create2(lower_dentry_mnt, d_inode(lower_parent_dentry), lower_dentry, mode, want_excl);
 	if (err)
 		goto out;
@@ -257,6 +258,7 @@ static int sdcardfs_mkdir(struct inode *dir, struct dentry *dentry, umode_t mode
 	task_lock(current);
 	current->fs = copied_fs;
 	task_unlock(current);
+
 	err = vfs_mkdir2(lower_mnt, d_inode(lower_parent_dentry), lower_dentry, mode);
 
 	if (err) {
@@ -327,6 +329,7 @@ out:
 	task_lock(current);
 	current->fs = saved_fs;
 	task_unlock(current);
+
 	free_fs_struct(copied_fs);
 out_unlock:
 	sdcardfs_put_lower_path(dentry, &lower_path);
@@ -583,7 +586,6 @@ static int sdcardfs_permission(struct vfsmount *mnt, struct inode *inode, int ma
 	err = generic_permission(&tmp, mask);
 
 	return err;
-
 }
 
 static int sdcardfs_setattr_wrn(struct dentry *dentry, struct iattr *ia)
