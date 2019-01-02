@@ -9,12 +9,17 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  */
-
+//<--[FairPhone][Charging][JasonHsing] Add battery parameter for battery spec for charging 20181228 BEGIN --
 qcom,mlp356477_2800mah {
 	/* mlp356477_2800mah_averaged_MasterSlave_Mar13th2018 */
 	qcom,max-voltage-uv = <4400000>;
+	qcom,v-cutoff-uv = <3400000>;
 	qcom,fg-cc-cv-threshold-mv = <4390>;
-	qcom,fastchg-current-ma = <4200>;
+
+	qcom,fcc-max-ua = <2000000>;
+	qcom,fastchg-current-ma = <2000>;
+	qcom,chg-term-ua = <100000>;
+
 //<--[FairPhone][Charging][JasonHsing] Battery ID change to 10 kohm 20181107 BEGIN --
 #if 1
 	qcom,batt-id-kohm = <10>;
@@ -22,19 +27,19 @@ qcom,mlp356477_2800mah {
 	qcom,batt-id-kohm = <82>;
 #endif
 //-->[FairPhone][Charging][JasonHsing] Battery ID change to 10 kohm 20181107 END --
-	qcom,battery-beta = <4250>;
+	qcom,battery-beta = <4100>;
 	qcom,battery-therm-kohm = <100>;
 	qcom,battery-type =
 		"mlp356477_2800mah_averaged_MasterSlave_Mar13th2018";
 	qcom,qg-batt-profile-ver = <100>;
 
-	qcom,jeita-fcc-ranges = <0   150   560000
-				 151 450  4200000
-				 451 550  2380000>;
-	qcom,jeita-fv-ranges =  <0   150  4150000
+	qcom,jeita-fcc-ranges = <0   150   600000
+				 151 450  2000000
+				 451 550  1000000>;
+	qcom,jeita-fv-ranges =  <0   150  4400000
 				 151 450  4400000
-				 451 550  4150000>;
-
+				 451 550  4100000>;
+//-->[FairPhone][Charging][JasonHsing] Add battery parameter for battery spec for charging 20181228 END --
 	/* COOL = 15 DegC, WARM = 45 DegC */
 	qcom,jeita-soft-thresholds = <0x4621 0x20b8>;
 	/* COLD = 0 DegC, HOT = 55 DegC */
