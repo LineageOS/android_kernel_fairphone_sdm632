@@ -40,10 +40,12 @@ qcom,mlp356477_2800mah {
 				 151 450  4400000
 				 451 550  4100000>;
 //-->[FairPhone][Charging][JasonHsing] Add battery parameter for battery spec for charging 20181228 END --
+//<--[FairPhone][Charging][JasonHsing] Setting jeita cold/cool/warm/hot threshold for charging 20190115 BEGIN --
 	/* COOL = 15 DegC, WARM = 45 DegC */
-	qcom,jeita-soft-thresholds = <0x4621 0x20b8>;
-	/* COLD = 0 DegC, HOT = 55 DegC */
-	qcom,jeita-hard-thresholds = <0x58cd 0x181d>;
+	qcom,jeita-soft-thresholds = <0x44FF 0x2204>;
+	/* COLD = 0 DegC, HOT = 60 DegC */
+	qcom,jeita-hard-thresholds = <0x5675 0x1618>;
+//-->[FairPhone][Charging][JasonHsing] Setting jeita cold/cool/warm/hot threshold for charging 20190115 END --
 
 	qcom,fcc1-temp-lut {
 		qcom,lut-col-legend = <0 10 25 40 50>;
