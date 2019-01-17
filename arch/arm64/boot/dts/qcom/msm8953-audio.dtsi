@@ -272,10 +272,8 @@
 			"SpkrRight IN", "SPK2 OUT";
 
 		qcom,tasha-mclk-clk-freq = <9600000>;
-		qcom,cdc-us-euro-gpios = <&tlmm 63 0>;
 		qcom,msm-mbhc-hphl-swh = <1>;
 		qcom,msm-mbhc-gnd-swh = <1>;
-		qcom,cdc-us-eu-gpios = <&cdc_us_euro_sw>;
 		qcom,quin-mi2s-gpios = <&cdc_quin_mi2s_gpios>;
 
 		asoc-platform = <&pcm0>, <&pcm1>, <&pcm2>, <&voip>, <&voice>,
