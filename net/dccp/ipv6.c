@@ -328,11 +328,8 @@ static int dccp_v6_conn_request(struct sock *sk, struct sk_buff *skb)
 	if (inet_csk_reqsk_queue_is_full(sk))
 		goto drop;
 
-//2019 01 09-Quaken > fix CTS fail testCreateServerSocketWithPortNoBacklog
-//	if (sk_acceptq_is_full(sk) && inet_csk_reqsk_queue_young(sk) > 1)
 	if (sk_acceptq_is_full(sk))
 		goto drop;
-//2019 01 09-Quaken < fix CTS fail testCreateServerSocketWithPortNoBacklog
 
 	req = inet_reqsk_alloc(&dccp6_request_sock_ops, sk, true);
 	if (req == NULL)
