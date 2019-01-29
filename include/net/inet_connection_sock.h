@@ -289,15 +289,6 @@ static inline int inet_csk_reqsk_queue_len(const struct sock *sk)
 	return reqsk_queue_len(&inet_csk(sk)->icsk_accept_queue);
 }
 
-//2019 01 09-Quaken > fix CTS fail testCreateServerSocketWithPortNoBacklog
-/*
-static inline int inet_csk_reqsk_queue_young(const struct sock *sk)
-{
-	return reqsk_queue_len_young(&inet_csk(sk)->icsk_accept_queue);
-}
-*/
-//2019 01 09-Quaken < fix CTS fail testCreateServerSocketWithPortNoBacklog
-
 static inline int inet_csk_reqsk_queue_is_full(const struct sock *sk)
 {
 	return inet_csk_reqsk_queue_len(sk) >= sk->sk_max_ack_backlog;
