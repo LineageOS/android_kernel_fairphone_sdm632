@@ -1394,6 +1394,8 @@
 			};
 		};
 
+//[FairPhone][Audio][jinjia]=2019.02.01=Remove the config of us-eu-gpios. -s
+/*
 		cross-conn-det {
 			cross_conn_det_act: lines_on {
 				mux {
@@ -1422,6 +1424,8 @@
 				};
 			};
 		};
+*/
+//[FairPhone][Audio][jinjia]=2019.02.01=Remove the config of us-eu-gpios. -e
 
 		/* WSA VI sense */
 		wsa-vi {
