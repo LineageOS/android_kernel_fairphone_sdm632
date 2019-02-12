@@ -76,8 +76,10 @@
 				"WSA_SPK OUT", "VDD_WSA_SWITCH",
 				"SpkrMono WSA_IN", "WSA_SPK OUT";
 
-		qcom,cdc-us-euro-gpios = <&tlmm 63 0>;
-		qcom,cdc-us-eu-gpios = <&cdc_us_euro_sw>;
+//[FairPhone][Audio][jinjia]=2019.02.01=Remove the config of us-eu-gpios. -s
+		//qcom,cdc-us-euro-gpios = <&tlmm 63 0>;
+		//qcom,cdc-us-eu-gpios = <&cdc_us_euro_sw>;
+//[FairPhone][Audio][jinjia]=2019.02.01=Remove the config of us-eu-gpios. -e
 		//qcom,cdc-comp-gpios = <&cdc_comp_gpios>;
 		//qcom,pri-mi2s-gpios = <&cdc_pri_mi2s_gpios>;
 		qcom,quin-mi2s-gpios = <&cdc_quin_mi2s_gpios>;
@@ -134,12 +136,16 @@
 		qcom,msm-vdd-wsa-switch-current = <10000>;
 	};
 
+//[FairPhone][Audio][jinjia]=2019.02.01=Remove the config of us-eu-gpios. -s
+/*
 	cdc_us_euro_sw: msm_cdc_pinctrl_us_euro_sw {
 		compatible = "qcom,msm-cdc-pinctrl";
 		pinctrl-names = "aud_active", "aud_sleep";
 		pinctrl-0 = <&cross_conn_det_act>;
 		pinctrl-1 = <&cross_conn_det_sus>;
 	};
+*/
+//[FairPhone][Audio][jinjia]=2019.02.01=Remove the config of us-eu-gpios. -e
 
 	cdc_comp_gpios: cdc_comp_pinctrl {
 		status = "disabled";
