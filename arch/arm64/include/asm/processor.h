@@ -84,6 +84,10 @@ extern char qpnp_poff_reason_extern[256];
 /*[Arima_8901][bozhi_lin] 20190221 end*/
 extern unsigned int cold_boot;
 
+/*[Arima_8901][bozhi_lin] ARFP3-77: Expose main memory hardware revision 20190225 begin*/
+extern char ddr_vendor[32];
+/*[Arima_8901][bozhi_lin] 20190225 end*/
+
 struct debug_info {
 	/* Have we suspended stepping by a debugger? */
 	int			suspended_step;
