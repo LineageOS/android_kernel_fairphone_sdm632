@@ -180,9 +180,11 @@ enum fix_touch_info
     SEC_FIX_HX_Y_RES = 2160,
     SEC_FIX_HX_MAX_PT = 10,
     SEC_FIX_HX_XY_REVERSE = true,
+/*[Arima_8901][allen_yu] Modify to edge trigger and upgrade fw to CID0802_D02_C05 20190322 begin*/
 /*[Arima_8901][allen_yu] Modify to edge trigger and upgrade himax first fw CIDFF00_D01_C02 20181128 begin*/
-    SEC_FIX_HX_INT_IS_EDGE = true,
+    SEC_FIX_HX_INT_IS_EDGE = false,
 /*[Arima_8901][allen_yu] 20181128 end*/
+/*[Arima_8901][allen_yu] 20190322 end*/
 #ifdef HX_TP_PROC_2T2R
     SEC_FIX_HX_RX_NUM_2 = 0,
     SEC_FIX_HX_TX_NUM_2 = 0
