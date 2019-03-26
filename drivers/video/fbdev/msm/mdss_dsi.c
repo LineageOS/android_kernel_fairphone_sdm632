@@ -3292,17 +3292,16 @@ extern int single_release(struct inode *, struct file *);
 static int proc_lcm_vendor_show(struct seq_file *m, void *v)
 {
     int lcm_id;
-
     lcm_id = gpio_request(59, "lcm_id");
 
     if(lcm_id == 1)
     {
-		//For another's LCM module
-    	seq_printf(m, "XXX , XXX\n");         
+        //For another's LCM module
+        seq_printf(m, "2nd LCM\n");         
     }
     else
-    {	//DJN's LCM module id is 0.
-    	seq_printf(m, "DJN , HX83112B\n");         
+    {   //DJN's LCM module id is 0.
+        seq_printf(m, "DJN , HX83112B\n");
     }
 
     return 0;
@@ -3320,6 +3319,42 @@ static const struct file_operations proc_lcm_vendor_fops = {
     .release = single_release,
 };
 /*[Arima_8901][Jialongjhan] Add LCM_vendor file node for PCBA function test 20181114 End*/
+
+/*[Arima_8901][Jialongjhan] Expose display revision 20190326 begin*/
+
+static int proc_lcm_revision_show(struct seq_file *m, void *v)
+{
+    int lcm_id;
+    extern int RDDID_HWINFO[3];
+
+    lcm_id = gpio_request(59, "lcm_id");
+
+    if(lcm_id == 1)
+    {
+        //For another's LCM module
+        seq_printf(m, "2nd Source not ready.\n");         
+    }
+    else
+    {   //DJN's LCM module id is 0.
+        seq_printf(m, "DJN , HX%x%x%x\n", RDDID_HWINFO[0],RDDID_HWINFO[1],RDDID_HWINFO[2]);
+    }
+
+    return 0;
+}
+
+static int proc_lcm_revision_fops_open(struct inode *inode, struct file *file)
+{
+    return single_open(file, proc_lcm_revision_show, NULL);
+}
+
+static const struct file_operations proc_lcm_revision_fops = { 
+    .open  = proc_lcm_revision_fops_open, 
+    .read = seq_read,
+    .llseek = seq_lseek,
+    .release = single_release,
+};
+
+/*[Arima_8901][Jialongjhan] Expose display revision 20190326 end*/
 
 static int mdss_dsi_ctrl_probe(struct platform_device *pdev)
 {
@@ -3514,7 +3549,11 @@ static int mdss_dsi_ctrl_probe(struct platform_device *pdev)
 
 	//[Arima_8901][LCM][Jialongjhan] Add LCM_vendor file node for PCBA function test begin
     proc_create("lcm_vendor", 0, NULL, &proc_lcm_vendor_fops);
-//[Arima_8901][LCM][Jialongjhan] Add LCM_vendor file node for PCBA function test end	
+    //[Arima_8901][LCM][Jialongjhan] Add LCM_vendor file node for PCBA function test end	
+
+    //[Arima_8901][Jialongjhan] Expose display revision 20190326 begin
+    proc_create("lcm_revision", 0666, NULL, &proc_lcm_revision_fops);
+    //[Arima_8901][Jialongjhan] Expose display revision 20190326 end
 	
 	return 0;
 

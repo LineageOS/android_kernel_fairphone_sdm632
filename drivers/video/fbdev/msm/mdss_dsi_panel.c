@@ -817,11 +817,22 @@ static void mdss_dsi_panel_switch_mode(struct mdss_panel_data *pdata,
 		mdss_dsi_panel_dsc_pps_send(ctrl_pdata, &pdata->panel_info);
 }
 
+/*[Arima_8901][Jialongjhan] Expose display revision 20190326 begin*/
+static char RDDID[4] = {0x04, 0x00, 0x00, 0x00};
+static struct dsi_cmd_desc cmd_RDDID = {
+    {DTYPE_DCS_READ, 1, 0, 1, 5, sizeof(RDDID)}, RDDID};
+int RDDID_HWINFO[3];
+int RDDID_read_count =0;
+/*[Arima_8901][Jialongjhan] Expose display revision 20190326 end*/
+
 static void mdss_dsi_panel_bl_ctrl(struct mdss_panel_data *pdata,
 							u32 bl_level)
 {
 	struct mdss_dsi_ctrl_pdata *ctrl_pdata = NULL;
 	struct mdss_dsi_ctrl_pdata *sctrl = NULL;
+    /*[Arima_8901][Jialongjhan] Expose display revision 20190326 begin*/
+    struct dcs_cmd_req cmdreq2;
+    /*[Arima_8901][Jialongjhan] Expose display revision 20190326 end*/
 
 	if (pdata == NULL) {
 		pr_err("%s: Invalid input data\n", __func__);
@@ -830,6 +841,28 @@ static void mdss_dsi_panel_bl_ctrl(struct mdss_panel_data *pdata,
 
 	ctrl_pdata = container_of(pdata, struct mdss_dsi_ctrl_pdata,
 				panel_data);
+
+    /*[Arima_8901][Jialongjhan] Expose display revision 20190326 begin*/
+    if(RDDID_read_count==0){
+        memset(&cmdreq2, 0, sizeof(cmdreq2));
+        cmdreq2.cmds = &cmd_RDDID;
+        cmdreq2.cmds_cnt = 1;
+        cmdreq2.flags = CMD_REQ_COMMIT | CMD_REQ_RX;;
+        cmdreq2.rlen = 3;//return 3 values
+        cmdreq2.cb = NULL; /* call back */
+        cmdreq2.rbuf = ctrl_pdata->rx_buf.data;
+    
+        mdss_dsi_cmdlist_put(ctrl_pdata, &cmdreq2);
+
+        if(ctrl_pdata->rx_buf.len>0){
+            RDDID_HWINFO[0]=(int)*(ctrl_pdata->rx_buf.data);
+            RDDID_HWINFO[1]=(int)*(ctrl_pdata->rx_buf.data+1);
+            RDDID_HWINFO[2]=(int)*(ctrl_pdata->rx_buf.data+2);
+            //pr_err("[Jialong] ctrl->rx_buf.data data =0x%x\n",*(ctrl_pdata->rx_buf.data));
+            RDDID_read_count++;
+        }
+    }
+    /*[Arima_8901][Jialongjhan] Expose display revision 20190326 end*/
 
 	/*
 	 * Some backlight controllers specify a minimum duty cycle
