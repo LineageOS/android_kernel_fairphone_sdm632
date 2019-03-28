@@ -326,9 +326,11 @@
 			qcom,hw-connector-mitigation;
 			qcom,connector-internal-pull-kohm = <100>;
 
+//<--[FairPhone][Charging][JasonHsing] Add condition of charging current for thermal-mitigation 20190327 BEGIN --
 			qcom,thermal-mitigation
-				= <3000000 2500000 2000000 1500000
-					1000000 500000>;
+				= <2000000 1500000 1000000 500000
+					500000 500000>;
+//-->[FairPhone][Charging][JasonHsing] Add condition of charging current for thermal-mitigation 20190327 END --
 
 			qcom,chgr@1000 {
 				reg = <0x1000 0x100>;
