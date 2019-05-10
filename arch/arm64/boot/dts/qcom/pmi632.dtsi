@@ -681,7 +681,7 @@
 				qcom,max-current = <1500>;
 				qcom,default-led-trigger = "flash0_trigger";
 				qcom,id = <0>;
-				qcom,current-ma = <1000>;
+				qcom,current-ma = <1400>; // [8901][FlashLED][akenhsu] Modify the current setting since tuning team required 20190510
 				qcom,duration-ms = <1280>;
 				qcom,ires-ua = <12500>;
 				qcom,hdrm-voltage-mv = <400>;
@@ -694,7 +694,7 @@
 				qcom,max-current = <1500>;
 				qcom,default-led-trigger = "flash1_trigger";
 				qcom,id = <1>;
-				qcom,current-ma = <1000>;
+				qcom,current-ma = <1400>; // [8901][FlashLED][akenhsu] Modify the current setting since tuning team required 20190510
 				qcom,duration-ms = <1280>;
 				qcom,ires-ua = <12500>;
 				qcom,hdrm-voltage-mv = <400>;
