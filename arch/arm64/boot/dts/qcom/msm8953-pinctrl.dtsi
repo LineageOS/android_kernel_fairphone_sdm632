@@ -123,7 +123,9 @@
 
 				config {
 					pins = "gpio31", "gpio32";
-					drive-strength = <2>; /* 2 MA */
+				/*<2019/05/10-Yuting Shih.[FAIRPHONE][MISC][COMMON][CAMERA][][]Pull up the strength level when camera cannot detected sometimes */
+					drive-strength = <4>; /* 2 MA */
+				/*>2019/05/10-Yuting Shih.[FAIRPHONE][MISC][COMMON][CAMERA][][] */
 					bias-disable; /* No PULL */
 				};
 			};
@@ -270,7 +272,9 @@
 			config {
 				pins = "gpio27";
 				bias-disable; /* No PULL */
-				drive-strength = <2>; /* 2 MA */
+			/*<2019/05/10-Yuting Shih.[FAIRPHONE][MISC][COMMON][CAMERA][][]Pull up the MIPI CLK strength level when camera cannot detected sometimes */
+				drive-strength = <8>; /* <2>; */ /* 2 MA */
+			/*>2019/05/10-Yuting Shih.[FAIRPHONE][MISC][COMMON][CAMERA][][] */
 			};
 		};
 
