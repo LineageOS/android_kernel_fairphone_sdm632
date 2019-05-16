@@ -864,6 +864,10 @@ static void mdss_dsi_panel_bl_ctrl(struct mdss_panel_data *pdata,
     }
     /*[Arima_8901][Jialongjhan] Expose display revision 20190326 end*/
 
+    //[Arima][8901][JialongJhan] Command mode debug fuzzy screen 20190516 Start
+    mdelay(1);
+    //[Arima][8901][JialongJhan] Command mode debug fuzzy screen 20190516 End
+
 	/*
 	 * Some backlight controllers specify a minimum duty cycle
 	 * for the backlight brightness. If the brightness is less
