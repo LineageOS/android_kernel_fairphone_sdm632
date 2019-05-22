@@ -143,7 +143,10 @@
 /*[Arima_8901][Jialong] lcm driver porting begin*/
 &mdss_dsi0 {
 	#if 1
-	qcom,dsi-pref-prim-pan = <&dsi_hx83112b_truly_1080p_video>;
+	//[Arima][8901][JialongJhan] Command mode 20190516 Start
+	qcom,dsi-pref-prim-pan = <&dsi_djn_hx83112b_1080p_cmd>;
+	//qcom,dsi-pref-prim-pan = <&dsi_hx83112b_truly_1080p_video>;
+	//[Arima][8901][JialongJhan] Command mode 20190516 End
 	#else
 	qcom,dsi-pref-prim-pan = <&dsi_truly_1080_vid>;
 	#endif
@@ -174,6 +177,13 @@
 
 /*[Arima_8901][Jialong] lcm driver porting begin*/
 &dsi_hx83112b_truly_1080p_video {
+	qcom,mdss-dsi-bl-pmic-control-type = "bl_ctrl_dcs";
+	qcom,mdss-dsi-bl-min-level = <1>;
+	qcom,mdss-dsi-bl-max-level = <4095>;
+	qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
+};
+
+&dsi_djn_hx83112b_1080p_cmd {
 	qcom,mdss-dsi-bl-pmic-control-type = "bl_ctrl_dcs";
 	qcom,mdss-dsi-bl-min-level = <1>;
 	qcom,mdss-dsi-bl-max-level = <4095>;
