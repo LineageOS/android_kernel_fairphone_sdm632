@@ -557,6 +557,7 @@ int himax_chip_self_test(struct i2c_client *client)
     tmp_addr[2] = 0x00;
     tmp_addr[1] = 0x7F;
     tmp_addr[0] = 0x1C;
+/*[Arima_8901][allen_yu] Modify touch golden value 20190527 begin*/
 /*[Arima_8710][allen_yu] Dynamic detect touch golden value 20180929 begin*/
 /*[Arima_8710][allen_yu] Dynamic detect Yandex LCM/TP 2nd source and add PCBA node 20180828 begin*/
     if(IC_TYPE == HX_83112A_SERIES_PWON)
@@ -574,8 +575,8 @@ int himax_chip_self_test(struct i2c_client *client)
 		 {
 		    tmp_data[3] = 0x00;
 		    tmp_data[2] = 0x64;
-		    tmp_data[1] = 0x00;
-		    tmp_data[0] = 0x64;
+		    tmp_data[1] = 0x08;
+		    tmp_data[0] = 0x37;
 		    tmp_data[7] = 0x00;
 		    tmp_data[6] = 0x00;
 		    tmp_data[5] = 0x00;
@@ -583,6 +584,7 @@ int himax_chip_self_test(struct i2c_client *client)
     	}
 /*[Arima_8710][allen_yu] 20180929 end*/
 /*[Arima_8710][allen_yu] 20180828 end*/
+/*[Arima_8901][allen_yu] 20190527 end*/
     himax_flash_write_burst_lenth(client, tmp_addr, tmp_data, 8);
 /*[Arima_8710][allen_yu] 20180620 end*/
     // 0x10007294 -> 0x0000190  //SET IIR_MAX FRAMES
