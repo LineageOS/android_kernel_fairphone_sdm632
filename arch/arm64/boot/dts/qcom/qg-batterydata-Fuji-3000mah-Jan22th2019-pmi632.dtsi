@@ -12,9 +12,9 @@
 //<--[FairPhone][Charging][JasonHsing] Add battery parameter for battery spec for charging 20181228 BEGIN --
 qcom,batterydata_fuji_3000mah {
 	/* 3804571_Arima_8901_Fuji_3000mAH_FG_averaged_MasterSlave_Jan22th2019 */
-	qcom,max-voltage-uv = <4400000>;
+	qcom,max-voltage-uv = <4390000>;
 	qcom,v-cutoff-uv = <3400000>;
-	qcom,fg-cc-cv-threshold-mv = <4390>;
+	qcom,fg-cc-cv-threshold-mv = <4380>;
 
 	qcom,fcc-max-ua = <2000000>;
 	qcom,fastchg-current-ma = <2000>;
