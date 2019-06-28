@@ -25,13 +25,13 @@
 #undef CDBG
 #define CDBG(fmt, args...) pr_debug(fmt, ##args)
 
-//<2019/05/10-Yuting Shih.[FAIRPHONE][MISC][COMMON][CAMERA][][]Add for CTS testMultiCameraRelease fail issue.
+//<2019/05/10-Yuting Shih.[FAIRPHONE][MISC][COMMON][CAMERA][][]Add for camera power re-open control when multicamera operate.
 #if defined( MULTI_CAMERA_POWER_ON )
   #undef  MULTI_CAMERA_POWER_ON
 #endif
   #define   MULTI_CAMERA_POWER_ON
 
-#if defined( CAM_CDBG )
+#if defined( CAM_DBG )
   #undef CAM_DBG
 #endif
 
@@ -42,7 +42,7 @@
 int   iovdd_count = 0;
 #else
 #define   CAM_DBG(fmt, args...)    do{}while(0)
-#endif
+#endif /* End..(MULTI_CAMERA_POWER_ON) */
 //>2019/05/10-Yuting Shih.[FAIRPHONE][MISC][COMMON][CAMERA][][].
 
 int msm_camera_fill_vreg_params(struct camera_vreg_t *cam_vreg,
@@ -1515,7 +1515,7 @@ int msm_camera_power_up(struct msm_camera_power_ctrl_t *ctrl,
 			CDBG("%s:%d gpio set val %d\n", __func__, __LINE__,
 				ctrl->gpio_conf->gpio_num_info->gpio_num
 				[power_setting->seq_val]);
-		//<2019/05/10-Yuting Shih.[FAIRPHONE][MISC][COMMON][CAMERA][CTS][]Add and modified for CTS testMultiCameraRelease fail issue.
+		//<2019/05/10-Yuting Shih.[FAIRPHONE][MISC][COMMON][CAMERA][][]Add for camera power re-open control when multicamera operate.
 		#if defined( MULTI_CAMERA_POWER_ON )
 			if( power_setting->seq_val == SENSOR_GPIO_VIO )
 			{
@@ -1539,8 +1539,8 @@ int msm_camera_power_up(struct msm_camera_power_ctrl_t *ctrl,
 				ctrl->gpio_conf->gpio_num_info->gpio_num
 				[power_setting->seq_val],
 				(int) power_setting->config_val);
-		#endif /* End.. (MULTI_CAMERA_POWER_ON) */
-		//>2019/05/10-Yuting Shih.[FAIRPHONE][MISC][COMMON][CAMERA][CTS][].
+		#endif /* End..(MULTI_CAMERA_POWER_ON) */
+		//>2019/05/10-Yuting Shih.[FAIRPHONE][MISC][COMMON][CAMERA][][].
 			break;
 		case SENSOR_VREG:
 			if (power_setting->seq_val == INVALID_VREG)
@@ -1614,7 +1614,7 @@ power_up_failed:
 			if (!ctrl->gpio_conf->gpio_num_info->valid
 				[power_setting->seq_val])
 				continue;
-		//<2019/05/10-Yuting Shih.[FAIRPHONE][MISC][COMMON][CAMERA][CTS][]Add and modified for CTS testMultiCameraRelease fail issue.
+		//<2019/05/10-Yuting Shih.[FAIRPHONE][MISC][COMMON][CAMERA][][]Add for camera power re-open control when multicamera operate.
 		#if defined( MULTI_CAMERA_POWER_ON )
 			if( power_setting->seq_val == SENSOR_GPIO_VIO )
 			{
@@ -1637,8 +1637,8 @@ power_up_failed:
 			gpio_set_value_cansleep(
 				ctrl->gpio_conf->gpio_num_info->gpio_num
 				[power_setting->seq_val], GPIOF_OUT_INIT_LOW);
-		#endif  /* end.. (MULTI_CAMERA_POWER_ON) */
-		//>2019/05/10-Yuting Shih.[FAIRPHONE][MISC][COMMON][CAMERA][CTS][].
+		#endif  /* end..(MULTI_CAMERA_POWER_ON) */
+		//>2019/05/10-Yuting Shih.[FAIRPHONE][MISC][COMMON][CAMERA][][].
 			break;
 		case SENSOR_VREG:
 			if (power_setting->seq_val < ctrl->num_vreg)
@@ -1747,7 +1747,7 @@ int msm_camera_power_down(struct msm_camera_power_ctrl_t *ctrl,
 			if (!ctrl->gpio_conf->gpio_num_info->valid
 				[pd->seq_val])
 				continue;
-		//<2019/05/10-Yuting Shih.[FAIRPHONE][MISC][COMMON][CAMERA][CTS][]Add and modified for CTS testMultiCameraRelease fail issue.
+		//<2019/05/10-Yuting Shih.[FAIRPHONE][MISC][COMMON][CAMERA][][]Add for camera power re-open control when multicamera operate.
 		#if defined( MULTI_CAMERA_POWER_ON )
 			if( pd->seq_val == SENSOR_GPIO_VIO )
 			{
@@ -1771,8 +1771,8 @@ int msm_camera_power_down(struct msm_camera_power_ctrl_t *ctrl,
 				ctrl->gpio_conf->gpio_num_info->gpio_num
 				[pd->seq_val],
 				(int) pd->config_val);
-		#endif  /* end.. (MULTI_CAMERA_POWER_ON) */
-		//>2019/05/10-Yuting Shih.[FAIRPHONE][MISC][COMMON][CAMERA][CTS][].
+		#endif  /* end..(MULTI_CAMERA_POWER_ON) */
+		//>2019/05/10-Yuting Shih.[FAIRPHONE][MISC][COMMON][CAMERA][][].
 			break;
 		case SENSOR_VREG:
 			if (pd->seq_val == INVALID_VREG)
