@@ -33,12 +33,15 @@ qcom,batterydata_fuji_3000mah {
 		"Fuji_3000mAH_FG_averaged_MasterSlave_Jan22th2019";
 	qcom,qg-batt-profile-ver = <100>;
 
+//<--[FairPhone][Charging][JasonHsing] Fix SW jeita is not correct 20190716 BEGIN --
 	qcom,jeita-fcc-ranges = <0   150   600000
 				 151 450  2000000
-				 451 550  1000000>;
+				 451 600  1000000>;
 	qcom,jeita-fv-ranges =  <0   150  4400000
 				 151 450  4400000
-				 451 550  4100000>;
+				 451 600  4100000>;
+//-->[FairPhone][Charging][JasonHsing] Fix SW jeita is not correct 20190716 END --
+
 //-->[FairPhone][Charging][JasonHsing] Add battery parameter for battery spec for charging 20181228 END --
 //<--[FairPhone][Charging][JasonHsing] Setting jeita cold/cool/warm/hot threshold for charging 20190115 BEGIN --
 	/* COOL = 15 DegC, WARM = 45 DegC */
