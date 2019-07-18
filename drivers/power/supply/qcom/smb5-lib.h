@@ -356,6 +356,9 @@ struct smb_charger {
 	struct votable		*chg_disable_votable;
 	struct votable		*pl_enable_votable_indirect;
 	struct votable		*usb_irq_enable_votable;
+//<--[FairPhone][Charging][JasonHsing] Setting jeita fv re-charge voltage for warm temp BEGIN --
+	struct votable		*rechg_vol_votable;
+//-->[FairPhone][Charging][JasonHsing] Setting jeita fv re-charge voltage for warm temp END --
 
 	/* work */
 	struct work_struct	bms_update_work;
