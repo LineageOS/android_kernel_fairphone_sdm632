@@ -23,7 +23,7 @@
 #ifdef HX_RST_PIN_FUNC
 extern void himax_ic_reset(uint8_t loadconfig,uint8_t int_off);
 #endif
-
+/*[Arima_8901][TracyChui]Add usb plug detect function and updated FW CID0804_D02_C13 20190816 start */
 /*[Arima_8901][jinjia] Upgrade himax fw CID0804_D02_C12 for 0.9mm CG performance 20190812 begin*/
 /*[Arima_8901][allen_yu] Upgrade himax fw CID0802_D02_C06 for DQA low ground issue 20190530 begin*/
 /*[Arima_8901][allen_yu] Modify to edge trigger and upgrade fw to CID0802_D02_C05 20190322 begin*/
@@ -40,7 +40,7 @@ unsigned char i_CTPM_FW_HX83112A[]=
 };
 unsigned char i_CTPM_FW_HX83112B[]=
 {
-#include "FP_DJN_Arima_CID0804_D02_C12_20190812.i"
+#include "FP_DJN_Arima_CID0804_D02_C13_20190816.i"
 };
 
 #endif
@@ -51,6 +51,7 @@ unsigned char i_CTPM_FW_HX83112B[]=
 /*[Arima_8901][allen_yu] 20190322 end*/
 /*[Arima_8901][allen_yu] 20190530 end*/
 /*[Arima_8901][jinjia] 20190812 end*/
+/*[Arima_8901][TracyChui] 20190816 end */
 
 /*[Arima_8710][allen_yu] Solve the report point issue 20180619 begin*/
 static void himax_release_all_finger(void);
@@ -179,9 +180,11 @@ static int	p_point_num	= 0xFFFF;
 static int	tpd_key	   	= 0x00;
 static int	tpd_key_old	= 0x00;
 static int	probe_fail_flag	= 0;
+/*[Arima_8901][TracyChui]Add usb plug detect function and updated FW CID0804_D02_C13 20190816 start */
 #ifdef HX_USB_DETECT_GLOBAL
-bool USB_detect_flag = 0;
+//bool USB_detect_flag = 0;
 #endif
+/*[Arima_8901][TracyChui] 20190816 end */
 
 #if defined(CONFIG_FB)
 int fb_notifier_callback(struct notifier_block *self,
@@ -994,14 +997,55 @@ mem_alloc_fail:
 
 
 #if defined(HX_USB_DETECT_GLOBAL)
+/*[Arima_8901][TracyChui]Add usb plug detect function and updated FW CID0804_D02_C13 20190816 start */
+void himax_read_file_func(char *pFilePath, u8 *pBuf, u16 nLength)
+{
+    struct file *pFile = NULL;
+    mm_segment_t old_fs;
+    ssize_t nReadBytes = 0;
+
+    old_fs = get_fs();
+    set_fs(get_ds());
+
+    pFile = filp_open(pFilePath, O_RDONLY, 0);
+
+    if (IS_ERR(pFile)) {
+        printk ( "[Tracy]Open file failed: %s\n", pFilePath);
+        return;
+    }
+
+    pFile->f_op->llseek(pFile, 0, SEEK_SET);
+    nReadBytes = pFile->f_op->read(pFile, pBuf, nLength, &pFile->f_pos);
+    printk ( "[Tracy]Read %d bytes!\n", (int)nReadBytes);
+
+    set_fs(old_fs);
+
+    filp_close(pFile, NULL);  
+
+}
+
 void himax_cable_detect_func(bool force_renew)
 {
     struct himax_ts_data *ts;
     u32 connect_status = 0;
+u8 szChargerStatus[20] = {0};
 
-    connect_status = USB_detect_flag;//upmu_is_chr_det();
     ts = private_ts;
-    //I("Touch: cable status=%d, cable_config=%p, usb_connected=%d \n", connect_status,ts->cable_config, ts->usb_connected);
+
+	if (ts->suspended==false)
+	{
+		himax_read_file_func(POWER_SUPPLY_BATTERY_STATUS_PATCH, szChargerStatus, 20);
+	    printk("[Tracy]Battery Status : %s \n", szChargerStatus);
+			if (strstr(szChargerStatus, "Charging") != NULL || strstr(szChargerStatus, "Full") != NULL || strstr(szChargerStatus, "Fully charged") != NULL) // Charging
+				{
+					connect_status=1;
+				}
+			else
+				{
+					connect_status=0;
+				}
+	}
+    
     if (ts->cable_config)
     {
         if (((!!connect_status) != ts->usb_connected) || force_renew)
@@ -1026,6 +1070,7 @@ void himax_cable_detect_func(bool force_renew)
         //	I("%s: Cable status is the same as previous one, ignore.\n", __func__);
     }
 }
+/*[Arima_8901][TracyChui] 20190816 end */
 #endif
 
 

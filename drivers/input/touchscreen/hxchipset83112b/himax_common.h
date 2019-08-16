@@ -39,7 +39,9 @@
 #include <linux/seq_file.h>
 #include <linux/proc_fs.h>
 #include "himax_platform.h"
-
+/*[Arima_8901][TracyChui]Add usb plug detect function and updated FW CID0804_D02_C13 20190816 start */
+#include <linux/file.h>
+/*[Arima_8901][TracyChui] 20190816 end */
 #if defined(CONFIG_FB)
 #include <linux/notifier.h>
 #include <linux/fb.h>
@@ -87,7 +89,9 @@ void himax_touch_proc_deinit(void);
 //#define HX_GESTURE_TRACK
 //#define HX_HIGH_SENSE
 //#define HX_PALM_REPORT
-//#define HX_USB_DETECT_GLOBAL
+/*[Arima_8901][TracyChui]Add usb plug detect function and updated FW CID0804_D02_C13 20190816 start */
+#define HX_USB_DETECT_GLOBAL
+/*[Arima_8901][TracyChui]20190816 end */
 //#define HX_USB_DETECT_CALLBACK
 //#define HX_PROTOCOL_A					/* for MTK special platform.If turning on,it will report to system by using specific format. */
 //#define HX_RESUME_HW_RESET
@@ -102,6 +106,12 @@ void himax_touch_proc_deinit(void);
 #if defined(HX_EN_SEL_BUTTON) || defined(HX_EN_MUT_BUTTON)
 //#define HX_PLATFOME_DEFINE_KEY		/* for specfic platform to set key(button) */
 #endif
+
+/*[Arima_8901][TracyChui]Add usb plug detect function and updated FW CID0804_D02_C13 20190816 start */
+#ifdef HX_USB_DETECT_GLOBAL
+#define POWER_SUPPLY_BATTERY_STATUS_PATCH  "/sys/class/power_supply/battery/status"
+#endif
+/*[Arima_8901][TracyChui] 20190816 end */
 
 #define HX_KEY_MAX_COUNT             4
 #define DEFAULT_RETRY_CNT            3
