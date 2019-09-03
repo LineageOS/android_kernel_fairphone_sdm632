@@ -38,11 +38,13 @@ qcom,batterydata_fuji_3000mah {
 	qcom,jeita-fcc-ranges = <0   150   600000
 				 151 400  2000000
 				 401 450  1500000
-				 451 600  500000>;
+				 451 550  1000000
+				 551 600  0>;
 	qcom,jeita-fv-ranges =  <0   150  4400000
 				 151 400  4400000
 				 401 450  4400000
-				 451 600  4100000>;
+				 451 550  4100000
+				 551 600  3300000>;
 //-->[FairPhone][Charging][JasonHsing] Fix SW jeita is not correct 20190716 END --
 //>2019/08/19-JessicaTseng
 
