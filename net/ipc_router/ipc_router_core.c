@@ -239,6 +239,10 @@ static int is_sensor_port(struct msm_ipc_router_remote_port *rport)
 
 	if (rport && rport->server) {
 		svcid = rport->server->name.service;
+		/* hold wakelock for thresh(proximity) algo sensor and
+		 * OEM1(e.g: pick up gesture sensor) */
+		if (svcid == 277 || svcid == 287)
+			return false;
 		if (svcid == 400 || (svcid >= 256 && svcid <= 320))
 			return true;
 	}
