@@ -44,11 +44,42 @@
 #define XO_CLK_RATE	19200000
 #define CMDLINE_DSI_CTL_NUM_STRING_LEN 2
 
+/*[20191024][TracyChui]Add memory detect node for service menu start */
+static u8 memorycid[20] = {0};
+/*[20191024][TracyChui]Add memory detect node for service menu end */
+
 /* Master structure to hold all the information about the DSI/panel */
 static struct mdss_dsi_data *mdss_dsi_res;
 
 #define DSI_DISABLE_PC_LATENCY 100
 #define DSI_ENABLE_PC_LATENCY PM_QOS_DEFAULT_VALUE
+
+/*[20191024][TracyChui]Add memory detect node for service menu start */
+void Arima_read_file_func(char *pFilePath, u8 *pBuf, u16 nLength)
+{
+    struct file *pFile = NULL;
+    mm_segment_t old_fs;
+    ssize_t nReadBytes = 0;
+
+    old_fs = get_fs();
+    set_fs(get_ds());
+
+    pFile = filp_open(pFilePath, O_RDONLY, 0);
+
+    if (IS_ERR(pFile)) {
+        printk ( "[Tracy]Open file failed: %s\n", pFilePath);
+        return;
+    }
+
+    pFile->f_op->llseek(pFile, 0, SEEK_SET);
+    nReadBytes = pFile->f_op->read(pFile, pBuf, nLength, &pFile->f_pos);
+    printk ( "[Tracy]Read %d bytes!\n", (int)nReadBytes);
+
+    set_fs(old_fs);
+
+    filp_close(pFile, NULL);
+}
+/*[20191024][TracyChui]Add memory detect node for service menu end */
 
 static struct pm_qos_request mdss_dsi_pm_qos_request;
 
@@ -1524,6 +1555,13 @@ int mdss_dsi_on(struct mdss_panel_data *pdata)
 	struct mipi_panel_info *mipi;
 	struct mdss_dsi_ctrl_pdata *ctrl_pdata = NULL;
 	int cur_power_state;
+
+/*[20191024][TracyChui]Add memory detect node for service menu start */
+	if (memorycid[0]!=0x31)
+		{
+			Arima_read_file_func(MEMORY_CID_PATCH, memorycid, 20);
+		}
+/*[20191024][TracyChui]Add memory detect node for service menu end */
 
 	if (pdata == NULL) {
 		pr_err("%s: Invalid input data\n", __func__);
@@ -3356,6 +3394,35 @@ static const struct file_operations proc_lcm_revision_fops = {
 
 /*[Arima_8901][Jialongjhan] Expose display revision 20190326 end*/
 
+/*[20191024][TracyChui]Add memory detect node for service menu start */
+static int proc_memory_vendor_show(struct seq_file *m, void *v)
+{
+	printk("[Tracy]memory cid : %s \n", memorycid);
+
+	if(memorycid[6]==0x35)
+		{
+	      seq_printf(m, "SAMSUNG_2ND\n");
+		}
+	else
+		{
+		 seq_printf(m, "SAMSUNG_Main\n");
+		}
+    return 0;
+}
+
+static int proc_memory_vendor_open(struct inode *inode, struct file *file)
+{
+    return single_open(file, proc_memory_vendor_show, NULL);
+}
+
+static const struct file_operations proc_memory_vendor_fops = {
+    .open  = proc_memory_vendor_open,
+    .read = seq_read,
+    .llseek = seq_lseek,
+    .release = single_release,
+};
+/*[20191024][TracyChui]Add memory detect node for service menu end */
+
 static int mdss_dsi_ctrl_probe(struct platform_device *pdev)
 {
 	int rc = 0;
@@ -3554,7 +3621,11 @@ static int mdss_dsi_ctrl_probe(struct platform_device *pdev)
     //[Arima_8901][Jialongjhan] Expose display revision 20190326 begin
     proc_create("lcm_revision", 0666, NULL, &proc_lcm_revision_fops);
     //[Arima_8901][Jialongjhan] Expose display revision 20190326 end
-	
+
+	/*[20191024][TracyChui]Add memory detect node for service menu start */
+	proc_create("memory_vendor", 0666, NULL, &proc_memory_vendor_fops);
+	/*[20191024][TracyChui]Add memory detect node for service menu end */
+
 	return 0;
 
 error_shadow_clk_deinit:
