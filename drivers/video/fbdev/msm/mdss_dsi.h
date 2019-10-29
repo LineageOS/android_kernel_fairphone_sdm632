@@ -19,9 +19,6 @@
 #include <linux/irqreturn.h>
 #include <linux/pinctrl/consumer.h>
 #include <linux/gpio.h>
-/*[20191024][TracyChui]Add memory detect node for service menu start */
-#include <linux/file.h>
-/*[20191024][TracyChui]Add memory detect node for service menu end */
 
 #include "mdss_panel.h"
 #include "mdss_dsi_cmd.h"
@@ -67,10 +64,6 @@
 
 #define MDSS_STATUS_TE_WAIT_MAX		3
 #define NONE_PANEL "none"
-
-/*[20191024][TracyChui]Add memory detect node for service menu start */
-#define MEMORY_CID_PATCH "/sys/class/mmc_host/mmc0/mmc0:0001/cid"
-/*[20191024][TracyChui]Add memory detect node for service menu end */
 
 enum {		/* mipi dsi panel */
 	DSI_VIDEO_MODE,
