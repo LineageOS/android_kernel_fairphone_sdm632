@@ -1018,11 +1018,10 @@ void himax_read_file_func(char *pFilePath, u8 *pBuf, u16 nLength)
 
     pFile->f_op->llseek(pFile, 0, SEEK_SET);
     nReadBytes = pFile->f_op->read(pFile, pBuf, nLength, &pFile->f_pos);
-    printk ( "[Tracy]Read %d bytes!\n", (int)nReadBytes);
 
     set_fs(old_fs);
 
-    filp_close(pFile, NULL);  
+    filp_close(pFile, NULL);
 
 }
 
@@ -1030,14 +1029,13 @@ void himax_cable_detect_func(bool force_renew)
 {
     struct himax_ts_data *ts;
     u32 connect_status = 0;
-u8 szChargerStatus[20] = {0};
+    u8 szChargerStatus[20] = {0};
 
-    ts = private_ts;
+	ts = private_ts;
 
 	if (ts->suspended==false)
 	{
 		himax_read_file_func(POWER_SUPPLY_BATTERY_STATUS_PATCH, szChargerStatus, 20);
-	    printk("[Tracy]Battery Status : %s \n", szChargerStatus);
 			if (strstr(szChargerStatus, "Charging") != NULL || strstr(szChargerStatus, "Full") != NULL || strstr(szChargerStatus, "Fully charged") != NULL) // Charging
 				{
 					connect_status=1;
@@ -1048,29 +1046,24 @@ u8 szChargerStatus[20] = {0};
 				}
 	}
     
-    if (ts->cable_config)
-    {
-        if (((!!connect_status) != ts->usb_connected) || force_renew)
-        {
-
-            if (!!connect_status)
-            {
-                ts->cable_config[1] = 0x01;
-                ts->usb_connected = 0x01;
-            }
-            else
-            {
-                ts->cable_config[1] = 0x00;
-                ts->usb_connected = 0x00;
-            }
-
-            himax_usb_detect_set(ts->client,ts->cable_config);
-
-            I("%s: Cable status change: 0x%2.2X\n", __func__, ts->usb_connected);
-        }
-        //else
-        //	I("%s: Cable status is the same as previous one, ignore.\n", __func__);
-    }
+	if (ts->cable_config)
+	{
+		if (((!!connect_status) != ts->usb_connected) || force_renew)
+		{
+			if (!!connect_status)
+			{
+			ts->cable_config[1] = 0x01;
+			ts->usb_connected = 0x01;
+			}
+			else
+			{
+			ts->cable_config[1] = 0x00;
+			ts->usb_connected = 0x00;
+			}
+		himax_usb_detect_set(ts->client,ts->cable_config);
+		printk("%s: Cable status change: 0x%2.2X\n", __func__, ts->usb_connected);
+		}
+	}
 }
 /*[Arima_8901][TracyChui] 20190816 end */
 #endif
