@@ -52,8 +52,8 @@ qcom,batterydata_fuji_3000mah {
 //<--[FairPhone][Charging][JasonHsing] Setting jeita cold/cool/warm/hot threshold for charging 20190115 BEGIN --
 	/* COOL = 15 DegC, WARM = 45 DegC */
 	qcom,jeita-soft-thresholds = <0x44FF 0x2204>;
-	/* COLD = 0 DegC, HOT = 60 DegC */
-	qcom,jeita-hard-thresholds = <0x5675 0x1618>;
+	/* COLD = 0 DegC, HOT = 55 DegC */
+	qcom,jeita-hard-thresholds = <0x5675 0x1987>;
 //-->[FairPhone][Charging][JasonHsing] Setting jeita cold/cool/warm/hot threshold for charging 20190115 END --
 
 	qcom,fcc1-temp-lut {

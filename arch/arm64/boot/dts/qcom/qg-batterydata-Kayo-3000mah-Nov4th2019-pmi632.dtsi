@@ -24,6 +24,11 @@ qcom,4184448_Arima_8902EU_3000mAh {
                              451 550  4100000
                              551 600  3300000>;
 
+    /* COOL = 20 DegC, WARM = 45 DegC */
+    qcom,jeita-soft-thresholds = <0x3EBC 0x2204>;
+    /* COLD = 0 DegC, HOT = 55 DegC */
+    qcom,jeita-hard-thresholds = <0x5675 0x1987>;
+
     qcom,step-chg-ranges =  <3500000 4200000  2700000
                              4200001 4400000  1500000>;
 
