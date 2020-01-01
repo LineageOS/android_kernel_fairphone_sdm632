@@ -125,11 +125,11 @@ static void msm_actuator_parse_i2c_params(struct msm_actuator_ctrl_t *a_ctrl,
 				value = abs(1023-value);
 =======
 //[Camera] Modify for IMX363 module AF Frank Cheng 20191225 S
-// temporary skip
+				/*
 				pr_err("%s:%d nActuatorAK7374: %d\n",
   				__func__, __LINE__,
   				nActuatorAK7374);
-
+				*/
 				if(nActuatorAK7374 == 0)value = abs(1023-value);
 //[Camera] Modify for IMX363 module AF Frank Cheng 20191225 S
 >>>>>>> CHANGE (081cba Camera Module Rear 2nd Source Backward Compatibility)
