@@ -1594,7 +1594,7 @@ static int msm_actuator_close(struct v4l2_subdev *sd,
 //  				nActuatorAK7374);
 
 				
-        if(nActuatorAK7374 == 0){
+///        if(nActuatorAK7374 == 0)
                 if (a_ctrl->act_device_type == MSM_CAMERA_PLATFORM_DEVICE &&
                         a_ctrl->actuator_state != ACT_DISABLE_STATE) {
                         rc = a_ctrl->i2c_client.i2c_func_tbl->i2c_util(
@@ -1602,7 +1602,7 @@ static int msm_actuator_close(struct v4l2_subdev *sd,
                         if (rc < 0)
                                 pr_err("cci_init failed\n");
                 }
-        }
+        
 //[Camera] Modify for IMX363 module AF Frank Cheng 20191225 S
 	kfree(a_ctrl->i2c_reg_tbl);
 	a_ctrl->i2c_reg_tbl = NULL;
