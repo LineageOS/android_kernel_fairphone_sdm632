@@ -98,3 +98,11 @@ config RD_LZ4
 	help
 	  Support loading of a LZ4 encoded initial ramdisk or cpio buffer
 	  If unsure, say N.
+
+config FORCE_INITRAMFS
+	bool "Ignore skip_initramfs commandline"
+	help
+	  This option will make the kernel ignore skip_initramfs command
+          line argument.
+	  If unsure, say N.
+
