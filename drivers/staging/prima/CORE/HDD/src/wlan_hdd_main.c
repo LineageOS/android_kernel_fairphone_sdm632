@@ -13048,6 +13048,9 @@ static int hdd_generate_iface_mac_addr_auto(hdd_context_t *pHddCtx,
    int i;
    unsigned int serialno;
    serialno = wcnss_get_serial_number();
+   mac_addr.bytes[0] = 0x84;
+   mac_addr.bytes[1] = 0xcf;
+   mac_addr.bytes[2] = 0xbf;
 
    if (0 != serialno)
    {
