@@ -37,6 +37,8 @@
 #include "mdss_dba_utils.h"
 #include "mdss_smmu.h"
 
+#include <linux/proc_fs.h>
+
 #define XO_CLK_RATE	19200000
 #define CMDLINE_DSI_CTL_NUM_STRING_LEN 2
 
@@ -410,6 +412,8 @@ static int mdss_dsi_panel_power_on(struct mdss_panel_data *pdata)
 {
 	int ret = 0;
 	struct mdss_dsi_ctrl_pdata *ctrl_pdata = NULL;
+
+	gpio_direction_output(64, 1);
 
 	if (pdata == NULL) {
 		pr_err("%s: Invalid input data\n", __func__);
@@ -3297,6 +3301,71 @@ end:
 	return rc;
 }
 
+extern void seq_printf(struct seq_file *m, const char *f, ...);
+extern int single_open(struct file *, int (*)(struct seq_file *, void *), void *);
+extern ssize_t seq_read(struct file *, char __user *, size_t, loff_t *);
+extern loff_t seq_lseek(struct file *, loff_t, int);
+extern int single_release(struct inode *, struct file *);
+
+static int proc_lcm_vendor_show(struct seq_file *m, void *v)
+{
+	int lcm_id;
+
+	lcm_id = gpio_request(59, "lcm_id");
+
+	if (lcm_id == 1) {
+		// For another's LCM module
+		seq_printf(m, "2nd LCM\n");
+	} else {
+		// DJN's LCM module id is 0.
+		seq_printf(m, "DJN , HX83112B\n");
+	}
+
+	return 0;
+}
+
+static int proc_lcm_vendor_open(struct inode *inode, struct file *file)
+{
+	return single_open(file, proc_lcm_vendor_show, NULL);
+}
+
+static const struct file_operations proc_lcm_vendor_fops = {
+	.open = proc_lcm_vendor_open,
+	.read = seq_read,
+	.llseek = seq_lseek,
+	.release = single_release,
+};
+
+static int proc_lcm_revision_show(struct seq_file *m, void *v)
+{
+	int lcm_id;
+	extern int RDDID_HWINFO[3];
+
+	lcm_id = gpio_request(59, "lcm_id");
+
+	if (lcm_id == 1) {
+		// For another's LCM module
+		seq_printf(m, "2nd Source not ready.\n");
+	} else {
+		// DJN's LCM module id is 0.
+		seq_printf(m, "DJN , HX%x%x%x\n", RDDID_HWINFO[0], RDDID_HWINFO[1], RDDID_HWINFO[2]);
+	}
+
+	return 0;
+}
+
+static int proc_lcm_revision_fops_open(struct inode *inode, struct file *file)
+{
+	return single_open(file, proc_lcm_revision_show, NULL);
+}
+
+static const struct file_operations proc_lcm_revision_fops = {
+	.open = proc_lcm_revision_fops_open,
+	.read = seq_read,
+	.llseek = seq_lseek,
+	.release = single_release,
+};
+
 static int mdss_dsi_ctrl_probe(struct platform_device *pdev)
 {
 	int rc = 0;
@@ -3487,6 +3556,10 @@ static int mdss_dsi_ctrl_probe(struct platform_device *pdev)
 		ctrl_pdata->shared_data->dsi1_active = true;
 
 	mdss_dsi_debug_bus_init(mdss_dsi_res);
+
+	proc_create("lcm_vendor", 0, NULL, &proc_lcm_vendor_fops);
+
+	proc_create("lcm_revision", 0666, NULL, &proc_lcm_revision_fops);
 
 	return 0;
 
