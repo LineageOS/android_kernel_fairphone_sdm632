@@ -212,10 +212,9 @@ static void mdss_dsi_panel_cmds_send(struct mdss_dsi_ctrl_pdata *ctrl,
 
 	mdss_dsi_cmdlist_put(ctrl, &cmdreq);
 }
-
-static char led_pwm1[2] = {0x51, 0x0};	/* DTYPE_DCS_WRITE1 */
+static char led_pwm1[3] = {0x51, 0x00, 0x00};	/* DTYPE_DCS_WRITE1 */
 static struct dsi_cmd_desc backlight_cmd = {
-	{DTYPE_DCS_WRITE1, 1, 0, 0, 1, sizeof(led_pwm1)},
+	{DTYPE_DCS_LWRITE, 1, 0, 0, 1, sizeof(led_pwm1)},
 	led_pwm1
 };
 
@@ -232,7 +231,8 @@ static void mdss_dsi_panel_bklt_dcs(struct mdss_dsi_ctrl_pdata *ctrl, int level)
 
 	pr_debug("%s: level=%d\n", __func__, level);
 
-	led_pwm1[1] = (unsigned char)level;
+	led_pwm1[1] = (unsigned char)(level >> 8) & 0x0F;
+	led_pwm1[2] = (unsigned char)level & 0xFF;
 
 	memset(&cmdreq, 0, sizeof(cmdreq));
 	cmdreq.cmds = &backlight_cmd;
@@ -523,6 +523,16 @@ int mdss_dsi_panel_reset(struct mdss_panel_data *pdata, int enable)
 			gpio_free(ctrl_pdata->disp_en_gpio);
 		}
 		gpio_set_value((ctrl_pdata->rst_gpio), 0);
+
+		// Move "pull low TP reset pin" from mdss_dsi.c,
+		// it have to same with LCM reset pin pull low
+
+		// To reduce power,pull down Touch reset pin when panel off
+		// TP reset pin pull low with LCD reset pin at same time.
+		gpio_direction_output(64, 0);
+
+		msleep(1);
+
 		gpio_free(ctrl_pdata->rst_gpio);
 		if (gpio_is_valid(ctrl_pdata->mode_gpio))
 			gpio_free(ctrl_pdata->mode_gpio);
@@ -824,11 +834,20 @@ static void mdss_dsi_panel_switch_mode(struct mdss_panel_data *pdata,
 		mdss_dsi_panel_dsc_pps_send(ctrl_pdata, &pdata->panel_info);
 }
 
+static char RDDID[4] = {0x04, 0x00, 0x00, 0x00};
+static struct dsi_cmd_desc cmd_RDDID = {
+	{DTYPE_DCS_READ, 1, 0, 1, 5, sizeof(RDDID)},
+	RDDID
+};
+int RDDID_HWINFO[3];
+int RDDID_read_count = 0;
+
 static void mdss_dsi_panel_bl_ctrl(struct mdss_panel_data *pdata,
 							u32 bl_level)
 {
 	struct mdss_dsi_ctrl_pdata *ctrl_pdata = NULL;
 	struct mdss_dsi_ctrl_pdata *sctrl = NULL;
+	struct dcs_cmd_req cmdreq2;
 
 	if (pdata == NULL) {
 		pr_err("%s: Invalid input data\n", __func__);
@@ -837,6 +856,28 @@ static void mdss_dsi_panel_bl_ctrl(struct mdss_panel_data *pdata,
 
 	ctrl_pdata = container_of(pdata, struct mdss_dsi_ctrl_pdata,
 				panel_data);
+
+	if (RDDID_read_count==0) {
+		memset(&cmdreq2, 0, sizeof(cmdreq2));
+		cmdreq2.cmds = &cmd_RDDID;
+		cmdreq2.cmds_cnt = 1;
+		cmdreq2.flags = CMD_REQ_COMMIT | CMD_REQ_RX;;
+		cmdreq2.rlen = 3; //return 3 values
+		cmdreq2.cb = NULL; /* call back */
+		cmdreq2.rbuf = ctrl_pdata->rx_buf.data;
+
+		mdss_dsi_cmdlist_put(ctrl_pdata, &cmdreq2);
+
+		if (ctrl_pdata->rx_buf.len > 0) {
+			RDDID_HWINFO[0]=(int)*(ctrl_pdata->rx_buf.data);
+			RDDID_HWINFO[1]=(int)*(ctrl_pdata->rx_buf.data+1);
+			RDDID_HWINFO[2]=(int)*(ctrl_pdata->rx_buf.data+2);
+			//pr_err("[Jialong] ctrl->rx_buf.data data =0x%x\n",*(ctrl_pdata->rx_buf.data));
+			RDDID_read_count++;
+		}
+	}
+
+	mdelay(1);
 
 	/*
 	 * Some backlight controllers specify a minimum duty cycle
