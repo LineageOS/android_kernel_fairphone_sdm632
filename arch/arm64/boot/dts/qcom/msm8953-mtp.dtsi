@@ -44,7 +44,9 @@
 		qcom,nq-ven = <&tlmm 16 0x00>;
 		qcom,nq-firm = <&tlmm 62 0x00>;
 		qcom,nq-clkreq = <&pm8953_gpios 2 0x00>;
-		qcom,nq-esepwr = <&tlmm 141 0x00>;
+/*<<2019-01-29-Michael Lin-[FairPhone][NFC]Reassign ESE Enable gpio in case of collision*/                
+		qcom,nq-esepwr = <&tlmm 134 0x00>;
+/*>>2019-01-29-Michael Lin-[FairPhone][NFC]Reassign ESE Enable gpio in case of collision*/                
 		interrupt-parent = <&tlmm>;
 		qcom,clk-src = "BBCLK2";
 		interrupts = <17 0>;
