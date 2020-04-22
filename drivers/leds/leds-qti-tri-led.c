@@ -475,6 +475,21 @@ static int qpnp_tri_led_parse_dt(struct qpnp_tri_led_chip *chip)
 			of_get_property(child_node, "label", NULL) ? :
 							child_node->name;
 
+	//<2020/04/21-Yuting Shih.[FAIRPHONE-Q][MISC][COMMON][LED][][]Add for flag initial.
+		led->pwm_setting.pre_period_ns = 0;
+		led->pwm_setting.period_ns  = 0;
+		led->pwm_setting.duty_ns    = 0;
+
+		led->led_setting.on_ms      = 0;
+		led->led_setting.off_ms     = 0;
+		led->led_setting.brightness = LED_OFF;
+		led->led_setting.blink      = false;
+		led->led_setting.breath     = false;
+
+		led->blinking   = false;
+		led->breathing  = false;
+	//>2020/04/21-Yuting Shih.[FAIRPHONE-Q][MISC][COMMON][LED][][].
+
 		led->pwm_dev =
 			devm_of_pwm_get(chip->dev, child_node, NULL);
 		if (IS_ERR(led->pwm_dev)) {
