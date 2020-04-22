@@ -565,30 +565,80 @@
 			nvmem = <&pmi632_sdam7>;
 			qcom,pbs-client = <&pmi632_pbs_client3>;
 			qcom,lut-sdam-base = <0x80>;
+		//<2020/04/21-Yuting Shih.[FAIRPHONE-Q][MISC][COMMON][LED][][]Modified for breath ramp and timing.
+		#if 1
+			qcom,lut-patterns = <0 0 0 0 0 0 0 0 2 16 30 44 58 72 86 96 100 100
+						100 100 96 86 72 58 44 30 16 2 0 0 0 0 0 0 0 0>;
+		#else
+			/* Code default */
 			qcom,lut-patterns = <0 0 0 14 28 42 56 70 84 100
 						100 84 70 56 42 28 14 0 0 0>;
+		#endif
+		//>2020/04/21-Yuting Shih.[FAIRPHONE-Q][MISC][COMMON][LED][][].
 			lpg@1 {
 				qcom,lpg-chan-id = <1>;
+		//<2020/04/21-Yuting Shih.[FAIRPHONE-Q][MISC][COMMON][LED][][]Modified for breath ramp and timing.
+		#if 1
+				qcom,ramp-step-ms = <60>;
+				qcom,ramp-pause-hi-count = <80>;
+				qcom,ramp-pause-lo-count = <80>;
+				qcom,ramp-low-index = <0>;
+				qcom,ramp-high-index = <35>;
+				//qcom,ramp-toggle; /* ramp from high to low */
+				//qcom,ramp-from-low-to-high;
+				qcom,ramp-pattern-repeat;
+		#else
+			/* Code default */
 				qcom,ramp-step-ms = <200>;
 				qcom,ramp-low-index = <0>;
 				qcom,ramp-high-index = <19>;
 				qcom,ramp-pattern-repeat;
+		#endif
+		//>2020/04/21-Yuting Shih.[FAIRPHONE-Q][MISC][COMMON][LED][][].
 				qcom,lpg-sdam-base = <0x48>;
 			};
 			lpg@2 {
 				qcom,lpg-chan-id = <2>;
+		//<2020/04/21-Yuting Shih.[FAIRPHONE-Q][MISC][COMMON][LED][][]Modified for breath ramp and timing.
+		#if 1
+				qcom,ramp-step-ms = <60>;
+				qcom,ramp-pause-hi-count = <80>;
+				qcom,ramp-pause-lo-count = <80>;
+				qcom,ramp-low-index = <0>;
+				qcom,ramp-high-index = <35>;
+				//qcom,ramp-toggle; /* ramp from high to low */
+				//qcom,ramp-from-low-to-high;
+				qcom,ramp-pattern-repeat;
+		#else
+			/* Code default */
 				qcom,ramp-step-ms = <200>;
 				qcom,ramp-low-index = <0>;
 				qcom,ramp-high-index = <19>;
 				qcom,ramp-pattern-repeat;
+		#endif
+		//>2020/04/21-Yuting Shih.[FAIRPHONE-Q][MISC][COMMON][LED][][].
 				qcom,lpg-sdam-base = <0x56>;
 			};
 			lpg@3 {
 				qcom,lpg-chan-id = <3>;
+		//<2020/04/21-Yuting Shih.[FAIRPHONE-Q][MISC][COMMON][LED][][]Modified for breath ramp and timing.
+		#if 1
+				qcom,ramp-step-ms = <60>;
+				qcom,ramp-pause-hi-count = <80>;
+				qcom,ramp-pause-lo-count = <80>;
+				qcom,ramp-low-index = <0>;
+				qcom,ramp-high-index = <35>;
+				//qcom,ramp-toggle; /* ramp from high to low */
+				//qcom,ramp-from-low-to-high;
+				qcom,ramp-pattern-repeat;
+		#else
+			/* Code default */
 				qcom,ramp-step-ms = <200>;
 				qcom,ramp-low-index = <0>;
 				qcom,ramp-high-index = <19>;
 				qcom,ramp-pattern-repeat;
+		#endif
+		//>2020/04/21-Yuting Shih.[FAIRPHONE-Q][MISC][COMMON][LED][][].
 				qcom,lpg-sdam-base = <0x64>;
 			};
 		};
