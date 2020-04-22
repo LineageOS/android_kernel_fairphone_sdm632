@@ -128,16 +128,27 @@
 	hw-config = "single_dsi";
 };
 
+/*[Arima_8901][Jialong] lcm driver porting begin*/
 &mdss_dsi0 {
+	#if 1
+	//[Arima][8901][JialongJhan] Command mode 20190516 Start
+	qcom,dsi-pref-prim-pan = <&dsi_djn_hx83112b_1080p_cmd>;
+	//qcom,dsi-pref-prim-pan = <&dsi_hx83112b_truly_1080p_video>;
+	//[Arima][8901][JialongJhan] Command mode 20190516 End
+	#else
 	qcom,dsi-pref-prim-pan = <&dsi_truly_1080_vid>;
+	#endif
 	pinctrl-names = "mdss_default", "mdss_sleep";
 	pinctrl-0 = <&mdss_dsi_active &mdss_te_active>;
 	pinctrl-1 = <&mdss_dsi_suspend &mdss_te_suspend>;
 
 	qcom,platform-te-gpio = <&tlmm 24 0>;
-		qcom,platform-reset-gpio = <&tlmm 61 0>;
-	qcom,platform-bklight-en-gpio = <&tlmm 59 0>;
+	qcom,platform-reset-gpio = <&tlmm 61 0>;
+	qcom,platform-bklight-en-gpio = <&tlmm 96 0>;
+	//not config yet...
+	//qcom,platform-id-gpio = <&tlmm 59 0>;
 };
+/*[Arima_8901][Jialong] lcm driver porting end*/
 
 &mdss_dsi1 {
 	status = "disabled";
@@ -151,6 +162,22 @@
 	qcom,platform-reset-gpio = <&tlmm 61 0>;
 	qcom,platform-bklight-en-gpio = <&tlmm 59 0>;
 };
+
+/*[Arima_8901][Jialong] lcm driver porting begin*/
+&dsi_hx83112b_truly_1080p_video {
+	qcom,mdss-dsi-bl-pmic-control-type = "bl_ctrl_dcs";
+	qcom,mdss-dsi-bl-min-level = <1>;
+	qcom,mdss-dsi-bl-max-level = <4095>;
+	qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
+};
+
+&dsi_djn_hx83112b_1080p_cmd {
+	qcom,mdss-dsi-bl-pmic-control-type = "bl_ctrl_dcs";
+	qcom,mdss-dsi-bl-min-level = <1>;
+	qcom,mdss-dsi-bl-max-level = <4095>;
+	qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
+};
+/*[Arima_8901][Jialong] lcm driver porting end*/
 
 &dsi_truly_1080_vid {
 	qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
