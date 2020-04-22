@@ -939,17 +939,18 @@
 				};
 			};
 
+/*<<2019-01-29-Michael Lin-[FairPhone][NFC]Reassign ESE Enable gpio in case of collision*/
 			nfc_disable_active: nfc_disable_active {
 				/* active state */
 				mux {
 					/* 16: NFC ENABLE 62: FW DNLD */
-					/* 141: ESE Enable */
-					pins = "gpio16", "gpio62", "gpio141";
+					/* 134: ESE Enable */
+					pins = "gpio16", "gpio62", "gpio134";
 					function = "gpio";
 				};
 
 				config {
-					pins = "gpio16", "gpio62", "gpio141";
+					pins = "gpio16", "gpio62", "gpio134";
 					drive-strength = <2>; /* 2 MA */
 					bias-pull-up;
 				};
@@ -959,18 +960,19 @@
 				/* sleep state */
 				mux {
 					/* 16: NFC ENABLE 62: FW DNLD */
-					/* 141: ESE Enable */
-					pins = "gpio16", "gpio62", "gpio141";
+					/* 134: ESE Enable */
+					pins = "gpio16", "gpio62", "gpio134";
 					function = "gpio";
 				};
 
 				config {
-					pins = "gpio16", "gpio62", "gpio141";
+					pins = "gpio16", "gpio62", "gpio134";
 					drive-strength = <2>; /* 2 MA */
 					bias-disable;
 				};
 			};
 		};
+/*>>2019-01-29-Michael Lin-[FairPhone][NFC]Reassign ESE Enable gpio in case of collision*/
 
 		wcnss_pmux_5wire {
 			/* Active configuration of bus pins */
