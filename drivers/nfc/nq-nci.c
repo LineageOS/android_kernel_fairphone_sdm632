@@ -29,6 +29,11 @@
 #include <linux/compat.h>
 #endif
 
+#define   PFX     "[NFC][NQ]"
+// 20181116 Michael Lin - Introduce firmware download fail recovery mechanism
+/* To avoid from recovery fail and then NFC always in download mode */
+#define   NFC_FW_DOWNLOAD_MODE
+
 struct nqx_platform_data {
 	unsigned int irq_gpio;
 	unsigned int en_gpio;
@@ -476,7 +481,11 @@ int nfc_ioctl_power_states(struct file *filp, unsigned long arg)
 		 * interrupts to avoid spurious notifications to upper
 		 * layers.
 		 */
+    //< 20181116 Michael Lin - Mask where firmware download fail recovery is used
+	#if !defined( NFC_FW_DOWNLOAD_MODE )
 		nqx_disable_irq(nqx_dev);
+	#endif
+    //> 20181116 Michael Lin - Mask where firmware download fail recovery is used
 		dev_dbg(&nqx_dev->client->dev,
 			"gpio_set_value disable: %s: info: %p\n",
 			__func__, nqx_dev);
@@ -533,6 +542,12 @@ int nfc_ioctl_power_states(struct file *filp, unsigned long arg)
 				return -EBUSY; /* Device or resource busy */
 			}
 		}
+    //< 20181116 Michael Lin - Add where firmware download fail recovery is used
+	#if defined( NFC_FW_DOWNLOAD_MODE )
+	/* Enable IRQ while upgrade FW. To avoid from recovery fail and then NFC always in download mode */
+		nqx_enable_irq( nqx_dev );
+	#endif
+    //< 20181116 Michael Lin - Add where firmware download fail recovery is used
 		gpio_set_value(nqx_dev->en_gpio, 1);
 		usleep_range(10000, 10100);
 		if (gpio_is_valid(nqx_dev->firm_gpio)) {
@@ -1187,8 +1202,14 @@ static int nqx_probe(struct i2c_client *client,
 	if (r) {
 		/* make sure NFCC is not enabled */
 		gpio_set_value(platform_data->en_gpio, 0);
+    //< 20181116 Michael Lin - Mask where firmware download fail recovery is used
+	#if !defined( NFC_FW_DOWNLOAD_MODE ) /* Qualcomm default */
 		/* We don't think there is hardware switch NFC OFF */
 		goto err_request_hw_check_failed;
+	#else
+	    dev_err(&client->dev, "[%s]nfcc_hw_check() error !!\n", __func__ );
+	#endif
+    //> 20181116 Michael Lin - Mask where firmware download fail recovery is used
 	}
 
 	/* Register reboot notifier here */
@@ -1350,6 +1371,7 @@ static int nfcc_reboot(struct notifier_block *notifier, unsigned long val,
  */
 static int __init nqx_dev_init(void)
 {
+	pr_info( PFX "[%s]Enter...\n", __func__ );
 	return i2c_add_driver(&nqx);
 }
 module_init(nqx_dev_init);
