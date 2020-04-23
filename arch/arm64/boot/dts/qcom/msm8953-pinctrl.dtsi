@@ -399,6 +399,62 @@
 
 		};
 
+//<2020/04/23-louisliu, Fingerprint. Driver porting.
+		fps {
+			fps_int_active: fps_int_active {
+				mux {
+					pins = "gpio48";
+					function = "gpio";
+				};
+
+				config {
+					pins = "gpio48";
+					drive-strength = <8>;
+					bias-pull-up;
+				};
+			};
+
+			fps_int_suspend: fps_int_suspend {
+				mux {
+					pins = "gpio48";
+					function = "gpio";
+				};
+
+			config {
+					pins = "gpio48";
+					drive-strength = <2>;
+					bias-pull-down;
+				};
+			};
+
+			fps_reset_active: fps_reset_active {
+				mux {
+					pins = "gpio140";
+					function = "gpio";
+				};
+
+				config {
+					pins = "gpio140";
+					drive-strength = <8>;
+					bias-pull-up;
+				};
+			};
+
+			fps_reset_suspend1: fps_reset_suspend1 {
+				mux {
+					pins = "gpio140";
+					function = "gpio";
+				};
+
+				config {
+					pins = "gpio140";
+					drive-strength = <2>;
+					bias-pull-down;
+				};
+			};
+		};
+//>2020/04/23-louisliu
+
 		pmx_mdss: pmx_mdss {
 			
 			/*[Arima_8901][Jialong] lcm driver porting begin*/

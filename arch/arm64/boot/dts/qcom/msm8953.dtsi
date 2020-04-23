@@ -2319,3 +2319,16 @@
 &gdsc_usb30 {
 	status = "okay";
 };
+
+// //<2020/04/23-louisliu, Fingerprint. Driver porting.
+&soc {
+	elan {
+		compatible = "elan,elan_fp";
+		interrupt-parent = <&tlmm>;
+		interrupts = <48 0>;
+		elan,irq-gpio = <&tlmm 48 0>;
+		elan,rst-gpio = <&tlmm 140 0>;
+		elan,vdd-gpio = <&tlmm 90 0>;
+	};
+};
+// //>2020/04/23-louisliu
