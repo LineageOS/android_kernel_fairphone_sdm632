@@ -36,8 +36,15 @@
 /{
 	mtp_batterydata: qcom,battery-data {
 		qcom,batt-id-range-pct = <15>;
+//<20202/04/22-JessicaTseng, Add Fuji & Kayo battery profiles
+#if 1
+		#include "qg-batterydata-Fuji-3000mah-Jan22th2019-pmi632.dtsi"
+		#include "qg-batterydata-Kayo-3000mah-Nov4th2019-pmi632.dtsi"
+#else
 		#include "qg-batterydata-ascent-3450mah.dtsi"
 		#include "qg-batterydata-mlp356477-2800mah.dtsi"
+#endif
+//>2020/04/22-JessicaTseng
 	};
 };
 
