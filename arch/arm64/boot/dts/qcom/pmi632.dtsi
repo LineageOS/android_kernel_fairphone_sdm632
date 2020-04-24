@@ -314,7 +314,7 @@
 
 			qcom,pmic-revid = <&pmi632_revid>;
 			dpdm-supply = <&qusb_phy>;
-			qcom,auto-recharge-soc = <98>;
+			qcom,auto-recharge-vbat-mv = <4300>;
 			qcom,chg-vadc = <&pmi632_vadc>;
 			qcom,flash-disable-soc = <10>;
 			qcom,sw-jeita-enable;
@@ -484,8 +484,6 @@
 			#size-cells = <1>;
 
 			qcom,qg-iterm-ma = <100>;
-			qcom,hold-soc-while-full;
-			qcom,linearize-soc;
 			qcom,qg-vadc = <&pmi632_vadc>;
 			qcom,pmic-revid = <&pmi632_revid>;
 
