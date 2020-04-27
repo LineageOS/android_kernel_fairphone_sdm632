@@ -1236,6 +1236,38 @@ static int smblib_usb_irq_enable_vote_callback(struct votable *votable,
 	return 0;
 }
 
+//<2020/04/28-JessicaTseng, Setting jeita fv re-charge voltage for warm temp
+static int smblib_jeita_rechg_voltage_vote_callback(struct votable *votable, void *data,
+			int voltage, const char *client)
+{
+	struct smb_charger *chg = data;
+	int rc = 0;
+	u32 temp = VBAT_TO_VRAW_ADC((voltage/1000));
+
+	temp = ((temp & 0xFF00) >> 8) | ((temp & 0xFF) << 8);
+	rc = smblib_batch_write(chg,
+		CHGR_ADC_RECHARGE_THRESHOLD_MSB_REG, (u8 *)&temp, 2);
+	if (rc < 0) {
+		dev_err(chg->dev, "Couldn't configure ADC_RECHARGE_THRESHOLD REG rc=%d\n",
+			rc);
+		return rc;
+	}
+	/* Program the sample count for VBAT based recharge to 3 */
+	rc = smblib_masked_write(chg, CHGR_NO_SAMPLE_TERM_RCHG_CFG_REG,
+				NO_OF_SAMPLE_FOR_RCHG,
+				2 << NO_OF_SAMPLE_FOR_RCHG_SHIFT);
+	if (rc < 0) {
+		dev_err(chg->dev, "Couldn't configure CHGR_NO_SAMPLE_FOR_TERM_RCHG_CFG rc=%d\n",
+			rc);
+		return rc;
+	}
+
+	dev_err(chg->dev, "jeita_rechg_voltage =%d\n", voltage);
+
+	return rc;
+}
+//>2020/04/28-JessicaTseng
+
 /*******************
  * VCONN REGULATOR *
  * *****************/
@@ -4427,6 +4459,16 @@ static int smblib_create_votables(struct smb_charger *chg)
 		chg->usb_irq_enable_votable = NULL;
 		return rc;
 	}
+
+//<2020/04/28-JessicaTseng, Setting jeita fv re-charge voltage for warm temp
+	chg->rechg_vol_votable = create_votable("RECHG_VOL", VOTE_MIN,
+					smblib_jeita_rechg_voltage_vote_callback,
+					chg);
+	if (IS_ERR(chg->rechg_vol_votable)) {
+		rc = PTR_ERR(chg->rechg_vol_votable);
+		return rc;
+	}
+//>2020/04/28-JessicaTseng
 
 	return rc;
 }
