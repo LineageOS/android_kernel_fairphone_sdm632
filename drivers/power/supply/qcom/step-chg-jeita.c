@@ -80,6 +80,7 @@ struct step_chg_info {
 	struct votable		*fcc_votable;
 	struct votable		*fv_votable;
 	struct votable		*usb_icl_votable;
+	struct votable		*rechg_vol_votable;
 	struct wakeup_source	*step_chg_ws;
 	struct power_supply	*batt_psy;
 	struct power_supply	*bms_psy;
@@ -500,6 +501,8 @@ reschedule:
 }
 
 #define JEITA_SUSPEND_HYST_UV		50000
+#define JEITA_RECHG_HYST_UV		200000//100000
+
 static int handle_jeita(struct step_chg_info *chip)
 {
 	union power_supply_propval pval = {0, };
@@ -561,6 +564,9 @@ static int handle_jeita(struct step_chg_info *chip)
 	if (rc < 0)
 		fv_uv = 0;
 
+	if (!chip->rechg_vol_votable)
+		chip->rechg_vol_votable = find_votable("RECHG_VOL");
+
 	chip->fv_votable = find_votable("FV");
 	if (!chip->fv_votable)
 		goto update_time;
@@ -597,6 +603,8 @@ static int handle_jeita(struct step_chg_info *chip)
 
 set_jeita_fv:
 	vote(chip->fv_votable, JEITA_VOTER, fv_uv ? true : false, fv_uv);
+	vote(chip->rechg_vol_votable,
+			JEITA_VOTER, true, (fv_uv -JEITA_RECHG_HYST_UV));
 
 update_time:
 	chip->jeita_last_update_time = ktime_get();
