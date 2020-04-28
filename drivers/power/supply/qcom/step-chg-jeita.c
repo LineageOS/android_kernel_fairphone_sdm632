@@ -80,6 +80,9 @@ struct step_chg_info {
 	struct votable		*fcc_votable;
 	struct votable		*fv_votable;
 	struct votable		*usb_icl_votable;
+//<2020/04/28-JessicaTseng, Setting jeita fv re-charge voltage for warm temp
+	struct votable		*rechg_vol_votable;
+//>2020/04/28-JessicaTseng
 	struct wakeup_source	*step_chg_ws;
 	struct power_supply	*batt_psy;
 	struct power_supply	*bms_psy;
@@ -500,6 +503,10 @@ reschedule:
 }
 
 #define JEITA_SUSPEND_HYST_UV		50000
+//<2020/04/28-JessicaTseng, Setting jeita fv re-charge voltage for warm temp
+#define JEITA_RECHG_HYST_UV		200000//100000
+//>2020/04/28-JessicaTseng
+
 static int handle_jeita(struct step_chg_info *chip)
 {
 	union power_supply_propval pval = {0, };
@@ -561,6 +568,11 @@ static int handle_jeita(struct step_chg_info *chip)
 	if (rc < 0)
 		fv_uv = 0;
 
+//<2020/04/28-JessicaTseng, Setting jeita fv re-charge voltage for warm temp
+	if (!chip->rechg_vol_votable)
+		chip->rechg_vol_votable = find_votable("RECHG_VOL");
+//>2020/04/28-JessicaTseng
+
 	chip->fv_votable = find_votable("FV");
 	if (!chip->fv_votable)
 		goto update_time;
@@ -597,6 +609,10 @@ static int handle_jeita(struct step_chg_info *chip)
 
 set_jeita_fv:
 	vote(chip->fv_votable, JEITA_VOTER, fv_uv ? true : false, fv_uv);
+//<2020/04/28-JessicaTseng, Setting jeita fv re-charge voltage for warm temp
+	vote(chip->rechg_vol_votable,
+			JEITA_VOTER, true, (fv_uv -JEITA_RECHG_HYST_UV));
+//>2020/04/28-JessicaTseng
 
 update_time:
 	chip->jeita_last_update_time = ktime_get();
