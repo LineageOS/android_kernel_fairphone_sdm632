@@ -500,8 +500,8 @@ reschedule:
 	return (STEP_CHG_HYSTERISIS_DELAY_US - elapsed_us + 1000);
 }
 
-#define JEITA_SUSPEND_HYST_UV		50000
-#define JEITA_RECHG_HYST_UV		200000//100000
+#define JEITA_SUSPEND_HYST_UV		200000
+#define JEITA_RECHG_HYST_UV		200000
 
 static int handle_jeita(struct step_chg_info *chip)
 {
