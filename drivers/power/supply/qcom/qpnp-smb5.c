@@ -2092,6 +2092,14 @@ static int smb5_init_hw(struct smb5 *chip)
 		}
 	}
 
+	/* AICL PERIODIC RERUN ENABLE*/
+	rc = smblib_write(chg, USBIN_AICL_OPTIONS_CFG_REG, 0xD4);
+	if (rc < 0) {
+		dev_err(chg->dev,
+			 "Couldn't config RERUN AICL ENABLE rc=%d\n", rc);
+		return rc;
+	}
+
 	/* enable the charging path */
 	rc = vote(chg->chg_disable_votable, DEFAULT_VOTER, false, 0);
 	if (rc < 0) {
