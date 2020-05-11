@@ -502,10 +502,12 @@ reschedule:
 	return (STEP_CHG_HYSTERISIS_DELAY_US - elapsed_us + 1000);
 }
 
-#define JEITA_SUSPEND_HYST_UV		50000
+//<2020/05/07-JessicaTseng, Modify recharging voltage from 4.05V to 3.9V at battery temperature over 45 degree
+#define JEITA_SUSPEND_HYST_UV		200000//50000
 //<2020/04/28-JessicaTseng, Setting jeita fv re-charge voltage for warm temp
 #define JEITA_RECHG_HYST_UV		200000//100000
 //>2020/04/28-JessicaTseng
+//>2020/05/07-JessicaTseng
 
 static int handle_jeita(struct step_chg_info *chip)
 {
