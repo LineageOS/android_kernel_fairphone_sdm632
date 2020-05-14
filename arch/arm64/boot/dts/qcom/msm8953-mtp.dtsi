@@ -60,6 +60,21 @@
 	};
 };
 
+//[FairPhone][Audio][jinjia]=2018.11.21=smart amp porting. -s
+&i2c_6 { /* BLSP2 QUP2 (smart amp) */
+	    status = "ok";
+	    /* AWINIC AW8898 Smart PA */
+	    aw8898_smartpa@34{
+	        compatible = "awinic,aw8898_smartpa";
+	        reg = <0x34>;
+	        reset-gpio = <&tlmm 21 0>;
+	        irq-gpio = <&tlmm 20 0>;
+	        status = "okay";
+	    };
+	    /* AWINIC AW8898 Smart PA End */
+};
+//[FairPhone][Audio][jinjia]=2018.11.21=smart amp porting. -e
+
 &sdhc_1 {
 	/* device core power supply */
 	vdd-supply = <&pm8953_l8>;
