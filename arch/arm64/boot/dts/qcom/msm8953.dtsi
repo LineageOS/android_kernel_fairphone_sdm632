@@ -169,6 +169,7 @@
 		};
 	};
 
+//[FairPhone][Audio][jinjia]=2018.11.21=smart amp porting. -s
 	aliases {
 		/* smdtty devices */
 		smd1 = &smdtty_apps_fm;
@@ -188,11 +189,12 @@
 		i2c2 = &i2c_2;
 		i2c3 = &i2c_3;
 		i2c5 = &i2c_5;
+		i2c6 = &i2c_6;
 /*[20200429][TracyChui]Touch driver porting start*/
 //		spi3 = &spi_3;
 /*[20200429][TracyChui]Touch driver porting end*/
-		spi6 = &spi_6;
 	};
+//[FairPhone][Audio][jinjia]=2018.11.21=smart amp porting. -e
 
 	soc: soc {
 		/*
@@ -627,41 +629,6 @@
 		status = "disabled";
 	};
 
-	blsp2_uart1: uart@7af0000 {
-		compatible = "qcom,msm-hsuart-v14";
-		reg = <0x7af0000 0x200>,
-			<0x7ac4000 0x1f000>;
-		reg-names = "core_mem", "bam_mem";
-
-		interrupt-names = "core_irq", "bam_irq", "wakeup_irq";
-		#address-cells = <0>;
-		interrupt-parent = <&blsp2_uart1>;
-		interrupts = <0 1 2>;
-		#interrupt-cells = <1>;
-		interrupt-map-mask = <0xffffffff>;
-		interrupt-map = <0 &intc 0 307 0
-				1 &intc 0 239 0
-				2 &tlmm 21 0>;
-
-		qcom,inject-rx-on-wakeup;
-		qcom,rx-char-to-inject = <0xFD>;
-		qcom,master-id = <84>;
-		clock-names = "core_clk", "iface_clk";
-		clocks = <&clock_gcc clk_gcc_blsp2_uart2_apps_clk>,
-			<&clock_gcc clk_gcc_blsp2_ahb_clk>;
-		pinctrl-names = "sleep", "default";
-		pinctrl-0 = <&blsp2_uart1_sleep>;
-		pinctrl-1 = <&blsp2_uart1_active>;
-		qcom,bam-tx-ep-pipe-index = <2>;
-		qcom,bam-rx-ep-pipe-index = <3>;
-		qcom,msm-bus,name = "blsp2_uart1";
-		qcom,msm-bus,num-cases = <2>;
-		qcom,msm-bus,num-paths = <1>;
-		qcom,msm-bus,vectors-KBps =
-				<84 512 0 0>,
-				<84 512 500 800>;
-		status = "disabled";
-	};
 
 	blsp1_serial1: serial@78b0000 {
 		compatible = "qcom,msm-uartdm-v1.4", "qcom,msm-uartdm";
@@ -717,31 +684,6 @@
 //	};
 /*[20200429][TracyChui]Touch driver porting end*/
 
-	spi_6: spi@7af6000 { /* BLSP2 QUP2 */
-		compatible = "qcom,spi-qup-v2";
-		#address-cells = <1>;
-		#size-cells = <0>;
-		reg-names = "spi_physical", "spi_bam_physical";
-		reg = <0x7af6000 0x600>,
-			<0x7ac4000 0x1f000>;
-		interrupt-names = "spi_irq", "spi_bam_irq";
-		interrupts = <0 300 0>, <0 239 0>;
-		spi-max-frequency = <19200000>;
-		pinctrl-names = "spi_default", "spi_sleep";
-		pinctrl-0 = <&spi6_default &spi6_cs0_active>;
-		pinctrl-1 = <&spi6_sleep &spi6_cs0_sleep>;
-		clocks = <&clock_gcc clk_gcc_blsp2_ahb_clk>,
-			<&clock_gcc clk_gcc_blsp2_qup2_spi_apps_clk>;
-		clock-names = "iface_clk", "core_clk";
-		qcom,infinite-mode = <0>;
-		qcom,use-bam;
-		qcom,use-pinctrl;
-		qcom,ver-reg-exists;
-		qcom,bam-consumer-pipe-index = <6>;
-		qcom,bam-producer-pipe-index = <7>;
-		qcom,master-id = <84>;
-		status = "disabled";
-	};
 
 	i2c_1: i2c@78b5000 { /* BLSP1 QUP1 */
 		compatible = "qcom,i2c-msm-v2";
@@ -848,6 +790,34 @@
 		dma-names = "tx", "rx";
 		status = "disabled";
 	};
+
+//[FairPhone][Audio][jinjia]=2018.11.21=smart amp porting. -s
+	i2c_6: i2c@7af6000 { /* BLSP2 QUP2 */
+		compatible = "qcom,i2c-msm-v2";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		reg-names = "qup_phys_addr";
+		reg = <0x7af6000 0x600>;
+		interrupt-names = "qup_irq";
+		interrupts = <0 300 0>;
+		qcom,clk-freq-out = <400000>;
+		qcom,clk-freq-in  = <19200000>;
+		clock-names = "iface_clk", "core_clk";
+		clocks = <&clock_gcc clk_gcc_blsp2_ahb_clk>,
+			<&clock_gcc clk_gcc_blsp2_qup2_i2c_apps_clk>;
+
+		pinctrl-names = "i2c_active", "i2c_sleep";
+		pinctrl-0 = <&i2c_6_active>;
+		pinctrl-1 = <&i2c_6_sleep>;
+		qcom,noise-rjct-scl = <0>;
+		qcom,noise-rjct-sda = <0>;
+		qcom,master-id = <84>;
+		dmas = <&dma_blsp2 6 64 0x20000020 0x20>,
+			<&dma_blsp2 7 32 0x20000020 0x20>;
+		dma-names = "tx", "rx";
+		status = "ok";
+	};
+//[FairPhone][Audio][jinjia]=2018.11.21=smart amp porting. -e
 
 	slim_msm: slim@c140000{
 		cell-index = <1>;

@@ -756,3 +756,8 @@ CONFIG_QMI_ENCDEC=y
 # //<2020/04/23-louisliu, Fingerprint. Driver porting.
 CONFIG_ELAN_FINGERPRINT=y
 # //>2020/04/23-louisliu
+#[FairPhone][Audio][jinjia]=2018.11.21=smart amp porting. -s
+#add aw8898 smartpa
+CONFIG_SND_SMARTPA_AW8898=y
+#[FairPhone][Audio][jinjia]=2018.11.21=smart amp porting. -e
+
