@@ -37,12 +37,14 @@
 		compatible = "simple-bus";
 	};
 
+//[20200520][TracyChui]Implement AB partition on Android Q start
 	firmware: firmware {
 		android {
 			compatible = "android,firmware";
 			vbmeta {
 				compatible = "android,vbmeta";
-				parts = "vbmeta,boot,system,vendor,dtbo,recovery";
+				parts = "vbmeta,boot,system,vendor,dtbo"; 
+				//parts = " vbmeta,boot,system,vendor,dtbo,recovery";
 			};
 
 			fstab {
@@ -52,13 +54,15 @@
 					dev = "/dev/block/platform/soc/7824900.sdhci/by-name/vendor";
 					type = "ext4";
 					mnt_flags = "ro,barrier=1,discard";
-					fsmgr_flags = "wait,avb";
+					fsmgr_flags = "wait,slotselect,avb";
+					//fsmgr_flags = "wait,avb";
 					status = "ok";
 				};
 
 			};
 		};
 	};
+//[20200520][TracyChui]Implement AB partition on Android Q end
 
 	reserved-memory {
 		#address-cells = <2>;
