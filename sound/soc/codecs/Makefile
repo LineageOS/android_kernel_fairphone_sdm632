@@ -447,3 +447,7 @@ obj-$(CONFIG_SND_SOC_MAX98504)	+= snd-soc-max98504.o
 obj-$(CONFIG_SND_SOC_TPA6130A2)	+= snd-soc-tpa6130a2.o
 obj-$(CONFIG_SND_SOC_AW8896)	+= snd-soc-aw8896.o
 obj-$(CONFIG_SND_SOC_TFA98XX)	+= snd-soc-tfa98xx.o
+#[FairPhone][Audio][jinjia]=2018.11.21=smart amp porting. -s
+#for AWINIC AW8898 Smart PA
+obj-y += aw/aw8898.o
+#[FairPhone][Audio][jinjia]=2018.11.21=smart amp porting. -e
