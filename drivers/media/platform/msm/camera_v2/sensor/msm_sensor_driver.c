@@ -18,12 +18,16 @@
 #include "msm_cci.h"
 #include "msm_camera_dt_util.h"
 #include "msm_sensor_driver.h"
+#include "../actuator/msm_actuator.h"
 
 /* Logging macro */
 #undef CDBG
 #define CDBG(fmt, args...) pr_debug(fmt, ##args)
 
 #define SENSOR_MAX_MOUNTANGLE (360)
+
+int nActuatorAK7374 = 0;
+int nActuatorDW9800 = 0;
 
 static struct v4l2_file_operations msm_sensor_v4l2_subdev_fops;
 static int32_t msm_sensor_driver_platform_probe(struct platform_device *pdev);
@@ -1136,7 +1140,23 @@ CSID_TG:
 		goto free_camera_info;
 	}
 
+	pr_err("%s:%d s_ctrl->sensordata->actuator_name: %s\n",
+  				__func__, __LINE__,
+  				s_ctrl->sensordata->actuator_name);
+	if(strcmp(s_ctrl->sensordata->actuator_name, "ak7374") == 0){
+		nActuatorAK7374 = 1;
+		pr_err("%s:%d nActuatorAK7374: %d\n",
+  				__func__, __LINE__,
+  				nActuatorAK7374);
+	}else if(strcmp(s_ctrl->sensordata->actuator_name, "dw9800") == 0){
+		nActuatorDW9800 = 1;
+		pr_err("%s:%d nActuatorDW9800: %d\n",
+  				__func__, __LINE__,
+  				nActuatorDW9800);
+	}
+  
 	pr_err("%s probe succeeded", slave_info->sensor_name);
+	if(strcmp(slave_info->sensor_name, "imx363") == 0)pr_err("imx363 compare success");
 
 	s_ctrl->bypass_video_node_creation =
 		slave_info->bypass_video_node_creation;

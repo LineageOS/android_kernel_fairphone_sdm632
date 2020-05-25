@@ -31,6 +31,9 @@ DEFINE_MSM_MUTEX(msm_actuator_mutex);
 #define PARK_LENS_SMALL_STEP 3
 #define MAX_QVALUE 4096
 
+extern int nActuatorAK7374;
+extern int nActuatorDW9800;
+
 static struct v4l2_file_operations msm_actuator_v4l2_subdev_fops;
 static int32_t msm_actuator_power_up(struct msm_actuator_ctrl_t *a_ctrl);
 static int32_t msm_actuator_power_down(struct msm_actuator_ctrl_t *a_ctrl);
@@ -118,7 +121,21 @@ static void msm_actuator_parse_i2c_params(struct msm_actuator_ctrl_t *a_ctrl,
 				write_arr[i].data_shift) |
 				((hw_dword & write_arr[i].hw_mask) >>
 				write_arr[i].hw_shift);
-
+//[Camera] Modify for IMX363 module AF Person Liu 20190509 S
+//[Camera] Modify for IMX363 module AF Frank Cheng 20191225 S
+//[Camera] Modify for S5KGM1SP module AF Frank Cheng 20200427 S
+				/*
+				pr_err("%s:%d nActuatorAK7374: %d\n",
+  				__func__, __LINE__,
+  				nActuatorAK7374);
+				pr_err("%s:%d nActuatorDW9800: %d\n",
+  				__func__, __LINE__,
+  				nActuatorDW9800);
+				*/
+				if(nActuatorAK7374 == 0 && nActuatorDW9800 == 0)value = abs(1023-value);
+//[Camera] Modify for S5KGM1SP module AF Frank Cheng 20200427 E
+//[Camera] Modify for IMX363 module AF Frank Cheng 20191225 E
+//[Camera] Modify for IMX363 module AF Person Liu 20190509 E
 			if (write_arr[i].reg_addr != 0xFFFF) {
 				i2c_byte1 = write_arr[i].reg_addr;
 				i2c_byte2 = value;
