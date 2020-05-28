@@ -760,4 +760,10 @@ CONFIG_ELAN_FINGERPRINT=y
 #add aw8898 smartpa
 CONFIG_SND_SMARTPA_AW8898=y
 #[FairPhone][Audio][jinjia]=2018.11.21=smart amp porting. -e
+#[FairPhone][Audio][jinjia]=2020.05.19=2nd smart amp porting. -s
+CONFIG_SND_SOC_TAS2557=y
+CONFIG_TAS2557_REGMAP=y
+CONFIG_TAS2557_CODEC=y
+CONFIG_TAS2557_MISC=y
+#[FairPhone][Audio][jinjia]=2020.05.19=2nd smart amp porting. -e
 
