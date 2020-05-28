@@ -451,3 +451,4 @@ obj-$(CONFIG_SND_SOC_TFA98XX)	+= snd-soc-tfa98xx.o
 #for AWINIC AW8898 Smart PA
 obj-y += aw/aw8898.o
 #[FairPhone][Audio][jinjia]=2018.11.21=smart amp porting. -e
+obj-$(CONFIG_SND_SOC_TAS2557) += tas2557/

@@ -1105,6 +1105,8 @@ config SND_SMARTPA_AW8898
 		This option enables support for aw8898 series Smart PA.
 #[FairPhone][Audio][jinjia]=2018.11.21=smart amp porting. -e
 
+source "sound/soc/codecs/tas2557/Kconfig"
+
 config SND_SOC_TFA98XX
 	tristate "NXP Semiconductors TFA98XX amplifier"
 	depends on I2C
