@@ -69,6 +69,17 @@
 		status = "okay";
 	};
 	/* AWINIC AW8898 Smart PA End */
+
+	tas2557@4c {
+		sound-dai-cells = <1>;
+		compatible = "ti,tas2557";
+		reg = <0x4c>;
+		ti,cdc-reset-gpio = <&tlmm 21 0>;
+		ti,irq-gpio = <&tlmm 20 0>;
+		ti,i2s-bits = <16>;
+		ti,bypass-tmax = <0>;
+		status = "ok";
+	};
 };
 
 &sdhc_1 {

@@ -449,3 +449,4 @@ obj-$(CONFIG_SND_SOC_AW8896)	+= snd-soc-aw8896.o
 obj-$(CONFIG_SND_SOC_TFA98XX)	+= snd-soc-tfa98xx.o
 #for AWINIC AW8898 Smart PA
 obj-y += aw/aw8898.o
+obj-$(CONFIG_SND_SOC_TAS2557)	+= tas2557/
