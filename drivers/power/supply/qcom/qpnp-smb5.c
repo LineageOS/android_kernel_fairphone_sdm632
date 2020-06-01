@@ -1671,10 +1671,11 @@ static int smb5_init_vconn_regulator(struct smb5 *chip)
 /***************************
  * HARDWARE INITIALIZATION *
  ***************************/
+//<2018/11/27-JessicaTseng, Qualcomm's patch is to fix current consumption
 static int smb5_configure_typec(struct smb_charger *chg)
 {
 	int rc;
-	u8 val = 0;
+	u8 val = 0, rid_int_src = 0;
 
 	rc = smblib_read(chg, LEGACY_CABLE_STATUS_REG, &val);
 	if (rc < 0) {
@@ -1740,7 +1741,17 @@ static int smb5_configure_typec(struct smb_charger *chg)
 				rc);
 			return rc;
 		}
+		
+		/* Enable Water detection rid source interrupt */ 
+		rid_int_src |= TYPEC_WATER_DETECTION_INT_EN_BIT;
 	}
+	
+ 	/* Disable rid source interrupts which are not required. */ 
+	rc = smblib_write(chg, TYPE_C_INTERRUPT_EN_CFG_2_REG, rid_int_src); 
+	if (rc < 0) { 
+		dev_err(chg->dev, "Couldn't configure Type-C interrupts rc=%d\n", rc); 
+		return rc;
+	}	
 
 	/* Disable TypeC and RID change source interrupts */
 	rc = smblib_write(chg, TYPE_C_INTERRUPT_EN_CFG_2_REG, 0);
@@ -1752,6 +1763,7 @@ static int smb5_configure_typec(struct smb_charger *chg)
 
 	return rc;
 }
+//>2018/11/27-JessicaTseng
 
 static int smb5_configure_micro_usb(struct smb_charger *chg)
 {
