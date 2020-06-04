@@ -327,6 +327,8 @@
 				= <2000000 1500000 1000000 500000
 					500000 500000>;
 
+			qcom,chg-term-src = <1>;
+			qcom,chg-term-current-ma = <(-100)>;
 			qcom,chgr@1000 {
 				reg = <0x1000 0x100>;
 				interrupts =
@@ -483,7 +485,7 @@
 			#address-cells = <1>;
 			#size-cells = <1>;
 
-			qcom,qg-iterm-ma = <100>;
+			qcom,qg-iterm-ma = <150>;
 			qcom,qg-vadc = <&pmi632_vadc>;
 			qcom,pmic-revid = <&pmi632_revid>;
 
