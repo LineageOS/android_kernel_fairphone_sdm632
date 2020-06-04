@@ -332,6 +332,11 @@
 					500000 500000>;
 //>2020/04/28-JessicaTseng
 
+//<2020/06/04-JessicaTseng, modify charging termination current
+			qcom,chg-term-src = <1>;
+			qcom,chg-term-current-ma = <(-100)>;
+//>2020/06/04-JessicaTseng
+
 			qcom,chgr@1000 {
 				reg = <0x1000 0x100>;
 				interrupts =
@@ -488,7 +493,11 @@
 			#address-cells = <1>;
 			#size-cells = <1>;
 
-			qcom,qg-iterm-ma = <100>;
+//<2020/06/04-JessicaTseng, modify charging termination current
+			//qcom,qg-iterm-ma = <100>;
+			qcom,qg-iterm-ma = <150>;
+//>2020/06/04-JessicaTseng
+
 //<2020/04/24-JessicaTseng, Re-charge condition for battery to 4.3V
 			//qcom,hold-soc-while-full;
 			//qcom,linearize-soc;
