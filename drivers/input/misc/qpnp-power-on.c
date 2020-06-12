@@ -313,6 +313,8 @@ static const char * const qpnp_poff_reason[] = {
 	[39] = "Triggered from S3_RESET_KPDPWR_ANDOR_RESIN (power key and/or reset line)",
 };
 
+unsigned int qpnp_pon_reason_extern = 0;
+unsigned int qpnp_poff_reason_extern = 0;
 static int
 qpnp_pon_masked_write(struct qpnp_pon *pon, u16 addr, u8 mask, u8 val)
 {
@@ -2287,8 +2289,10 @@ static int qpnp_pon_probe(struct platform_device *pdev)
 		goto err_out;
 	}
 
-	if (sys_reset)
+	if (sys_reset) {
 		boot_reason = ffs(pon_sts);
+		qpnp_pon_reason_extern = ffs(pon_sts);
+	}
 
 	index = ffs(pon_sts) - 1;
 	cold_boot = !qpnp_pon_is_warm_reset();
@@ -2321,6 +2325,9 @@ static int qpnp_pon_probe(struct platform_device *pdev)
 			goto err_out;
 		}
 		poff_sts = buf[0] | (buf[1] << 8);
+	}
+	if (sys_reset) {
+		qpnp_poff_reason_extern = ffs(poff_sts);
 	}
 	index = ffs(poff_sts) - 1 + reason_index_offset;
 	if (index >= ARRAY_SIZE(qpnp_poff_reason) || index < 0) {
