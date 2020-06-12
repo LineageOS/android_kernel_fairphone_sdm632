@@ -82,7 +82,10 @@ extern phys_addr_t arm64_dma_phys_limit;
 #define ARCH_LOW_ADDRESS_LIMIT	(arm64_dma_phys_limit - 1)
 
 extern unsigned int boot_reason;
+extern unsigned int qpnp_pon_reason_extern;
+extern unsigned int qpnp_poff_reason_extern;
 extern unsigned int cold_boot;
+extern char ddr_vendor[32];
 
 struct debug_info {
 	/* Have we suspended stepping by a debugger? */
