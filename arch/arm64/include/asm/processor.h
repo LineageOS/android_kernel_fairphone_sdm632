@@ -81,7 +81,12 @@ extern phys_addr_t arm64_dma_phys_limit;
 #define ARCH_LOW_ADDRESS_LIMIT	(arm64_dma_phys_limit - 1)
 
 extern unsigned int boot_reason;
+/*[TracyChui] Expose power up/down reason and memory info 20200615 start */
+extern unsigned int qpnp_pon_reason_extern;
+extern unsigned int qpnp_poff_reason_extern;
 extern unsigned int cold_boot;
+extern char ddr_vendor[32];
+/*[TracyChui] Expose power up/down reason and memory info 20200615 end */
 
 struct debug_info {
 	/* Have we suspended stepping by a debugger? */

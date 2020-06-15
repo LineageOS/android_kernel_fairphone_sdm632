@@ -66,6 +66,9 @@
 #include <linux/kexec.h>
 #include <linux/bpf.h>
 #include <linux/mount.h>
+/*[TracyChui] Expose power up/down reason and memory info 20200615 start */
+#include <soc/qcom/smem.h>
+/*[TracyChui] Expose power up/down reason and memory info 20200615 end */
 
 #include <asm/uaccess.h>
 #include <asm/processor.h>
@@ -230,6 +233,10 @@ static struct ctl_table vm_table[];
 static struct ctl_table fs_table[];
 static struct ctl_table debug_table[];
 static struct ctl_table dev_table[];
+/*[TracyChui] Expose power up/down reason and memory info 20200615 start */
+static struct ctl_table qpnp_power_on_table[];
+static struct ctl_table ddr_table[];
+/*[TracyChui] Expose power up/down reason and memory info 20200615 end */
 extern struct ctl_table random_table[];
 #ifdef CONFIG_EPOLL
 extern struct ctl_table epoll_table[];
@@ -267,6 +274,13 @@ static struct ctl_table sysctl_base_table[] = {
 		.mode		= 0555,
 		.child		= dev_table,
 	},
+/*[TracyChui] Expose power up/down reason and memory info 20200615 start */
+	{
+		.procname	= "qpnp-power-on",
+		.mode		= 0555,
+		.child		= qpnp_power_on_table,
+	},
+/*[TracyChui] Expose power up/down reason and memory info 20200615 end */
 	{ }
 };
 
@@ -2089,8 +2103,42 @@ static struct ctl_table debug_table[] = {
 };
 
 static struct ctl_table dev_table[] = {
+	{
+		.procname	= "ddr",
+		.mode		= 0555,
+		.child		= ddr_table,
+	},
 	{ }
 };
+/*[TracyChui] Expose power up/down reason and memory info 20200615 start */
+static struct ctl_table qpnp_power_on_table[] = {
+	{
+		.procname	= "pon_reason",
+		.data		= &qpnp_pon_reason_extern,
+		.maxlen		= sizeof(int),
+		.mode		= 0444,
+		.proc_handler	= proc_dointvec,
+	},
+	{
+		.procname	= "poff_reason",
+		.data		= &qpnp_poff_reason_extern,
+		.maxlen		= sizeof(int),
+		.mode		= 0444,
+		.proc_handler	= proc_dointvec,
+	},
+	{ }
+};
+static struct ctl_table ddr_table[] = {
+	{
+		.procname	= "vendor",
+		.data		= &ddr_vendor,
+		.maxlen		= 32,
+		.mode		= 0444,
+		.proc_handler	= proc_dostring,
+	},
+	{ }
+};
+/*[TracyChui] Expose power up/down reason and memory info 20200615 end */
 
 int __init sysctl_init(void)
 {
