@@ -444,6 +444,10 @@ static int __qseecom_scm_call2_locked(uint32_t smc_id, struct scm_desc *desc)
 {
 	int ret = 0;
 	int retry_count = 0;
+///<<20200615 revert Qualcomm patch:CR# 2402609 and 2478458
+    if (qseecom.support_bus_scaling)
+        return scm_call2(smc_id, desc);
+///>>20200615 revert Qualcomm patch
 
 	do {
 		ret = scm_call2_noretry(smc_id, desc);
@@ -1519,14 +1523,20 @@ static int __qseecom_decrease_clk_ref_count(enum qseecom_ce_hw_instance ce)
 		qclk = &qseecom.qsee;
 	else
 		qclk = &qseecom.ce_drv;
-
-	if (qclk->clk_access_cnt > 0) {
-		qclk->clk_access_cnt--;
-	} else {
+///<<20200615 revert Qualcomm patch:CR# 2402609 and 2478458
+///	if (qclk->clk_access_cnt > 0) {
+///		qclk->clk_access_cnt--;
+///	} else {
+	if (qclk->clk_access_cnt > 2) {
 		pr_err("Invalid clock ref count %d\n", qclk->clk_access_cnt);
 		ret = -EINVAL;
+		goto err_dec_ref_cnt;
 	}
+	if (qclk->clk_access_cnt == 2)
+		qclk->clk_access_cnt--;
 
+err_dec_ref_cnt:
+///>>20200615 revert Qualcomm patch
 	mutex_unlock(&clk_access_lock);
 	return ret;
 }
