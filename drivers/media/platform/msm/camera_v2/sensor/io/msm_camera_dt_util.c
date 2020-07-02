@@ -26,6 +26,26 @@
 #undef CDBG
 #define CDBG(fmt, args...) pr_debug(fmt, ##args)
 
+//<2019/05/10-Yuting Shih.[FAIRPHONE][MISC][COMMON][CAMERA][][]Add for camera power re-open control when multicamera operate.
+#if defined( MULTI_CAMERA_POWER_ON )
+  #undef  MULTI_CAMERA_POWER_ON
+#endif
+  #define   MULTI_CAMERA_POWER_ON
+
+#if defined( CAM_DBG )
+  #undef CAM_DBG
+#endif
+
+#if defined( MULTI_CAMERA_POWER_ON )
+//#define   CAM_DBG(fmt, args...)    pr_debug(fmt, ##args)
+#define   CAM_DBG(fmt, args...)    pr_err(fmt, ##args)
+
+int   iovdd_count = 0;
+#else
+#define   CAM_DBG(fmt, args...)    do{}while(0)
+#endif /* End..(MULTI_CAMERA_POWER_ON) */
+//>2019/05/10-Yuting Shih.[FAIRPHONE][MISC][COMMON][CAMERA][][].
+
 int msm_camera_fill_vreg_params(struct camera_vreg_t *cam_vreg,
 	int num_vreg, struct msm_sensor_power_setting *power_setting,
 	uint16_t power_setting_size)
