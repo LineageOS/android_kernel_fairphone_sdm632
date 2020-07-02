@@ -46,7 +46,7 @@
 #define	PPC_DRIVER_MTPLLSRC			0x00000400
 #define	PPC_DRIVER_CFGDEV_NONCRC	0x00000101
 
-#define TAS2557_CAL_NAME    "/data/tas2557_cal.bin"
+#define TAS2557_CAL_NAME    "/mnt/vendor/persist/tas2557_cal.bin"
 #define RESTART_MAX 3
 
 static int tas2557_load_calibration(struct tas2557_priv *pTAS2557,
