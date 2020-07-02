@@ -46,7 +46,10 @@
 #define	PPC_DRIVER_MTPLLSRC			0x00000400
 #define	PPC_DRIVER_CFGDEV_NONCRC	0x00000101
 
-#define TAS2557_CAL_NAME    "/data/tas2557_cal.bin"
+//[FairPhone][Audio][jinjia]=2020.07.01=Read the calibration data from persist to adjust speaker performance. -s
+//#define TAS2557_CAL_NAME    "/data/tas2557_cal.bin"
+#define TAS2557_CAL_NAME    "/mnt/vendor/persist/tas2557_cal.bin"
+//[FairPhone][Audio][jinjia]=2020.07.01=Read the calibration data from persist to adjust speaker performance. -e
 #define RESTART_MAX 3
 
 static int tas2557_load_calibration(struct tas2557_priv *pTAS2557,
