@@ -1532,10 +1532,32 @@ int msm_camera_power_up(struct msm_camera_power_ctrl_t *ctrl,
 			CDBG("%s:%d gpio set val %d\n", __func__, __LINE__,
 				ctrl->gpio_conf->gpio_num_info->gpio_num
 				[power_setting->seq_val]);
+		//<2019/05/10-Yuting Shih.[FAIRPHONE][MISC][COMMON][CAMERA][][]Add for camera power re-open control when multicamera operate.
+		#if defined( MULTI_CAMERA_POWER_ON )
+			if( power_setting->seq_val == SENSOR_GPIO_VIO )
+			{
+				CAM_DBG("[%s][Arima] 1.Set common gpio. Loop %d\n", __func__, iovdd_count );
+				if( iovdd_count == 0 )
+				{
+					gpio_set_value_cansleep(
+						ctrl->gpio_conf->gpio_num_info->gpio_num[power_setting->seq_val],
+						(int) power_setting->config_val );
+				}
+				iovdd_count++;
+			}
+			else
+			{
+				gpio_set_value_cansleep(
+					ctrl->gpio_conf->gpio_num_info->gpio_num[power_setting->seq_val],
+					(int) power_setting->config_val);
+			}
+		#else /** Default **/
 			gpio_set_value_cansleep(
 				ctrl->gpio_conf->gpio_num_info->gpio_num
 				[power_setting->seq_val],
 				(int) power_setting->config_val);
+		#endif /* End..(MULTI_CAMERA_POWER_ON) */
+		//>2019/05/10-Yuting Shih.[FAIRPHONE][MISC][COMMON][CAMERA][][].
 			break;
 		case SENSOR_VREG:
 			if (power_setting->seq_val == INVALID_VREG)
@@ -1608,9 +1630,31 @@ power_up_failed:
 			if (!ctrl->gpio_conf->gpio_num_info->valid
 				[power_setting->seq_val])
 				continue;
+		//<2019/05/10-Yuting Shih.[FAIRPHONE][MISC][COMMON][CAMERA][][]Add for camera power re-open control when multicamera operate.
+		#if defined( MULTI_CAMERA_POWER_ON )
+			if( power_setting->seq_val == SENSOR_GPIO_VIO )
+			{
+				iovdd_count --;
+				if( iovdd_count == 0 )
+				{
+					gpio_set_value_cansleep(
+						ctrl->gpio_conf->gpio_num_info->gpio_num[power_setting->seq_val],
+						GPIOF_OUT_INIT_LOW );
+				}
+				CAM_DBG("[%s][Arima] 2.Set common gpio. Loop %d\n", __func__, iovdd_count );
+			}
+			else
+			{
+				gpio_set_value_cansleep(
+					ctrl->gpio_conf->gpio_num_info->gpio_num
+					[power_setting->seq_val], GPIOF_OUT_INIT_LOW);
+			}
+		#else /** Default **/
 			gpio_set_value_cansleep(
 				ctrl->gpio_conf->gpio_num_info->gpio_num
 				[power_setting->seq_val], GPIOF_OUT_INIT_LOW);
+		#endif  /* end..(MULTI_CAMERA_POWER_ON) */
+		//>2019/05/10-Yuting Shih.[FAIRPHONE][MISC][COMMON][CAMERA][][].
 			break;
 		case SENSOR_VREG:
 			if (power_setting->seq_val < ctrl->num_vreg)
@@ -1735,10 +1779,32 @@ int msm_camera_power_down(struct msm_camera_power_ctrl_t *ctrl,
 			if (!ctrl->gpio_conf->gpio_num_info->valid
 				[pd->seq_val])
 				continue;
+		//<2019/05/10-Yuting Shih.[FAIRPHONE][MISC][COMMON][CAMERA][][]Add for camera power re-open control when multicamera operate.
+		#if defined( MULTI_CAMERA_POWER_ON )
+			if( pd->seq_val == SENSOR_GPIO_VIO )
+			{
+				iovdd_count --;
+				if( iovdd_count == 0 )
+				{
+					gpio_set_value_cansleep(
+						ctrl->gpio_conf->gpio_num_info->gpio_num[pd->seq_val],
+						(int) pd->config_val );
+				}
+				CAM_DBG("[%s][Arima] 3.Set common gpio. Loop %d\n", __func__, iovdd_count );
+			}
+			else
+			{
+				gpio_set_value_cansleep(
+					ctrl->gpio_conf->gpio_num_info->gpio_num[pd->seq_val],
+					(int) pd->config_val );
+			}
+		#else /** Default **/
 			gpio_set_value_cansleep(
 				ctrl->gpio_conf->gpio_num_info->gpio_num
 				[pd->seq_val],
 				(int) pd->config_val);
+		#endif  /* end..(MULTI_CAMERA_POWER_ON) */
+		//>2019/05/10-Yuting Shih.[FAIRPHONE][MISC][COMMON][CAMERA][][].
 			break;
 		case SENSOR_VREG:
 			if (pd->seq_val == INVALID_VREG)
