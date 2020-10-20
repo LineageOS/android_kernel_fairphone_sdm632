@@ -44,7 +44,7 @@
 			compatible = "android,firmware";
 			vbmeta {
 				compatible = "android,vbmeta";
-				parts = "vbmeta,boot,system,vendor,dtbo,product"; 
+				parts = "vbmeta,boot,system,vendor,dtbo";
 				//parts = " vbmeta,boot,system,vendor,dtbo,recovery";
 			};
 
@@ -55,16 +55,7 @@
 					dev = "/dev/block/platform/soc/7824900.sdhci/by-name/vendor";
 					type = "ext4";
 					mnt_flags = "ro,barrier=1,discard";
-					fsmgr_flags = "wait,slotselect,avb";
-					//fsmgr_flags = "wait,avb";
-					status = "ok";
-				};
-        product {
-					compatible = "android,product";
-					dev = "/dev/block/platform/soc/7824900.sdhci/by-name/product";
-					type = "ext4";
-					mnt_flags = "ro,barrier=1,discard";
-					fsmgr_flags = "wait,slotselect,avb";
+					fsmgr_flags = "wait,slotselect";
 					status = "ok";
 				};
 			};
