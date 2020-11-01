@@ -37,15 +37,12 @@
 		compatible = "simple-bus";
 	};
 
-//[FairPhone][Storage][JasonHsing] To enable A/B support 20190129 BEGIN--
-//[FairPhone][Storage][JasonHsing] Add product image and mount partition_3 20190529 BEGIN--
-
 	firmware: firmware {
 		android {
 			compatible = "android,firmware";
 			vbmeta {
 				compatible = "android,vbmeta";
-				parts = "vbmeta,boot,system,vendor,dtbo,product";
+				parts = "vbmeta,boot,system,vendor,dtbo";
 			};
 
 			fstab {
@@ -58,19 +55,9 @@
 					fsmgr_flags = "wait,slotselect,avb";
 					status = "ok";
 				};
-				product {
-					compatible = "android,product";
-					dev = "/dev/block/platform/soc/7824900.sdhci/by-name/product";
-					type = "ext4";
-					mnt_flags = "ro,barrier=1,discard";
-					fsmgr_flags = "wait,slotselect,avb";
-					status = "ok";
-				};
 			};
 		};
 	};
-//[FairPhone][Storage][JasonHsing] Add product image and mount partition_3 20190529 END--
-//[FairPhone][Storage][JasonHsing] To enable A/B support 20190129 END--
 
 	reserved-memory {
 		#address-cells = <2>;
