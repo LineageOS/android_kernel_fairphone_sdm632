@@ -5964,6 +5964,8 @@ tSirRetStatus limSendAddBARsp( tpAniSirGlobal pMac,
       frmAddBARsp.AddBAParameterSet.policy = pMlmAddBARsp->baPolicy;
       frmAddBARsp.AddBAParameterSet.bufferSize = pMlmAddBARsp->baBufferSize;
 
+      // To fix AP-11ac test case 4.2.30 of WFA certification. BEGIN
+      /*
       if(psessionEntry->isAmsduSupportInAMPDU)
       {
          frmAddBARsp.AddBAParameterSet.amsduSupported =
@@ -5973,6 +5975,9 @@ tSirRetStatus limSendAddBARsp( tpAniSirGlobal pMac,
       {
          frmAddBARsp.AddBAParameterSet.amsduSupported = 0;
       }
+      */
+      frmAddBARsp.AddBAParameterSet.amsduSupported = 1;
+      // To fix AP-11ac test case 4.2.30 of WFA certification. END
 
       // BA timeout
       // 0 - indicates no BA timeout

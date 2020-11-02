@@ -3979,6 +3979,10 @@ static int hdd_driver_command(hdd_adapter_t *pAdapter,
        {
            tANI_U8 *ptr = command ;
 
+           // FEATURE: Select frequency band. BEGIN
+           printk(KERN_DEBUG"Receive SETBAND command from framework.\n");
+           // FEATURE: Select frequency band. END
+
            ret = hdd_drv_cmd_validate(command, 7);
            if (ret)
                goto exit;
