@@ -46,7 +46,8 @@ enum nfcc_initial_core_reset_ntf {
 enum nfcc_chip_variant {
 	NFCC_NQ_210			= 0x48,	/**< NFCC NQ210 */
 	NFCC_NQ_220			= 0x58,	/**< NFCC NQ220 */
-	NFCC_NQ_310			= 0x40,	/**< NFCC NQ310 */
+	NFCC_PN553_A0			= 0x40,	/**< NFCC PN553_A0 */
+	NFCC_NQ_310			= 0x41,	/**< NFCC NQ310 */
 	NFCC_NQ_330			= 0x51,	/**< NFCC NQ330 */
 	NFCC_SN100_A			= 0xa3,	/**< NFCC SN100_A */
 	NFCC_SN100_B			= 0xa4,	/**< NFCC SN100_B */
