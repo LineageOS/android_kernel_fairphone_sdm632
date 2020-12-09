@@ -31,7 +31,7 @@ unsigned char i_CTPM_FW_HX83112A[]=
 };
 unsigned char i_CTPM_FW_HX83112B[]=
 {
-#include "FP_DJN_Arima_CID0804_D02_C14_20190903.i"
+#include "FP_DJN_Arima_CID0804_D02_C15_20201209.i"
 };
 
 #endif
