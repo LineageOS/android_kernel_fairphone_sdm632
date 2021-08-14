@@ -26,7 +26,6 @@ TARGET_KERNEL_HEADER_ARCH := $(strip $(TARGET_KERNEL_HEADER_ARCH))
 ifeq ($(TARGET_KERNEL_HEADER_ARCH),)
 KERNEL_HEADER_ARCH := $(KERNEL_ARCH)
 else
-$(warning Forcing kernel header generation only for '$(TARGET_KERNEL_HEADER_ARCH)')
 KERNEL_HEADER_ARCH := $(TARGET_KERNEL_HEADER_ARCH)
 endif
 
@@ -52,7 +51,6 @@ ifeq ($(KERNEL_LLVM_SUPPORT), true)
     $(warning "Using sdllvm" $(KERNEL_LLVM_BIN))
   else
      KERNEL_LLVM_BIN := $(shell pwd)/$(CLANG) #Using aosp-llvm compiler
-    $(warning "Using aosp-llvm" $(KERNEL_LLVM_BIN))
   endif
 endif
 
