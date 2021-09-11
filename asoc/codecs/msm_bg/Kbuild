@@ -8,7 +8,6 @@ ifeq ($(KERNEL_BUILD), 0)
 	# Need to explicitly configure for Android-based builds
 	ifeq ($(CONFIG_ARCH_MSM8909), y)
 		include $(AUDIO_ROOT)/config/msm8909auto.conf
-		export
 	endif
 endif
 

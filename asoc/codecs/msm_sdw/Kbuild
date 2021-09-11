@@ -17,27 +17,22 @@ endif
 ifeq ($(KERNEL_BUILD), 0)
 	ifeq ($(CONFIG_ARCH_SDM845), y)
 		include $(AUDIO_ROOT)/config/sdm845auto.conf
-		export
 		INCS    +=  -include $(AUDIO_ROOT)/config/sdm845autoconf.h
 	endif
 	ifeq ($(CONFIG_ARCH_SDM670), y)
 		include $(AUDIO_ROOT)/config/sdm710auto.conf
-		export
 		INCS    +=  -include $(AUDIO_ROOT)/config/sdm710autoconf.h
 	endif
 	ifeq ($(CONFIG_ARCH_SDM450), y)
 		include $(AUDIO_ROOT)/config/sdm450auto.conf
-		export
 		INCS    +=  -include $(AUDIO_ROOT)/config/sdm450autoconf.h
 	endif
 	ifeq ($(CONFIG_ARCH_SDM439), y)
 		include $(AUDIO_ROOT)/config/sdm450auto.conf
-		export
 		INCS    +=  -include $(AUDIO_ROOT)/config/sdm450autoconf.h
 	endif
 	ifeq ($(CONFIG_ARCH_MSM8917), y)
 		include $(AUDIO_ROOT)/config/sdm450auto.conf
-		export
 		INCS    +=  -include $(AUDIO_ROOT)/config/sdm450autoconf.h
 	endif
 endif
