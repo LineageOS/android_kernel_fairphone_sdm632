@@ -813,7 +813,7 @@ static int get_time_to_full_locked(struct ttf *ttf, int *val)
 	}
 
 	if (!valid) {
-		*val = -EINVAL;
+		*val = -1;
 		return 0;
 	}
 
@@ -824,7 +824,7 @@ static int get_time_to_full_locked(struct ttf *ttf, int *val)
 	}
 
 	if (charge_status != POWER_SUPPLY_STATUS_CHARGING) {
-		*val = -EINVAL;
+		*val = -1;
 		return 0;
 	}
 
@@ -1145,7 +1145,7 @@ int ttf_get_time_to_empty(struct ttf *ttf, int *val)
 	}
 
 	if (!valid) {
-		*val = -EINVAL;
+		*val = -1;
 		return 0;
 	}
 
@@ -1156,7 +1156,7 @@ int ttf_get_time_to_empty(struct ttf *ttf, int *val)
 	}
 
 	if (charge_status == POWER_SUPPLY_STATUS_CHARGING) {
-		*val = -EINVAL;
+		*val = -1;
 		return 0;
 	}
 
