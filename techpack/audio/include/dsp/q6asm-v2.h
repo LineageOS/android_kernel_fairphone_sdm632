@@ -603,8 +603,10 @@ int q6asm_media_format_block_amrwbplus(struct audio_client *ac,
 int q6asm_stream_media_format_block_flac(struct audio_client *ac,
 			struct asm_flac_cfg *cfg, int stream_id);
 
+#ifdef ALAC_SUPPORTED
 int q6asm_media_format_block_alac(struct audio_client *ac,
 			struct asm_alac_cfg *cfg, int stream_id);
+#endif
 
 int q6asm_media_format_block_g711(struct audio_client *ac,
 			struct asm_g711_dec_cfg *cfg, int stream_id);

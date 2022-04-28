@@ -7209,6 +7209,7 @@ fail_cmd:
 }
 EXPORT_SYMBOL(q6asm_stream_media_format_block_flac);
 
+#ifdef ALAC_SUPPORTED
 /**
  * q6asm_media_format_block_alac -
  *       command to set mediafmt block for alac on ASM stream
@@ -7275,6 +7276,7 @@ fail_cmd:
 	return rc;
 }
 EXPORT_SYMBOL(q6asm_media_format_block_alac);
+#endif
 
 /*
  * q6asm_media_format_block_g711 - sends g711 decoder configuration

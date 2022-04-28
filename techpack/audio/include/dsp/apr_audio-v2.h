@@ -4406,6 +4406,7 @@ struct asm_flac_cfg {
 	u16 md5_sum;
 };
 
+#ifdef ALAC_SUPPORTED
 struct asm_alac_cfg {
 	u32 frame_length;
 	u8 compatible_version;
@@ -4420,6 +4421,7 @@ struct asm_alac_cfg {
 	u32 sample_rate;
 	u32 channel_layout_tag;
 };
+#endif
 
 struct asm_g711_dec_cfg {
 	u32 sample_rate;
@@ -5401,6 +5403,7 @@ struct asm_flac_fmt_blk_v2 {
 
 } __packed;
 
+#ifdef ALAC_SUPPORTED
 struct asm_alac_fmt_blk_v2 {
 	struct apr_hdr hdr;
 	struct asm_data_cmd_media_fmt_update_v2 fmtblk;
@@ -5419,6 +5422,7 @@ struct asm_alac_fmt_blk_v2 {
 	u32 channel_layout_tag;
 
 } __packed;
+#endif
 
 struct asm_g711_dec_fmt_blk_v2 {
 	struct apr_hdr hdr;
