@@ -82,7 +82,9 @@ ifdef CONFIG_MSM_QDSP6V2_CODECS
 	NATIVE_OBJS += amrnb_in.o
 	NATIVE_OBJS += amrwb_in.o
 	NATIVE_OBJS += audio_aac.o
+ifdef ALAC_SUPPORTED
 	NATIVE_OBJS += audio_alac.o
+endif
 	NATIVE_OBJS += audio_amrnb.o
 	NATIVE_OBJS += audio_amrwb.o
 	NATIVE_OBJS += audio_amrwbplus.o

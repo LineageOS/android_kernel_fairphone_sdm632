@@ -962,7 +962,9 @@ static int msm_compr_send_media_format_block(struct snd_compr_stream *cstream,
 	struct asm_wmapro_cfg wma_pro_cfg;
 	struct asm_flac_cfg flac_cfg;
 	struct asm_vorbis_cfg vorbis_cfg;
+#ifdef ALAC_SUPPORTED
 	struct asm_alac_cfg alac_cfg;
+#endif
 	struct asm_ape_cfg ape_cfg;
 	struct asm_dsd_cfg dsd_cfg;
 	struct aptx_dec_bt_addr_cfg aptx_cfg;
@@ -1150,6 +1152,7 @@ static int msm_compr_send_media_format_block(struct snd_compr_stream *cstream,
 
 		break;
 	case FORMAT_ALAC:
+#ifdef ALAC_SUPPORTED
 		pr_debug("%s: SND_AUDIOCODEC_ALAC\n", __func__);
 		memset(&alac_cfg, 0x0, sizeof(struct asm_alac_cfg));
 		alac_cfg.num_channels = prtd->num_channels;
@@ -1172,6 +1175,9 @@ static int msm_compr_send_media_format_block(struct snd_compr_stream *cstream,
 		if (ret < 0)
 			pr_err("%s: CMD Format block failed ret %d\n",
 					__func__, ret);
+#else
+		pr_err("%s: ALAC is not supported.\n", __func__);
+#endif
 		break;
 	case FORMAT_APE:
 		pr_debug("%s: SND_AUDIOCODEC_APE\n", __func__);
@@ -2034,8 +2040,13 @@ static int msm_compr_set_params(struct snd_compr_stream *cstream,
 	}
 
 	case SND_AUDIOCODEC_ALAC: {
+#ifdef ALAC_SUPPORTED
 		pr_debug("%s: SND_AUDIOCODEC_ALAC\n", __func__);
 		prtd->codec = FORMAT_ALAC;
+#else
+		pr_err("%s: ALAC codec not supported\n", __func__);
+		return -EINVAL;
+#endif
 		break;
 	}
 
@@ -2939,7 +2950,9 @@ static int msm_compr_get_codec_caps(struct snd_compr_stream *cstream,
 	case SND_AUDIOCODEC_EAC3:
 	case SND_AUDIOCODEC_FLAC:
 	case SND_AUDIOCODEC_VORBIS:
+#ifdef ALAC_SUPPORTED
 	case SND_AUDIOCODEC_ALAC:
+#endif
 	case SND_AUDIOCODEC_APE:
 	case SND_AUDIOCODEC_DTS:
 	case SND_AUDIOCODEC_DSD:
@@ -2947,6 +2960,9 @@ static int msm_compr_get_codec_caps(struct snd_compr_stream *cstream,
 	case SND_AUDIOCODEC_IEC61937:
 	case SND_AUDIOCODEC_APTX:
 		break;
+#ifndef ALAC_SUPPORTED
+	case SND_AUDIOCODEC_ALAC:
+#endif
 	default:
 		pr_err("%s: Unsupported audio codec %d\n",
 			__func__, codec->codec);
@@ -3079,7 +3095,9 @@ static int msm_compr_set_next_track_param(struct snd_compr_stream *cstream,
 	case FORMAT_WMA_V10PRO:
 	case FORMAT_FLAC:
 	case FORMAT_VORBIS:
+#ifdef ALAC_SUPPORTED
 	case FORMAT_ALAC:
+#endif
 	case FORMAT_APE:
 		memcpy(&(prtd->gapless_state.codec_options),
 			codec_options,
@@ -3092,6 +3110,12 @@ static int msm_compr_set_next_track_param(struct snd_compr_stream *cstream,
 		}
 		break;
 
+#ifndef ALAC_SUPPORTED
+	case FORMAT_ALAC:
+		pr_debug("%s: Ignore sending CMD Format block for unsupported ALAC.\n",
+			__func__);
+		break;
+#endif
 	default:
 		pr_debug("%s: Ignore sending CMD Format block\n",
 			__func__);
@@ -3475,7 +3499,9 @@ static int msm_compr_dec_params_put(struct snd_kcontrol *kcontrol,
 	case FORMAT_MPEG4_AAC:
 	case FORMAT_FLAC:
 	case FORMAT_VORBIS:
+#ifdef ALAC_SUPPORTED
 	case FORMAT_ALAC:
+#endif
 	case FORMAT_APE:
 	case FORMAT_DTS:
 	case FORMAT_DSD:
@@ -3485,6 +3511,11 @@ static int msm_compr_dec_params_put(struct snd_kcontrol *kcontrol,
 		pr_debug("%s: no runtime parameters for codec: %d\n", __func__,
 			 prtd->codec);
 		break;
+#ifndef ALAC_SUPPORTED
+	case FORMAT_ALAC:
+		pr_debug("%s: ALAC codec unsupported.\n", __func__);
+		break;
+#endif
 	case FORMAT_AC3:
 	case FORMAT_EAC3: {
 		struct snd_dec_ddp *ddp = &dec_params->ddp_params;

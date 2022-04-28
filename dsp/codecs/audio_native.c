@@ -22,7 +22,9 @@ static int __init audio_native_init(void)
 	amrnb_in_init();
 	amrwb_in_init();
 	audio_aac_init();
+#ifdef ALAC_SUPPORTED
 	audio_alac_init();
+#endif
 	audio_amrnb_init();
 	audio_amrwb_init();
 	audio_amrwbplus_init();
@@ -49,7 +51,9 @@ static void __exit audio_native_exit(void)
 	amrnb_in_exit();
 	amrwb_in_exit();
 	audio_aac_exit();
+#ifdef ALAC_SUPPORTED
 	audio_alac_exit();
+#endif
 	audio_amrnb_exit();
 	audio_amrwb_exit();
 	audio_amrwbplus_exit();
