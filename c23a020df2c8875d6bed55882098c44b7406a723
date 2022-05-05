@@ -16,6 +16,24 @@
       "message": "Maybe you want to pick https://github.com/LineageOS/android_kernel_xiaomi_sdm845/commit/6473297d69d0a1c3f353a807b76691d935bbfc47 instead (provided that the same mismerge happpened here).",
       "revId": "c23a020df2c8875d6bed55882098c44b7406a723",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5fadf3fc_7a55473f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 28232
+      },
+      "writtenOn": "2022-05-05T13:42:28Z",
+      "side": 1,
+      "message": "Thanks. I had taken this but it didn\u0027t have a Change-Id and Gerrit rejected it.\nShall I create a new one and resubmit it?",
+      "parentUuid": "9d089640_97e2931f",
+      "revId": "c23a020df2c8875d6bed55882098c44b7406a723",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
