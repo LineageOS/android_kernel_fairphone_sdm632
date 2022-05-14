@@ -70,6 +70,24 @@
       "parentUuid": "5fadf3fc_7a55473f",
       "revId": "c23a020df2c8875d6bed55882098c44b7406a723",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce9b198c_9681d05a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 28232
+      },
+      "writtenOn": "2022-05-14T06:46:35Z",
+      "side": 1,
+      "message": "Hi Bruno, I tried your suggestion and it is causing some unexpected issue. So, I\u0027d like to retain this change for now.",
+      "parentUuid": "3e62182a_cf7f2cd1",
+      "revId": "c23a020df2c8875d6bed55882098c44b7406a723",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
