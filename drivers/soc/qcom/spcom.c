@@ -116,7 +116,7 @@
 
 /*
  * After both sides get CONNECTED,
- * there is a race between one side queueing rx buffer and the other side
+ * there is a race between one side queuing rx buffer and the other side
  * trying to call glink_tx() , this race is only on the 1st tx.
  * Do tx retry with some delay to allow the other side to queue rx buffer.
  */
