@@ -154,14 +154,8 @@ static int timer_in_progress;
 static int diag_mask_clear_param = 1;
 module_param(diag_mask_clear_param, int, 0644);
 
-struct diag_apps_data_t {
-	void *buf;
-	uint32_t len;
-	int ctxt;
-};
-
-static struct diag_apps_data_t hdlc_data;
-static struct diag_apps_data_t non_hdlc_data;
+struct diag_apps_data_t hdlc_data;
+struct diag_apps_data_t non_hdlc_data;
 static struct mutex apps_data_mutex;
 
 #define DIAGPKT_MAX_DELAYED_RSP 0xFFFF

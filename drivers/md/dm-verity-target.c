@@ -21,6 +21,8 @@
 #include <linux/module.h>
 #include <linux/reboot.h>
 #include <linux/vmalloc.h>
+#include <linux/io.h>
+#include <linux/input/qpnp-power-on.h>
 
 #define DM_MSG_PREFIX			"verity"
 
@@ -254,6 +256,13 @@ out:
 		kernel_restart("dm-verity device corrupted");
 	}
 
+	if (v->mode == DM_VERITY_MODE_EIO) {
+#ifdef CONFIG_DM_VERITY_AVB
+		dm_verity_avb_error_handler();
+#endif
+		qpnp_pon_set_restart_reason(
+			PON_RESTART_REASON_DMVERITY_CORRUPTED);
+	}
 	return 1;
 }
 
@@ -1205,6 +1214,7 @@ EXPORT_SYMBOL_GPL(verity_ctr);
 
 static struct target_type verity_target = {
 	.name		= "verity",
+	.features	= DM_TARGET_IMMUTABLE,
 	.version	= {1, 4, 0},
 	.module		= THIS_MODULE,
 	.ctr		= verity_ctr,
