@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "34631bd7_f7145d1c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 28232
+      },
+      "writtenOn": "2022-07-10T14:48:20Z",
+      "side": 1,
+      "message": "Causing some failures in xTS.\n\nLet\u0027s hold this for now.",
+      "revId": "acac482669aa295d802099ee5fceb3aca5837b54",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
