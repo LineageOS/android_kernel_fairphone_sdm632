@@ -24,7 +24,7 @@ ifneq ($(findstring opensource,$(LOCAL_PATH)),)
 	AUDIO_BLD_DIR := $(shell pwd)/vendor/qcom/opensource/audio-kernel
 endif # opensource
 
-DLKM_DIR := $(TOP)/device/qcom/common/dlkm
+DLKM_DIR := $(TOP)/$(FP_PATH)/dlkm
 
 # Build audio.ko as $(AUDIO_CHIPSET)_audio.ko
 ###########################################################

@@ -40,7 +40,7 @@ endif # opensource
 ifeq ($(AUDIO_FEATURE_ENABLED_DLKM_8909W),true)
 DLKM_DIR := $(TOP)/device/qcom/msm8909w/common/dlkm
 else
-DLKM_DIR := $(TOP)/device/qcom/common/dlkm
+DLKM_DIR := $(TOP)/$(FP_PATH)/dlkm
 endif
 
 # Build audio.ko as $(AUDIO_CHIPSET)_audio.ko
