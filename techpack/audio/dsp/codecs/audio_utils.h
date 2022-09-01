@@ -116,7 +116,9 @@ int aac_in_init(void);
 int amrnb_in_init(void);
 int amrwb_in_init(void);
 int audio_aac_init(void);
+#ifdef ALAC_SUPPORTED
 int audio_alac_init(void);
+#endif
 int audio_amrnb_init(void);
 int audio_amrwb_init(void);
 int audio_amrwbplus_init(void);
@@ -138,7 +140,9 @@ void aac_in_exit(void);
 void amrnb_in_exit(void);
 void amrwb_in_exit(void);
 void audio_aac_exit(void);
+#ifdef ALAC_SUPPORTED
 void audio_alac_exit(void);
+#endif
 void audio_amrnb_exit(void);
 void audio_amrwb_exit(void);
 void audio_amrwbplus_exit(void);

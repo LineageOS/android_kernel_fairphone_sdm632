@@ -11,6 +11,7 @@
  */
 
 #include <linux/of.h>
+#include <linux/gpio.h>
 #include <sound/core.h>
 #include <sound/soc.h>
 #include <sound/soc-dapm.h>
@@ -20,6 +21,10 @@
 #include "codecs/wcd9335.h"
 
 #define DEV_NAME_STR_LEN            32
+
+#define PSTAGE_0 97
+#define PSTAGE_1 98
+#define PSTAGE_2 99
 
 /* dummy definition of below deprecated FE DAI's*/
 enum {
@@ -1289,14 +1294,15 @@ static struct snd_soc_dai_link msm8952_common_be_dai[] = {
 	},
 };
 
-static struct snd_soc_dai_link msm8952_hdmi_dba_dai_link[] = {
+static struct snd_soc_dai_link msm8952_quin_dai_link[] = {
 	{
 		.name = LPASS_BE_QUIN_MI2S_RX,
 		.stream_name = "Quinary MI2S Playback",
 		.cpu_dai_name = "msm-dai-q6-mi2s.5",
 		.platform_name = "msm-pcm-routing",
-		.codec_dai_name = "msm_hdmi_dba_codec_rx_dai",
-		.codec_name = "msm-hdmi-dba-codec-rx",
+		.codec_dai_name = "aw8898-aif",
+		.codec_name = "aw8898_smartpa",
+		.dai_fmt = SND_SOC_DAIFMT_I2S | SND_SOC_DAIFMT_NB_NF | SND_SOC_DAIFMT_CBS_CFS,
 		.no_pcm = 1,
 		.dpcm_playback = 1,
 		.id = MSM_BACKEND_DAI_QUINARY_MI2S_RX,
@@ -1307,14 +1313,14 @@ static struct snd_soc_dai_link msm8952_hdmi_dba_dai_link[] = {
 	},
 };
 
-static struct snd_soc_dai_link msm8952_quin_dai_link[] = {
+static struct snd_soc_dai_link msm8952_quin_dai_link_tas2557[] = {
 	{
 		.name = LPASS_BE_QUIN_MI2S_RX,
 		.stream_name = "Quinary MI2S Playback",
 		.cpu_dai_name = "msm-dai-q6-mi2s.5",
 		.platform_name = "msm-pcm-routing",
-		.codec_dai_name = "snd-soc-dummy-dai",
-		.codec_name = "snd-soc-dummy",
+		.codec_dai_name = "tas2557 ASI1",
+		.codec_name = "tas2557.6-004c",
 		.no_pcm = 1,
 		.dpcm_playback = 1,
 		.id = MSM_BACKEND_DAI_QUINARY_MI2S_RX,
@@ -1401,7 +1407,7 @@ ARRAY_SIZE(msm8952_tasha_fe_dai) +
 ARRAY_SIZE(msm8952_tdm_fe_dai) +
 ARRAY_SIZE(msm8952_common_be_dai) +
 ARRAY_SIZE(msm8952_tasha_be_dai) +
-ARRAY_SIZE(msm8952_hdmi_dba_dai_link) +
+ARRAY_SIZE(msm8952_quin_dai_link) +
 ARRAY_SIZE(msm8952_tdm_be_dai_link)];
 
 int msm8952_init_wsa_dev(struct platform_device *pdev,
@@ -1592,6 +1598,10 @@ struct snd_soc_card *populate_snd_card_dailinks(struct device *dev)
 	struct snd_soc_card *card = &snd_soc_card_msm_card;
 	struct snd_soc_dai_link *msm8952_dai_links = NULL;
 	int num_links, ret, len1, len2, len3, len4, len5 = 0;
+	int pstage_0 = 0; //GPIO 97
+	int pstage_1 = 0; //GPIO 98
+	int pstage_2 = 0; //GPIO 99
+
 	enum codec_variant codec_ver = 0;
 	const char *tasha_lite[NUM_OF_TASHA_LITE_DEVICE] = {
 		"msm8952-tashalite-snd-card",
@@ -1636,14 +1646,51 @@ struct snd_soc_card *populate_snd_card_dailinks(struct device *dev)
 			msm8952_tasha_be_dai, sizeof(msm8952_tasha_be_dai));
 		msm8952_dai_links = msm8952_tasha_dai_links;
 	}
-	if (of_property_read_bool(dev->of_node, "qcom,hdmi-dba-codec-rx")) {
-		dev_dbg(dev, "%s(): hdmi dba audio support present\n",
-				__func__);
-		memcpy(msm8952_dai_links + len5, msm8952_hdmi_dba_dai_link,
-			sizeof(msm8952_hdmi_dba_dai_link));
-		len5 += ARRAY_SIZE(msm8952_hdmi_dba_dai_link);
+
+	//PSTAGE_0
+	ret = gpio_request(PSTAGE_0,"PSTAGE_0 GPIO_97");
+
+	if (ret<0) {
+		printk("PSTAGE_0 failed to request \n");
 	} else {
-		dev_dbg(dev, "%s(): No hdmi dba present, add quin dai\n",
+		gpio_direction_input(PSTAGE_0);
+	}
+	pstage_0 = gpio_get_value(PSTAGE_0);
+	gpio_free(PSTAGE_0);
+
+	//PSTAGE_1
+	ret = gpio_request(PSTAGE_1,"PSTAGE_1 GPIO_98");
+
+	if (ret<0) {
+		printk("PSTAGE_1 failed to request \n");
+	} else {
+		gpio_direction_input(PSTAGE_1);
+	}
+	pstage_1 = gpio_get_value(PSTAGE_1);
+	gpio_free(PSTAGE_1);
+
+	//PSTAGE_2
+	ret = gpio_request(PSTAGE_2,"PSTAGE_2 GPIO_99");
+
+	if (ret<0) {
+		printk("PSTAGE_2 failed to request \n");
+	} else {
+		gpio_direction_input(PSTAGE_2);
+	}
+	pstage_2 = gpio_get_value(PSTAGE_2);
+	gpio_free(PSTAGE_2);
+
+	if (pstage_2 == 1 && ((pstage_1 || pstage_0) == 1)) {
+		//PCB Variant : 8903MP and newer variants (PCB Variant = HLH,HHL,HHH)
+
+		dev_dbg(dev, "%s(): No aw8898 present, add quin dai for tas2257\n",
+				__func__);
+		memcpy(msm8952_dai_links + len5, msm8952_quin_dai_link_tas2557,
+			sizeof(msm8952_quin_dai_link_tas2557));
+		len5 += ARRAY_SIZE(msm8952_quin_dai_link_tas2557);
+	} else {
+		//PCB Variant : EP0 ~ 8901MP
+		dev_dbg(dev, "%s(): No tas2257 present, add quin dai for aw8898\n",
 				__func__);
 		memcpy(msm8952_dai_links + len5, msm8952_quin_dai_link,
 			sizeof(msm8952_quin_dai_link));

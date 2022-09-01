@@ -8,7 +8,6 @@ ifeq ($(KERNEL_BUILD), 0)
 	# Need to explicitly configure for Android-based builds
 	ifeq ($(CONFIG_ARCH_MSM8909), y)
 		include $(AUDIO_ROOT)/config/msm8909auto.conf
-		export
 	endif
 endif
 
@@ -93,6 +92,3 @@ endif
 # Module information used by KBuild framework
 obj-$(CONFIG_SND_SOC_BG_CODEC) += bg_codec_dlkm.o
 bg_codec_dlkm-y := $(BG_CODEC_CDC_OBJS)
-
-# inject some build related information
-DEFINES += -DBUILD_TIMESTAMP=\"$(shell date -u +'%Y-%m-%dT%H:%M:%SZ')\"

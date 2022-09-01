@@ -13,7 +13,9 @@ header-y += msm_audio_sbc.h
 header-y += msm_audio_voicememo.h
 header-y += msm_audio_wma.h
 header-y += msm_audio_wmapro.h
+ifdef ALAC_SUPPORTED
 header-y += msm_audio_alac.h
+endif
 header-y += msm_audio_ape.h
 header-y += msm_audio_g711.h
 header-y += msm_audio_g711_dec.h
