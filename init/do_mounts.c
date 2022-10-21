@@ -290,7 +290,6 @@ done:
 }
 EXPORT_SYMBOL_GPL(name_to_dev_t);
 
-#if 0
 static int __init root_dev_setup(char *line)
 {
 	strlcpy(saved_root_name, line, sizeof(saved_root_name));
@@ -308,7 +307,6 @@ static int __init rootwait_setup(char *str)
 }
 
 __setup("rootwait", rootwait_setup);
-#endif
 
 static char * __initdata root_mount_data;
 static int __init root_data_setup(char *str)
