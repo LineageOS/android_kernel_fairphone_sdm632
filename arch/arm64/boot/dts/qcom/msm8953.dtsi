@@ -118,12 +118,12 @@
 			status = "disabled";
 		};
 
-		cont_splash_mem: splash_region@0x90001000 {
+		cont_splash_mem: splash_region@90001000 {
 			reg = <0x0 0x90001000 0x0 0x13ff000>;
 			label = "cont_splash_mem";
 		};
 
-		adsp_shmem_device_mem: adsp_shmem_device_region@0xc0100000 {
+		adsp_shmem_device_mem: adsp_shmem_device_region@c0100000 {
 			compatible = "shared-dma-pool";
 			label = "adsp_shmem_device_mem";
 			reusable;
@@ -335,7 +335,7 @@
 			status = "disabled";
 		};
 	};
-	qcom,rmtfs_sharedmem@00000000 {
+	qcom,rmtfs_sharedmem@0 {
 		compatible = "qcom,sharedmem-uio";
 		reg = <0x00000000 0x00180000>;
 		reg-names = "rmtfs";
@@ -448,7 +448,7 @@
 		status = "okay";
 	};
 
-	qcom_tzlog: tz-log@08600720 {
+	qcom_tzlog: tz-log@8600720 {
 		compatible = "qcom,tz-log";
 		reg = <0x08600720 0x2000>;
 		status = "okay";
@@ -1565,7 +1565,7 @@
 	};
 
 
-	ipa_hw: qcom,ipa@07900000 {
+	ipa_hw: qcom,ipa@7900000 {
 		compatible = "qcom,ipa";
 		reg = <0x07900000 0x4effc>, <0x07904000 0x26934>;
 		reg-names = "ipa-base", "bam-base";
@@ -2072,7 +2072,7 @@
 		memory-region = <&venus_mem>;
 	};
 
-	qcom,wcnss-wlan@0a000000 {
+	qcom,wcnss-wlan@a000000 {
 		compatible = "qcom,wcnss_wlan";
 		reg = <0x0a000000 0x280000>,
 		      <0x0b011008 0x04>,

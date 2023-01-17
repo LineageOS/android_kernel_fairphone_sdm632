@@ -59,6 +59,9 @@
 };
 
 &i2c_6 { /* BLSP2 QUP2 (smart amp) */
+	#address-cells = <1>;
+	#size-cells = <0>;
+
 	status = "ok";
 	/* AWINIC AW8898 Smart PA */
 	aw8898_smartpa@34{
