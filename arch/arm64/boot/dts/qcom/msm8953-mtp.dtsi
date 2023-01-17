@@ -163,15 +163,6 @@
 
 &mdss_dsi1 {
 	status = "disabled";
-	qcom,dsi-pref-prim-pan = <&dsi_adv7533_1080p>;
-	pinctrl-names = "mdss_default", "mdss_sleep";
-	pinctrl-0 = <&mdss_dsi_active &mdss_te_active>;
-	pinctrl-1 = <&mdss_dsi_suspend &mdss_te_suspend>;
-
-	qcom,pluggable;
-	qcom,platform-te-gpio = <&tlmm 24 0>;
-	qcom,platform-reset-gpio = <&tlmm 61 0>;
-	qcom,platform-bklight-en-gpio = <&tlmm 59 0>;
 };
 
 &dsi_hx83112b_truly_1080p_video {
@@ -186,27 +177,6 @@
 	qcom,mdss-dsi-bl-min-level = <1>;
 	qcom,mdss-dsi-bl-max-level = <4095>;
 	qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
-};
-
-&dsi_truly_1080_vid {
-	qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
-	qcom,mdss-dsi-pan-enable-dynamic-fps;
-	qcom,mdss-dsi-min-refresh-rate = <48>;
-	qcom,mdss-dsi-max-refresh-rate = <60>;
-	qcom,mdss-dsi-pan-fps-update = "dfps_immediate_porch_mode_vfp";
-};
-
-&dsi_hx8399c_truly_vid {
-	qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
-	qcom,mdss-dsi-pan-enable-dynamic-fps;
-	qcom,mdss-dsi-pan-fps-update = "dfps_immediate_porch_mode_vfp";
-};
-
-&dsi_truly_1080_cmd {
-	qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
-	qcom,ulps-enabled;
-	qcom,partial-update-enabled;
-	qcom,panel-roi-alignment = <2 2 4 2 1080 2>;
 };
 
 &soc {
