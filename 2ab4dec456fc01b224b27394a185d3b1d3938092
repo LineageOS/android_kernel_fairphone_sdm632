@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85f4c83a_1c41947b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 19282
+      },
+      "writtenOn": "2023-01-21T17:20:58Z",
+      "side": 1,
+      "message": "Checkout latest `lineage-20` branch, then merge the other branch into it.\n`git commit --amend` to add the Change-Id / signoffs etc to the merge commit if wanted. \n\nRun `git show` on the merge commit and note how it lists two additional SHA sums.\nIf they are in short form, `git show SHORT-SHA` them to get both full SHA sums.\n\nAfterwards you can upload it to gerrit using `git push lineage-review HEAD:refs/for/lineage-20%base\u003dFIRST_SHA,base\u003dSECOND_SHA`.\n\nThis will create a proper merge change, so you retain the full history.\nAfterwards you can push the branch directly (`git push lineage-review HEAD:refs/heads/lineage-20`).",
+      "revId": "2ab4dec456fc01b224b27394a185d3b1d3938092",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
