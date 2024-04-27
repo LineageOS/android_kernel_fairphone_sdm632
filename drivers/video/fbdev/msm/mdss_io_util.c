@@ -286,6 +286,11 @@ int msm_mdss_enable_vreg(struct mdss_vreg *in_vreg, int num_vreg, int enable)
 				goto vreg_set_opt_mode_fail;
 			}
 			rc = regulator_enable(in_vreg[i].vreg);
+
+			if (!strcmp(in_vreg[i].vreg_name, "vddio")) {
+				msleep(10);
+			}
+
 			if (in_vreg[i].post_on_sleep && need_sleep)
 				usleep_range((in_vreg[i].post_on_sleep * 1000),
 					(in_vreg[i].post_on_sleep * 1000) + 10);
@@ -303,6 +308,10 @@ int msm_mdss_enable_vreg(struct mdss_vreg *in_vreg, int num_vreg, int enable)
 					(in_vreg[i].pre_off_sleep * 1000) + 10);
 			regulator_set_load(in_vreg[i].vreg,
 				in_vreg[i].load[DSS_REG_MODE_DISABLE]);
+
+			if (!strcmp(in_vreg[i].vreg_name, "vddio")) {
+				msleep(10);
+			}
 
 			if (regulator_is_enabled(in_vreg[i].vreg))
 				regulator_disable(in_vreg[i].vreg);

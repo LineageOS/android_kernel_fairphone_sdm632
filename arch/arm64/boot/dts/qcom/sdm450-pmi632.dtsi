@@ -36,8 +36,8 @@
 /{
 	mtp_batterydata: qcom,battery-data {
 		qcom,batt-id-range-pct = <15>;
-		#include "qg-batterydata-ascent-3450mah.dtsi"
-		#include "qg-batterydata-mlp356477-2800mah.dtsi"
+		#include "qg-batterydata-Fuji-3000mah-Jan22th2019-pmi632.dtsi"
+		#include "qg-batterydata-Kayo-3000mah-Nov4th2019-pmi632.dtsi"
 	};
 };
 
@@ -373,23 +373,19 @@
 	};
 };
 
-&tlmm {
-	pmx_mdss {
-		mdss_dsi_active: mdss_dsi_active {
-			 mux {
-				 pins = "gpio61";
-			 };
-			 config {
-				 pins = "gpio61";
-			 };
-		 };
-		mdss_dsi_suspend: mdss_dsi_suspend {
-			  mux {
-				  pins = "gpio61";
-			  };
-			  config {
-				  pins = "gpio61";
-			  };
-		  };
+&i2c_3 {
+	status = "ok";
+	himax_ts@48 {
+		compatible = "himax,hxcommon";
+		reg = <0x48>;
+		interrupt-parent = <&tlmm>;
+		interrupts = <65 0x2008>;
+		vcc_i2c-supply = <&pm8953_l6>;
+		vdd-ana-supply = <&pm8953_l10>;
+		himax,display-coords = <0 1080 0 2160>;
+		himax,panel-coords = <0 1080 0 2160>;
+		himax,irq-gpio = <&tlmm 65 0x2008>;
+		himax,rst-gpio = <&tlmm 64 0x00>;
+		report_type = <1>;
 	};
 };

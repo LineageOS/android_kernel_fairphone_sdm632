@@ -80,6 +80,7 @@ struct step_chg_info {
 	struct votable		*fcc_votable;
 	struct votable		*fv_votable;
 	struct votable		*usb_icl_votable;
+	struct votable		*rechg_vol_votable;
 	struct wakeup_source	*step_chg_ws;
 	struct power_supply	*batt_psy;
 	struct power_supply	*bms_psy;
@@ -499,7 +500,9 @@ reschedule:
 	return (STEP_CHG_HYSTERISIS_DELAY_US - elapsed_us + 1000);
 }
 
-#define JEITA_SUSPEND_HYST_UV		50000
+#define JEITA_SUSPEND_HYST_UV		200000
+#define JEITA_RECHG_HYST_UV		200000
+
 static int handle_jeita(struct step_chg_info *chip)
 {
 	union power_supply_propval pval = {0, };
@@ -561,6 +564,9 @@ static int handle_jeita(struct step_chg_info *chip)
 	if (rc < 0)
 		fv_uv = 0;
 
+	if (!chip->rechg_vol_votable)
+		chip->rechg_vol_votable = find_votable("RECHG_VOL");
+
 	chip->fv_votable = find_votable("FV");
 	if (!chip->fv_votable)
 		goto update_time;
@@ -597,6 +603,8 @@ static int handle_jeita(struct step_chg_info *chip)
 
 set_jeita_fv:
 	vote(chip->fv_votable, JEITA_VOTER, fv_uv ? true : false, fv_uv);
+	vote(chip->rechg_vol_votable,
+			JEITA_VOTER, true, (fv_uv -JEITA_RECHG_HYST_UV));
 
 update_time:
 	chip->jeita_last_update_time = ktime_get();
@@ -770,7 +778,7 @@ int qcom_step_chg_init(struct device *dev,
 
 	chip->step_chg_config->psy_prop = POWER_SUPPLY_PROP_VOLTAGE_NOW;
 	chip->step_chg_config->prop_name = "VBATT";
-	chip->step_chg_config->hysteresis = 100000;
+	chip->step_chg_config->hysteresis = 0; /* 100000 */;
 
 	chip->jeita_fcc_config = devm_kzalloc(dev,
 			sizeof(struct jeita_fcc_cfg), GFP_KERNEL);
