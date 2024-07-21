@@ -1,5 +1,6 @@
 /* Copyright (c) 2011-2021, The Linux Foundation. All rights reserved.
- * Copyright (c) 2022-2023, Qualcomm Innovation Center, Inc. All rights reserved.
+ * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
  * only version 2 as published by the Free Software Foundation.
@@ -2438,11 +2439,13 @@ static bool iommu_addr_in_svm_ranges(struct kgsl_iommu_pt *pt,
 		return false;
 
 	if ((gpuaddr >= pt->compat_va_start && gpuaddr < pt->compat_va_end) &&
-		(end > pt->compat_va_start && end <= pt->compat_va_end))
+		(end > pt->compat_va_start &&
+			end <= pt->compat_va_end))
 		return true;
 
 	if ((gpuaddr >= pt->svm_start && gpuaddr < pt->svm_end) &&
-		(end > pt->svm_start && end <= pt->svm_end))
+		(end > pt->svm_start &&
+			end <= pt->svm_end))
 		return true;
 
 	return false;

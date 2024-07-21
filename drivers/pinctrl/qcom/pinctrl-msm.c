@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2013, Sony Mobile Communications AB.
- * Copyright (c) 2013-2018, The Linux Foundation. All rights reserved.
+ * Copyright (c) 2013-2018, 2021, The Linux Foundation. All rights reserved.
  * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -1768,6 +1768,7 @@ int msm_pinctrl_probe(struct platform_device *pdev,
 	key = "spi_cfg_regs";
 	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, key);
 	if (res) {
+		pctrl->spi_base = devm_ioremap_resource(&pdev->dev, res);
 		pctrl->spi_cfg_regs = res->start;
 		pctrl->spi_cfg_end = res->end;
 	}
