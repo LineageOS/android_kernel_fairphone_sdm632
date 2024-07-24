@@ -1,4 +1,5 @@
 /* Copyright (c) 2017-2019, The Linux Foundation. All rights reserved.
+ * Copyright (c) 2022, 2024 Qualcomm Innovation Center, Inc. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -710,7 +711,7 @@ static int cam_res_mgr_remove(struct platform_device *pdev)
 		cam_res = NULL;
 	}
 
-	return 0;
+	return rc;
 }
 
 static const struct of_device_id cam_res_mgr_dt_match[] = {
