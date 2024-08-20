@@ -16,6 +16,23 @@
       "message": "@hansol@hansol.ca did I mess up with the merge?",
       "revId": "2d80aa92347a47ab107016ddffd3544d7fac4b95",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c862a28_4c8d030a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 28232
+      },
+      "writtenOn": "2024-08-20T18:51:15Z",
+      "side": 1,
+      "message": "Merge is messed up. Need to re-do.",
+      "revId": "2d80aa92347a47ab107016ddffd3544d7fac4b95",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
