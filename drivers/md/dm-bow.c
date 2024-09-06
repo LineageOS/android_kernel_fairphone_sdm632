@@ -12,7 +12,6 @@
 #include <linux/module.h>
 
 #define DM_MSG_PREFIX "bow"
-#define SECTOR_SIZE 512
 
 struct log_entry {
 	u64 source;
@@ -658,6 +657,7 @@ static int dm_bow_ctr(struct dm_target *ti, unsigned int argc, char **argv)
 		bc->dev->bdev->bd_queue->limits.max_discard_sectors = 1 << 15;
 		bc->forward_trims = false;
 	} else {
+		bc->dev->bdev->bd_queue->limits.discard_granularity = 1 << 12;
 		bc->forward_trims = true;
 	}
 
