@@ -1811,7 +1811,6 @@ static int put_args(uint32_t kernel, struct smq_invoke_ctx *ctx,
 						0, 0, &mmap)) {
 				if (mmap && mmap->ctx_refs)
 					mmap->ctx_refs--;
-
 				fastrpc_mmap_free(mmap, 0);
 			}
  		}
