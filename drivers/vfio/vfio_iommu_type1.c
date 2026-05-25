@@ -31,7 +31,7 @@
 #include <linux/module.h>
 #include <linux/mm.h>
 #include <linux/rbtree.h>
-#include <linux/sched.h>
+#include <linux/sched/signal.h>
 #include <linux/slab.h>
 #include <linux/uaccess.h>
 #include <linux/vfio.h>
@@ -251,6 +251,8 @@ static int vaddr_get_pfn(unsigned long vaddr, int prot, unsigned long *pfn)
 	}
 
 	down_read(&current->mm->mmap_sem);
+
+	vaddr = untagged_addr(vaddr);
 
 retry:
 	vma = find_vma_intersection(current->mm, vaddr, vaddr + 1);

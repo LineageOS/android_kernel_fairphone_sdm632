@@ -2886,6 +2886,7 @@ SYSCALL_DEFINE2(munmap, unsigned long, addr, size_t, len)
 	int ret;
 	struct mm_struct *mm = current->mm;
 
+	addr = untagged_addr(addr);
 	profile_munmap(addr);
 	if (down_write_killable(&mm->mmap_sem))
 		return -EINTR;
